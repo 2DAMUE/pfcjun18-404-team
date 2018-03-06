@@ -1,13 +1,13 @@
-**Grandes ideas para PFCs inolvidables**
+##Grandes ideas para PFCs inolvidables
 
 
-Mensajería con pictogramas autismo
-http://Teayudamos.eu
+* Mensajería con pictogramas autismo
+* http://Teayudamos.eu
 
 hackforgood.net
-https://hackforgood.net/blog/
+* https://hackforgood.net/blog/
 
-cambiaMO | changing MObility, now
+* cambiaMO | changing MObility, now
 http://cambiamo.net/
 
 Medialab
