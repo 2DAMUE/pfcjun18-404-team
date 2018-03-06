@@ -11,8 +11,8 @@ cambiaMO | changing MObility, now
 * http://cambiamo.net/
 
 Medialab
-* http://medialab-prado.es/article/jornadas-inauguracion-juegos-reunidos
-* http://medialab-prado.es/article/interactivos17
+* https://www.medialab-prado.es/comunidad
+* https://www.medialab-prado.es/actividades
 
 Streaming video con Proyecto investigación Universidad Europea
 * *esteban.garcia@universidadeuropea.es*
