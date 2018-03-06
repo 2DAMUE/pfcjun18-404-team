@@ -1,4 +1,4 @@
-**Grandes ideas para PFCs inolvidables
+**Grandes ideas para PFCs inolvidables**
 
 
 Mensajería con pictogramas autismo
@@ -15,7 +15,7 @@ http://medialab-prado.es/article/jornadas-inauguracion-juegos-reunidos
 http://medialab-prado.es/article/interactivos17
 
 Streaming video con Proyecto investigación Universidad Europea
-_esteban.garcia@universidadeuropea.es
+*esteban.garcia@universidadeuropea.es*
 
 osc / protocoder
 https://www.youtube.com/watch?v=yzvAXO4_QDM
