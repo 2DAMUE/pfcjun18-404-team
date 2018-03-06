@@ -1,25 +1,21 @@
-Grandes ideas para PFCs inolvidables
+**Grandes ideas para PFCs inolvidables
 
 
 Mensajería con pictogramas autismo
-Teayudamos.eu
+http://Teayudamos.eu
 
 hackforgood.net
 https://hackforgood.net/blog/
 
-
 cambiaMO | changing MObility, now
 http://cambiamo.net/
-
 
 Medialab
 http://medialab-prado.es/article/jornadas-inauguracion-juegos-reunidos
 http://medialab-prado.es/article/interactivos17
 
-
 Streaming video con Proyecto investigación Universidad Europea
-esteban.garcia@universidadeuropea.es
-
+_esteban.garcia@universidadeuropea.es
 
 osc / protocoder
 https://www.youtube.com/watch?v=yzvAXO4_QDM
