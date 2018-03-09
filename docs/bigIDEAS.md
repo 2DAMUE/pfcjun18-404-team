@@ -28,5 +28,7 @@ Parque de las sonrisas
 jarduino uni de sevilla
 * http://thedatacitizendrivencity.com/?page_id=108
 
-
-Vodafone...
+Vodafone:
+* Lab
+* Fundación vodafone
+* Vodafone apps (manual reanimación CV)
