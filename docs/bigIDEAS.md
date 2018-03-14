@@ -8,7 +8,9 @@ hackforgood.net
 * https://hackforgood.net/blog/
 
 cambiaMO | changing MObility, now
+* https://maresmadrid.es/
 * http://cambiamo.net/
+* http://www.lavanguardia.com/vida/20171123/433107941507/emt-de-madrid-lanzara-en-2018-maas-para-aunar-todos-los-tipos-de-movilidad.html
 
 Medialab
 * https://www.medialab-prado.es/comunidad
@@ -32,3 +34,5 @@ Vodafone:
 * Lab
 * Fundación vodafone
 * Vodafone apps (manual reanimación CV)
+
+
