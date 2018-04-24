@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">404Team</string>
+    <string name="log_user">Usuario</string>
+    <string name="log_pass">Contraseña</string>
+    <string name="log_in">Log In</string>
+    <string name="no_cuenta">No tengo cuenta.</string>
 </resources>

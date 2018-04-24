@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="log_user">Username</string>
+    <string name="log_pass">Password</string>
+    <string name="log_in">Log In</string>
+    <string name="no_cuenta">I don\'t have an account.</string>
+</resources>

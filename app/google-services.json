@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "230554561881",
+    "firebase_url": "https://petaware-pfc18.firebaseio.com",
+    "project_id": "petaware-pfc18",
+    "storage_bucket": "petaware-pfc18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230554561881:android:85055bd38f2b1eb1",
+        "android_client_info": {
+          "package_name": "com.team.a404.a404team"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230554561881-6g71t3tihnolc6cpc11q5slgvqd008hs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAdbtVSCFwDZs3j6_IOEWUpybGZeDHRnc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
