@@ -4,4 +4,8 @@
     <string name="log_pass">Contraseña</string>
     <string name="log_in">Log In</string>
     <string name="no_cuenta">No tengo cuenta.</string>
+    <string name="meteuser">El nombre de usuario está vacío.</string>
+    <string name="metepass">La contraseña está vacía</string>
+    <string name="nolog">Nombre de usuario o contraseña incorrectos.</string>
+    <string name="sinpass">No recuerdo mi contraseña.</string>
 </resources>
