@@ -79,28 +79,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pass1" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/nocuenta"
+                android:layout_width="match_parent"
+
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="3dp"
+
+                android:text="@string/no_cuenta"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toTopOf="@+id/logbutt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pass1" />
+
+        </FrameLayout>
+
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/nocuenta"
-            android:layout_width="match_parent"
-
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="3dp"
-
-            android:text="@string/no_cuenta"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            app:layout_constraintBottom_toTopOf="@+id/logbutt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pass1" />
-
-    </FrameLayout>
 
 </LinearLayout>

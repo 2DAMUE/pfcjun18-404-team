@@ -8,4 +8,18 @@
     <string name="metepass">The password field is empty.</string>
     <string name="nolog">Incorrect username or password.</string>
     <string name="sinpass">I don\'t remember my password.</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="repassword">Repeat password</string>
+    <string name="btn_registro">Send data</string>
+    <string name="registrando">Loading...</string>
+    <string name="nopass">The password doesn\'t match!</string>
+    <string name="noregistro">Unable to create your account. Please try again</string>
+    <string name="completarperfiltitle">Your profile is almost ready!</string>
+    <string name="guardadatos">Your data was saved successfully</string>
+    <string name="username">Name</string>
+    <string name="phone">Phone number</string>
+    <string name="btn_complete">Complete my profile</string>
+    <string name="btn_start">Start!</string>
+    <string name="new_profile_created">Your profile was created successfully!</string>
 </resources>

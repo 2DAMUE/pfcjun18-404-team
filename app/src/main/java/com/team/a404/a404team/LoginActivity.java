@@ -18,11 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
-    private EditText user,pass;
+    private EditText user, pass;
     private Button login;
-    private TextView noCuenta,nopass;
+    private TextView noCuenta, nopass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         user = (EditText) findViewById(R.id.usuario);
         pass = (EditText) findViewById(R.id.pass1);
         noCuenta = (TextView) findViewById(R.id.nocuenta);
-        nopass = (TextView)findViewById(R.id.nopass);
+        nopass = (TextView) findViewById(R.id.nopass);
         login = (Button) findViewById(R.id.logbutt);
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
@@ -43,8 +43,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         noCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -56,15 +56,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view == login) {
             userLogin();
         }
-        if (view == nopass){
+        if (view == nopass) {
 //            Intent intent = new Intent(LoginActivity.this, ForgetPwd.class);
 //            startActivity(intent);
         }
     }
+
     public void closeSoftKeyBoard() {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(login.getWindowToken(), 0);
     }
+
     private void userLogin() {
         String usr = user.getText().toString().trim();
         String pwd = pass.getText().toString().trim();
@@ -91,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
 //                            Intent intent1 = new Intent(LoginActivity.this, MainScreen.class);
 //                            startActivity(intent1);
-                        }else{
+                        } else {
                             Snackbar.make(login, getString(R.string.nolog), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         }
 
