@@ -27,7 +27,7 @@ public class SplashScreen extends AppCompatActivity {
                 }catch (Exception e){
 
                 } finally {
-                    Intent myIntent = new Intent(SplashScreen.this, tipo_login.class);
+                    Intent myIntent = new Intent(SplashScreen.this, lobby.class);
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(myIntent);

@@ -28,6 +28,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
+
         user = (EditText) findViewById(R.id.usuario);
         pass = (EditText) findViewById(R.id.pass1);
         noCuenta = (TextView) findViewById(R.id.nocuenta);
