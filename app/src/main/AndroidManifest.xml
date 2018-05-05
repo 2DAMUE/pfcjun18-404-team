@@ -29,7 +29,11 @@
         <activity
             android:name=".DetallesPerfilActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".CreacionSuccessActivity"></activity>
+        <activity android:name=".CreacionSuccessActivity" />
+        <activity
+            android:name=".tipo_login"
+            android:label="@string/title_activity_tipo_login"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
