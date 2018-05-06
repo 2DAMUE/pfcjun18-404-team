@@ -1,4 +1,4 @@
-package com.team.a404.a404team;
+package com.team.a404.a404team.Zona_lobby;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.team.a404.a404team.DetallesPerfilActivity;
+import com.team.a404.a404team.R;
 
 public class RegistroActivity extends AppCompatActivity implements View.OnClickListener {
     protected EditText mail, pass1, pass2, nombre, telf;
@@ -31,7 +33,7 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().hide();
 
         mail = (EditText) findViewById(R.id.email);
-        pass1 = (EditText) findViewById(R.id.pass1);
+        pass1 = (EditText) findViewById(R.id.edit_pass);
         pass2 = (EditText) findViewById(R.id.pass2);
         log = (Button) findViewById(R.id.crear);
         progressDialog = new ProgressDialog(this);

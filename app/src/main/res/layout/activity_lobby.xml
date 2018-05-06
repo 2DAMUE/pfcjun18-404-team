@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/fondo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -38,5 +38,13 @@
         android:backgroundTint="#a60143"
         android:text="Iniciar Sesion"
         android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="208dp"
+        android:layout_height="139dp"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/logo" />
 
 </FrameLayout>

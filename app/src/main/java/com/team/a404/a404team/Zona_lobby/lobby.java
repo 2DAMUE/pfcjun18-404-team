@@ -1,4 +1,4 @@
-package com.team.a404.a404team;
+package com.team.a404.a404team.Zona_lobby;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.team.a404.a404team.R;
 
 public class lobby extends AppCompatActivity {
 

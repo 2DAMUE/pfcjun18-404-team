@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:context=".Zona_lobby.LoginActivity">
+
+    <Button
+
+
+        android:id="@+id/b_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        android:layout_gravity="center_horizontal|bottom"
+
+        android:background="#ba0063"
+        android:text="@string/log_in"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nocuenta" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/usuario"
+            android:id="@+id/edit_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -25,13 +44,13 @@
             android:inputType="textEmailAddress"
             android:singleLine="false"
             android:textColorLink="@color/colorAccent"
-            app:layout_constraintBottom_toTopOf="@+id/pass1"
+            app:layout_constraintBottom_toTopOf="@+id/edit_pass"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/pass1"
+            android:id="@+id/edit_pass"
             android:layout_width="match_parent"
 
             android:layout_height="49dp"
@@ -42,27 +61,8 @@
             android:hint="@string/log_pass"
             android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/nocuenta"
-            app:layout_constraintStart_toStartOf="@+id/usuario"
-            app:layout_constraintTop_toBottomOf="@+id/usuario" />
-
-        <Button
-            android:id="@+id/logbutt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-
-            android:layout_marginTop="20dp"
-            android:background="@color/colorAccent"
-            android:text="@string/log_in"
-            android:textColor="@android:color/background_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nocuenta" />
+            app:layout_constraintStart_toStartOf="@+id/edit_user"
+            app:layout_constraintTop_toBottomOf="@+id/edit_user" />
 
         <TextView
             android:id="@+id/nopass"
@@ -75,33 +75,12 @@
             android:text="@string/sinpass"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
-            app:layout_constraintBottom_toTopOf="@+id/logbutt"
+            app:layout_constraintBottom_toTopOf="@+id/b_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pass1" />
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/nocuenta"
-                android:layout_width="match_parent"
-
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="3dp"
-
-                android:text="@string/no_cuenta"
-                android:textAlignment="center"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintBottom_toTopOf="@+id/logbutt"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pass1" />
-
-        </FrameLayout>
+            app:layout_constraintTop_toBottomOf="@+id/edit_pass" />
 
     </LinearLayout>
 
 
-</LinearLayout>
+</FrameLayout>

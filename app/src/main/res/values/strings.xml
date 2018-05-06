@@ -2,7 +2,7 @@
     <string name="app_name">404Team</string>
     <string name="log_user">Usuario</string>
     <string name="log_pass">Contraseña</string>
-    <string name="log_in">Log In</string>
+    <string name="log_in">Iniciar Sesión</string>
     <string name="no_cuenta">No tengo cuenta.</string>
     <string name="meteuser">El nombre de usuario está vacío.</string>
     <string name="metepass">La contraseña está vacía</string>

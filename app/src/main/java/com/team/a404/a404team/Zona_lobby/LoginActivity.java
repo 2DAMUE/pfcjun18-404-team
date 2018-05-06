@@ -1,4 +1,4 @@
-package com.team.a404.a404team;
+package com.team.a404.a404team.Zona_lobby;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,12 +17,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.team.a404.a404team.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
-    private EditText user, pass;
+    private EditText v_user, v_pass;
     private Button login;
-    private TextView noCuenta, nopass;
+    private TextView nopass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +31,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
 
-        user = (EditText) findViewById(R.id.usuario);
-        pass = (EditText) findViewById(R.id.pass1);
-        noCuenta = (TextView) findViewById(R.id.nocuenta);
+        v_user = (EditText) findViewById(R.id.edit_user);
+        v_pass = (EditText) findViewById(R.id.edit_pass);
         nopass = (TextView) findViewById(R.id.nopass);
-        login = (Button) findViewById(R.id.logbutt);
+        login = (Button) findViewById(R.id.b_login);
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
@@ -42,14 +42,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //            startActivity(intent1);
 
         }
-        noCuenta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     @Override
@@ -70,8 +62,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void userLogin() {
-        String usr = user.getText().toString().trim();
-        String pwd = pass.getText().toString().trim();
+        String usr = v_user.getText().toString().trim();
+        String pwd = v_pass.getText().toString().trim();
 
 
         if (TextUtils.isEmpty(usr)) {
