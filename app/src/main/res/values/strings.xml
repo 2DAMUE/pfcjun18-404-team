@@ -7,7 +7,7 @@
     <string name="meteuser">El nombre de usuario está vacío.</string>
     <string name="metepass">La contraseña está vacía</string>
     <string name="nolog">Nombre de usuario o contraseña incorrectos.</string>
-    <string name="sinpass">No recuerdo mi contraseña.</string>
+    <string name="sinpass">¿Olvidaste tu contraseña?</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña</string>
     <string name="repassword">Repetir contraseña</string>
@@ -22,7 +22,5 @@
     <string name="btn_complete">Completar mi perfil</string>
     <string name="btn_start">¡Empezar!</string>
     <string name="new_profile_created">¡Tu perfil ha sido creado con éxito!</string>
-    <string name="title_activity_tipo_login">tipo_login</string>
     <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

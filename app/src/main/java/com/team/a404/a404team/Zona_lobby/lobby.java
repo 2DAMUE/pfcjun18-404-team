@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.team.a404.a404team.R;
+import com.team.a404.a404team.SplashScreen;
 
 public class lobby extends AppCompatActivity {
 
@@ -32,15 +33,15 @@ public class lobby extends AppCompatActivity {
         v_btn_iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(lobby.this, LoginActivity.class);
-                startActivity(myIntent);
+                startActivity(new Intent(lobby.this, LoginActivity.class));
+                overridePendingTransition(R.anim.left_in, R.anim.zoom_back_out);
             }
         });
         v_btn_registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(lobby.this, RegistroActivity.class);
-                startActivity(myIntent);
+                startActivity(new Intent(lobby.this, RegistroActivity.class));
+                overridePendingTransition(R.anim.left_in, R.anim.zoom_back_out);
             }
         });
     }

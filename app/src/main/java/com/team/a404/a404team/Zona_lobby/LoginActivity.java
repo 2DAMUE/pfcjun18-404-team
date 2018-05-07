@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.team.a404.a404team.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
+
     private EditText v_user, v_pass;
     private Button login;
     private TextView nopass;
@@ -42,6 +44,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //            startActivity(intent1);
 
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Log.v("CLIK ?","SI");
+        startActivity(new Intent(LoginActivity.this, lobby.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        overridePendingTransition(R.anim.zoom_back_in,R.anim.right_out);
     }
 
     @Override

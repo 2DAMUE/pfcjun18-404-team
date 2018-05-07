@@ -23,7 +23,7 @@ public class SplashScreen extends AppCompatActivity {
                 try {
                     //lottieAnimationView = (LottieAnimationView) findViewById(R.id.animation_view);
                     //lottieAnimationView.playAnimation();
-                    sleep(1500);
+                    sleep(500);
                 }catch (Exception e){
 
                 } finally {

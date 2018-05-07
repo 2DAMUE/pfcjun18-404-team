@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +40,12 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
         progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
         log.setOnClickListener(this);
+    }
+
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(RegistroActivity.this, lobby.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        overridePendingTransition(R.anim.zoom_back_in,R.anim.right_out);
     }
 
     @Override
