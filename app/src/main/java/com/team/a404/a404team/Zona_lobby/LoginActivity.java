@@ -2,6 +2,7 @@ package com.team.a404.a404team.Zona_lobby;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,11 +21,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.team.a404.a404team.DetallesPerfilActivity;
 import com.team.a404.a404team.R;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     private EditText v_user, v_pass;
-    private Button login;
+    private Button v_btn_login;
     private TextView nopass;
 
     @Override
@@ -36,13 +37,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         v_user = (EditText) findViewById(R.id.edit_user);
         v_pass = (EditText) findViewById(R.id.edit_telefono);
         nopass = (TextView) findViewById(R.id.nopass);
-        login = (Button) findViewById(R.id.btn_enviar);
+        v_btn_login = (Button) findViewById(R.id.btn_enviar);
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
             Intent intent1 = new Intent(LoginActivity.this, DetallesPerfilActivity.class);
             startActivity(intent1);
         }
+
+        v_btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userLogin();
+            }
+        });
     }
 
     @Override
@@ -51,21 +59,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         overridePendingTransition(R.anim.zoom_back_in,R.anim.right_out);
     }
 
-    @Override
-    public void onClick(View view) {
-        closeSoftKeyBoard();
-        if (view == login) {
-            userLogin();
-        }
-        if (view == nopass) {
-//            Intent intent = new Intent(LoginActivity.this, ForgetPwd.class);
-//            startActivity(intent);
-        }
-    }
-
     public void closeSoftKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(login.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(v_btn_login.getWindowToken(), 0);
     }
 
     private void userLogin() {
@@ -75,13 +71,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (TextUtils.isEmpty(usr)) {
             // email is empty
-            Snackbar.make(login, getString(R.string.meteuser), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            Snackbar.make(v_btn_login, getString(R.string.meteuser), Snackbar.LENGTH_LONG).setAction("Action", null).show();
             return;
             // para la ejecucion
         }
         if (TextUtils.isEmpty(pwd)) {
             // password is empty
-            Snackbar.make(login, getString(R.string.metepass), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            Snackbar.make(v_btn_login, getString(R.string.metepass), Snackbar.LENGTH_LONG).setAction("Action", null).show();
             // para la ejecucion
             return;
         }
@@ -92,10 +88,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             finish();
-//                            Intent intent1 = new Intent(LoginActivity.this, MainScreen.class);
-//                            startActivity(intent1);
+                            startActivity(new Intent(LoginActivity.this, DetallesPerfilActivity.class));
+                            overridePendingTransition(R.anim.left_in, R.anim.zoom_back_out);
                         } else {
-                            Snackbar.make(login, getString(R.string.nolog), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                            Snackbar.make(v_btn_login, getString(R.string.nolog), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         }
 
                     }
