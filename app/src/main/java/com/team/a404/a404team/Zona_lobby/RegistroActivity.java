@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,9 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.team.a404.a404team.DetallesPerfilActivity;
 import com.team.a404.a404team.R;
 
-public class RegistroActivity extends AppCompatActivity implements View.OnClickListener {
-    protected EditText mail, pass1, pass2, nombre, telf;
-    protected Button log;
+public class RegistroActivity extends AppCompatActivity {
+    protected EditText v_mail, v_pass, nombre, telf;
+    protected Button v_enviar;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference DataRef;
@@ -33,13 +32,19 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_registro);
         getSupportActionBar().hide();
 
-        mail = (EditText) findViewById(R.id.email);
-        pass1 = (EditText) findViewById(R.id.edit_pass);
-        pass2 = (EditText) findViewById(R.id.pass2);
-        log = (Button) findViewById(R.id.crear);
+        v_mail = (EditText) findViewById(R.id.edit_email);
+        v_pass = (EditText) findViewById(R.id.edit_telefono);
+        v_enviar = (Button) findViewById(R.id.btn_enviar);
         progressDialog = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
-        log.setOnClickListener(this);
+
+
+        v_enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registrar();
+            }
+        });
     }
 
     @Override
@@ -48,22 +53,14 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
         overridePendingTransition(R.anim.zoom_back_in,R.anim.right_out);
     }
 
-    @Override
-    public void onClick(View view) {
-        if(view==log){
-            registrar();
-        }
-
-    }
 
     private void registrar() {
-        String email = mail.getText().toString().trim();
-        String password1 = pass1.getText().toString().trim();
-        String password2 = pass2.getText().toString().trim();
+        String email = v_mail.getText().toString().trim();
+        String password1 = v_pass.getText().toString().trim();
 
 
 
-        if (password1.equals(password2)){
+        //if (password1.equals(password2)){
             if (TextUtils.isEmpty(email)) {
                 // email is empty
                 Toast.makeText(this, getString(R.string.meteuser), Toast.LENGTH_SHORT).show();
@@ -96,9 +93,11 @@ public class RegistroActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
             });
+        /*
         }else{
             Toast.makeText(RegistroActivity.this, getString(R.string.nopass), Toast.LENGTH_SHORT).show();
             progressDialog.hide();
         }
+        */
     }
 }

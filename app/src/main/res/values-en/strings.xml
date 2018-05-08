@@ -22,4 +22,5 @@
     <string name="btn_complete">Complete my profile</string>
     <string name="btn_start">Start!</string>
     <string name="new_profile_created">Your profile was created successfully!</string>
+    <string name="crear_c">Falta tradución</string>
 </resources>

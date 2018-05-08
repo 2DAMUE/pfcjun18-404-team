@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorVerdeCorrecto"
     android:orientation="vertical"
     tools:context=".CreacionSuccessActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="23dp"
+            android:text="@string/new_profile_created"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlanco"
+            android:textSize="24sp" />
+    </LinearLayout>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="checksuccess.json"
-        app:lottie_loop="true" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="@string/new_profile_created"
-        android:textSize="24sp"
-        android:textAlignment="center"/>
+        app:lottie_fileName="anim_tick.json"
+        app:lottie_loop="false" />
 
     <Button
-        android:id="@+id/start"
+        android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:text="@string/btn_start" />
 
-</LinearLayout>
+</FrameLayout>

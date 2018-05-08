@@ -24,7 +24,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/button_background"
-        android:text="Registrarse"
+        android:text="@string/crear_c"
         android:textColor="@android:color/white" />
 
     <Button

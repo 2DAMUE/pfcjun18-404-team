@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.team.a404.a404team.DetallesPerfilActivity;
 import com.team.a404.a404team.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,21 +34,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().hide();
 
         v_user = (EditText) findViewById(R.id.edit_user);
-        v_pass = (EditText) findViewById(R.id.edit_pass);
+        v_pass = (EditText) findViewById(R.id.edit_telefono);
         nopass = (TextView) findViewById(R.id.nopass);
-        login = (Button) findViewById(R.id.b_login);
+        login = (Button) findViewById(R.id.btn_enviar);
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
-//            Intent intent1 = new Intent(LoginActivity.this, MainScreen.class);
-//            startActivity(intent1);
-
+            Intent intent1 = new Intent(LoginActivity.this, DetallesPerfilActivity.class);
+            startActivity(intent1);
         }
     }
 
     @Override
     public void onBackPressed(){
-        Log.v("CLIK ?","SI");
         startActivity(new Intent(LoginActivity.this, lobby.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
         overridePendingTransition(R.anim.zoom_back_in,R.anim.right_out);
     }

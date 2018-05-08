@@ -21,6 +21,7 @@ android {
 
 ext {
     supportLibVersion = '27.1.1'  // variable that can be referenced to keep support libs consistent
+    lottieVersion = '2.0.0'
 }
 
 dependencies {
@@ -35,7 +36,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:11.8.0'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.mikhaellopez:circularimageview:3.0.2'
-    implementation 'com.airbnb.android:lottie:2.0.0'
+    implementation "com.airbnb.android:lottie:${lottieVersion}"
 
     implementation "com.android.support:appcompat-v7:${supportLibVersion}"
     implementation "com.android.support:design:${supportLibVersion}"
