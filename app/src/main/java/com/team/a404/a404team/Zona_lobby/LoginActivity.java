@@ -2,7 +2,6 @@ package com.team.a404.a404team.Zona_lobby;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.team.a404.a404team.DetallesPerfilActivity;
 import com.team.a404.a404team.R;
+import com.team.a404.a404team.MainActivities.MainMapActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
-            Intent intent1 = new Intent(LoginActivity.this, DetallesPerfilActivity.class);
+            Intent intent1 = new Intent(LoginActivity.this, MainMapActivity.class);
             startActivity(intent1);
         }
 

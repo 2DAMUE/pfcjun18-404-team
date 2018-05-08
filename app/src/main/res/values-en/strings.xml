@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">PetAware</string>
     <string name="log_user">Username</string>
     <string name="log_pass">Password</string>
     <string name="log_in">Log In</string>
@@ -22,5 +23,10 @@
     <string name="btn_complete">Complete my profile</string>
     <string name="btn_start">Start!</string>
     <string name="new_profile_created">Your profile was created successfully!</string>
-    <string name="crear_c">Falta tradución</string>
+    <string name="crear_c">Create an account</string>
+    <string name="action_settings">Settings</string>
+    <string name="modo_log1">Email and Password</string>
+    <string name="modo_log2">Google Account</string>
+    <string name="or">or</string>
+    <string name="log_options">Login Options</string>
 </resources>

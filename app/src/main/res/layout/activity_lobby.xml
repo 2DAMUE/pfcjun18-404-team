@@ -37,7 +37,7 @@
         android:layout_marginRight="15dp"
         android:background="@drawable/button_background_lleno"
         android:backgroundTint="#a60143"
-        android:text="Iniciar Sesion"
+        android:text="@string/log_in"
         android:textColor="@android:color/white" />
 
     <ImageView
