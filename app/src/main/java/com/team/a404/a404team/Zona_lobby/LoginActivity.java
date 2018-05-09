@@ -1,5 +1,6 @@
 package com.team.a404.a404team.Zona_lobby;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText v_user, v_pass;
     private Button v_btn_login;
     private TextView nopass;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,10 @@ public class LoginActivity extends AppCompatActivity {
         v_pass = (EditText) findViewById(R.id.edit_telefono);
         nopass = (TextView) findViewById(R.id.nopass);
         v_btn_login = (Button) findViewById(R.id.btn_enviar);
+
         firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
+
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
             Intent intent1 = new Intent(LoginActivity.this, MainMapActivity.class);
@@ -48,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         v_btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                progressDialog.setMessage("Iniciando Sesión");
+                progressDialog.show();
                 userLogin();
             }
         });
@@ -71,12 +79,15 @@ public class LoginActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(usr)) {
             // email is empty
+            progressDialog.hide();
             Snackbar.make(v_btn_login, getString(R.string.meteuser), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
             return;
             // para la ejecucion
         }
         if (TextUtils.isEmpty(pwd)) {
             // password is empty
+            progressDialog.hide();
             Snackbar.make(v_btn_login, getString(R.string.metepass), Snackbar.LENGTH_LONG).setAction("Action", null).show();
             // para la ejecucion
             return;
@@ -88,9 +99,11 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             finish();
-                            startActivity(new Intent(LoginActivity.this, DetallesPerfilActivity.class));
+                            progressDialog.hide();
+                            startActivity(new Intent(LoginActivity.this, MainMapActivity.class));
                             overridePendingTransition(R.anim.left_in, R.anim.zoom_back_out);
                         } else {
+                            progressDialog.hide();
                             Snackbar.make(v_btn_login, getString(R.string.nolog), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         }
 

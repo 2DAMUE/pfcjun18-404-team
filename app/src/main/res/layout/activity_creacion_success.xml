@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fondo_color"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorVerdeCorrecto"
     android:orientation="vertical"
     tools:context=".CreacionSuccessActivity">
 
@@ -31,7 +31,7 @@
         android:layout_height="150dp"
         android:layout_gravity="center"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="anim_tick.json"
+        app:lottie_fileName="load.json"
         app:lottie_loop="false" />
 
     <Button

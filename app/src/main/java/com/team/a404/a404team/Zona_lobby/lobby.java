@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.team.a404.a404team.DetallesPerfilActivity;
+import com.team.a404.a404team.MainActivities.MainMapActivity;
 import com.team.a404.a404team.R;
 import com.team.a404.a404team.SplashScreen;
 
@@ -39,7 +40,7 @@ public class lobby extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
-            Intent intent1 = new Intent(lobby.this, DetallesPerfilActivity.class);
+            Intent intent1 = new Intent(lobby.this, MainMapActivity.class);
             startActivity(intent1);
 
         }
