@@ -4,8 +4,9 @@
     <string name="log_pass">Contraseña</string>
     <string name="log_in">Iniciar Sesión</string>
     <string name="no_cuenta">No tengo cuenta.</string>
-    <string name="meteuser">El nombre de usuario está vacío.</string>
-    <string name="metepass">La contraseña está vacía</string>
+    <string name="meteuser">¿Como te llamas?</string>
+    <string name="metepass">Necesitamos una contraseña</string>
+    <string name="metemail">¿No tienes Email? Lo necesitamos</string>
     <string name="nolog">Nombre de usuario o contraseña incorrectos.</string>
     <string name="sinpass">¿Olvidaste tu contraseña?</string>
     <string name="email">Correo electrónico</string>
@@ -25,7 +26,7 @@
     <string name="action_settings">Ajustes</string>
     <string name="crear_c">Crear una cuenta</string>
     <string name="title_activity_main_map">MainMapActivity</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">Inicio</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="modo_log1">Correo electrónico y contraseña</string>

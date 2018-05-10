@@ -2,8 +2,10 @@ package com.team.a404.a404team;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,13 +17,16 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
+import com.team.a404.a404team.MainActivities.MainMapActivity;
+import com.team.a404.a404team.Zona_lobby.RegistroActivity;
+import com.team.a404.a404team.Zona_lobby.lobby;
 
 public class CreacionSuccessActivity extends AppCompatActivity {
     private LottieAnimationView lottieAnimationView;
-    private estado e = new estado();
     private TextView v_text_ok;
     private Button v_btn_next;
     private FrameLayout v_fondo_color;
+    public static int estado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,23 +48,21 @@ public class CreacionSuccessActivity extends AppCompatActivity {
         lottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-                animator.setDuration(3000);
+
             }
             @Override
             public void onAnimationEnd(Animator animator) {
-                if (e.getV_estado() == 1){
+                if (estado == 1){
                     lottieAnimationView.setAnimation("anim_tick.json");
                     updateColor(Color.parseColor("#2ecc71"));
-                    lottieAnimationView.pauseAnimation();
-                }else if (e.getV_estado() == 2){
+                    gohome();
+                }else if (estado == 2){
                     updateColor(Color.parseColor("#FFCC2E31"));
                     lottieAnimationView.setAnimation("anim_tick.json");
-                    lottieAnimationView.pauseAnimation();
-                }else{
+                    gohome();
+                }else if (estado == 0){
                     lottieAnimationView.playAnimation();
                 }
-                Log.v("Cual",""+e.getV_estado());
-
             }
 
             @Override
@@ -81,5 +84,24 @@ public class CreacionSuccessActivity extends AppCompatActivity {
             this.getWindow().setStatusBarColor(color);
         }
         v_fondo_color.setBackgroundColor(color);
+    }
+    public void gohome(){
+        Thread t = new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void run() {
+                try {
+                    sleep(3000);
+                }catch (Exception e){
+
+                } finally {
+                    startActivity(new Intent(CreacionSuccessActivity.this, MainMapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                }
+            }
+        };
+        t.start();
+
+
     }
 }

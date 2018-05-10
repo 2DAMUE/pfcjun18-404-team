@@ -14,7 +14,7 @@
     </style>
 
     <style name="counterText">
-        <item name="android:textColor">@color/colorPrimary</item>
+
     </style>
 
     <style name="counterOverride">
@@ -24,5 +24,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme_Dialog_Translucent">
+        <item name="android:textColor">@color/common_google_signin_btn_text_dark_disabled</item>
+    </style>
 
 </resources>

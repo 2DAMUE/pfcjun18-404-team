@@ -3,13 +3,17 @@ package com.team.a404.a404team.Zona_lobby;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.team.a404.a404team.DetallesPerfilActivity;
 import com.team.a404.a404team.MainActivities.MainMapActivity;
@@ -18,9 +22,10 @@ import com.team.a404.a404team.SplashScreen;
 
 public class lobby extends AppCompatActivity {
 
-    protected Button v_btn_iniciarSesion,v_btn_registro;
+    protected Button v_btn_iniciarSesion,v_btn_registro,v_btn_iniciarSesionCorreo;
     private FirebaseAuth firebaseAuth;
-    private TextView nombreypass,cuentagoogle;
+    private SignInButton v_btn_iniciarSesionGoogle;
+    private FrameLayout v_pantalla;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +53,27 @@ public class lobby extends AppCompatActivity {
         v_btn_iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(lobby.this);
+                final Dialog dialog;
+                // con este tema personalizado evitamos los bordes por defecto
+                dialog = new Dialog(lobby.this, R.style.Theme_Dialog_Translucent);
+                //deshabilitamos el título por defecto
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#86000000")));
+
                 dialog.setContentView(R.layout.login_dialog);
                 dialog.show();
                 dialog.setCanceledOnTouchOutside(true);
-                nombreypass = (TextView)dialog.findViewById(R.id.userPass);
-                cuentagoogle = (TextView)dialog.findViewById(R.id.googleAcc);
-                nombreypass.setOnClickListener(new View.OnClickListener() {
+                v_btn_iniciarSesionCorreo = (Button) dialog.findViewById(R.id.btn_iniciarPorCorreo);
+                v_btn_iniciarSesionGoogle = (SignInButton)dialog.findViewById(R.id.btn_iniciarPorGoogle);
+                v_pantalla = (FrameLayout) dialog.findViewById(R.id.pantalla);
+
+                v_pantalla.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.hide();
+                    }
+                });
+
+                v_btn_iniciarSesionCorreo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();

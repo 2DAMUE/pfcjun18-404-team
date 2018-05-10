@@ -25,7 +25,7 @@
         android:layout_marginRight="15dp"
         android:background="@drawable/button_background"
         android:text="@string/crear_c"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"/>
 
     <Button
         android:id="@+id/btn_iniciarSesion"
@@ -36,7 +36,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/button_background_lleno"
-        android:backgroundTint="#a60143"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:text="@string/log_in"
         android:textColor="@android:color/white" />
 

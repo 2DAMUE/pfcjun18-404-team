@@ -26,7 +26,6 @@ public class DetallesPerfilActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference DataRef;
     private FirebaseUser usuario;
-    private estado e = new estado();
     private EditText v_name, v_telefono;
     private Button v_btn_enviar;
     private boolean enviado_1 = false;
@@ -104,35 +103,6 @@ public class DetallesPerfilActivity extends AppCompatActivity {
 
             }
         });
-
-
-        Thread t_e = new Thread(){
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void run() {
-                try {
-                    e.setV_estado(3);
-                    //Toast.makeText(getBaseContext(), "Enviando....",Toast.LENGTH_LONG).show();
-                    Log.v("-------- Entra","Enviando...");
-                    Intent intent = new Intent(DetallesPerfilActivity.this,CreacionSuccessActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    sleep(10000);
-                    if (enviado_1){
-                        e.setV_estado(1);
-                        Log.v("-------- Entra","Enviado");
-                    }
-                }catch (Exception e){
-                    Log.v("-------- Error","------------------------");
-
-                } finally {
-                    if (!enviado_1){
-                        e.setV_estado(2);
-                        Log.v("-------- Entra","Sin Internet");
-                    }
-                }
-            }
-        };
-        t_e.start();
     }
 
 }

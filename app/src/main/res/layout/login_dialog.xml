@@ -1,50 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="300dp">
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/log_options"
-        android:textAlignment="center"
-        android:textColor="@color/colorNegro"
-        android:textSize="24sp" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:google="http://schemas.android.com/tools"
+    android:id="@+id/pantalla"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="15dp">
 
-        <TextView
-            android:id="@+id/userPass"
-            android:layout_width="match_parent"
-            android:layout_height="59dp"
-            android:text="@string/modo_log1"
-            android:textAlignment="center"
-            android:textColor="@color/azulInter"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/empty"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:text="@string/or"
-            android:textAlignment="center"
-            android:textColor="@color/colorGris"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/googleAcc"
+        <Button
+            android:id="@+id/btn_iniciarPorCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/modo_log2"
-            android:textAlignment="center"
-            android:textColor="@color/azulInter"
-            android:textSize="24sp" />
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="@drawable/button_background_lleno"
+            android:backgroundTint="#a60143"
+            android:text="@string/modo_log1"
+            android:textColor="@android:color/white" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_iniciarPorGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:tooltipText="dddddd" />
     </LinearLayout>
 
 </FrameLayout>

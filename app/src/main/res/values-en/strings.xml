@@ -29,4 +29,5 @@
     <string name="modo_log2">Google Account</string>
     <string name="or">or</string>
     <string name="log_options">Login Options</string>
+    <string name="title_home">Home</string>
 </resources>
