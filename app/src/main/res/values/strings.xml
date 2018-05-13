@@ -33,4 +33,8 @@
     <string name="modo_log2">Cuenta de Google</string>
     <string name="or">ó</string>
     <string name="log_options">Opciones de Inicio de Sesión</string>
+    <string name="btn_news">Anuncios</string>
+    <string name="btn_map">Mapa</string>
+    <string name="btn_profile">Perfil</string>
+    <string name="google_map_api">AIzaSyCRGTpx__yJEuFFdNeBRqLGrtl2MEpJ6_A</string>
 </resources>
