@@ -18,9 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.team.a404.a404team.DetallesPerfilActivity;
 import com.team.a404.a404team.R;
-import com.team.a404.a404team.MainActivities.MainMapActivity;
+import com.team.a404.a404team.HomeActivities.HomeActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -46,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
-            Intent intent1 = new Intent(LoginActivity.this, MainMapActivity.class);
+            Intent intent1 = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent1);
         }
 
@@ -100,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             finish();
                             progressDialog.hide();
-                            startActivity(new Intent(LoginActivity.this, MainMapActivity.class));
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             overridePendingTransition(R.anim.left_in, R.anim.zoom_back_out);
                         } else {
                             progressDialog.hide();

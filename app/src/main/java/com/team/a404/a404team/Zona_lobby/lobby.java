@@ -2,23 +2,17 @@ package com.team.a404.a404team.Zona_lobby;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.team.a404.a404team.DetallesPerfilActivity;
-import com.team.a404.a404team.MainActivities.MainMapActivity;
+import com.team.a404.a404team.HomeActivities.HomeActivity;
 import com.team.a404.a404team.R;
-import com.team.a404.a404team.SplashScreen;
 
 public class lobby extends AppCompatActivity {
 
@@ -45,7 +39,7 @@ public class lobby extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
-            Intent intent1 = new Intent(lobby.this, MainMapActivity.class);
+            Intent intent1 = new Intent(lobby.this, HomeActivity.class);
             startActivity(intent1);
 
         }

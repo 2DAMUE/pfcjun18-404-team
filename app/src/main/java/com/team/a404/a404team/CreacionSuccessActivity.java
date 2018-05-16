@@ -1,14 +1,12 @@
 package com.team.a404.a404team;
 
 import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -16,10 +14,7 @@ import android.widget.TextView;
 
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.airbnb.lottie.LottieDrawable;
-import com.team.a404.a404team.MainActivities.MainMapActivity;
-import com.team.a404.a404team.Zona_lobby.RegistroActivity;
-import com.team.a404.a404team.Zona_lobby.lobby;
+import com.team.a404.a404team.HomeActivities.HomeActivity;
 
 public class CreacionSuccessActivity extends AppCompatActivity {
     private LottieAnimationView lottieAnimationView;
@@ -95,7 +90,7 @@ public class CreacionSuccessActivity extends AppCompatActivity {
                 }catch (Exception e){
 
                 } finally {
-                    startActivity(new Intent(CreacionSuccessActivity.this, MainMapActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    startActivity(new Intent(CreacionSuccessActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
             }

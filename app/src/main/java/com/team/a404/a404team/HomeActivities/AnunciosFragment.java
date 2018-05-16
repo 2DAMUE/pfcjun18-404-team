@@ -1,27 +1,23 @@
-package com.team.a404.a404team.MainActivities;
+package com.team.a404.a404team.HomeActivities;
 
-import android.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.team.a404.a404team.R;
 
-public class MainSettingsFragment extends Fragment {
+public class AnunciosFragment extends Fragment {
 
-    public MainSettingsFragment() {
+    public AnunciosFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_main_map_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_anuncios, container, false);
         return rootView;
     }
-
-
 }
