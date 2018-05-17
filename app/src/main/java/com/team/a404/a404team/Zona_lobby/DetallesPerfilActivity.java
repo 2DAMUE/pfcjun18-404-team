@@ -1,16 +1,12 @@
-package com.team.a404.a404team;
+package com.team.a404.a404team.Zona_lobby;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,8 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.team.a404.a404team.Zona_lobby.LoginActivity;
-import com.team.a404.a404team.Zona_lobby.lobby;
+import com.team.a404.a404team.R;
 
 public class DetallesPerfilActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;

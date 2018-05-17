@@ -55,7 +55,7 @@
                 android:layout_centerVertical="false"
                 android:ems="10"
                 android:hint="@string/log_user"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
 

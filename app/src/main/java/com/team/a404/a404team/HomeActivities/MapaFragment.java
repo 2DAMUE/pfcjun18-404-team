@@ -13,12 +13,16 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,12 +34,16 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.team.a404.a404team.R;
+import com.team.a404.a404team.SplashScreen;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
 public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mGoogleMap;
     private MapView mMapView;
     private View mView;
+    private LinearLayout v_vista_error_carga;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,7 +55,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceStade) {
         super.onViewCreated(view, savedInstanceStade);
+
         mMapView = (MapView) mView.findViewById(R.id.map);
+        v_vista_error_carga = (LinearLayout) mView.findViewById(R.id.vista_error_carga);
+
+        mMapView.setVisibility(View.INVISIBLE);
+
         if (mMapView != null) {
             mMapView.onCreate(null);
             mMapView.onResume();
@@ -58,21 +71,28 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-        MapsInitializer.initialize(getContext());
-        mGoogleMap = googleMap;
-
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            v_vista_error_carga.setVisibility(View.VISIBLE);
             return;
+        }else{
+
+            mMapView.setVisibility(View.VISIBLE);
+            MapsInitializer.initialize(getContext());
+            mGoogleMap = googleMap;
+
+
+            mMapView.setVisibility(View.VISIBLE);
+            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            googleMap.addMarker(new MarkerOptions().position(new LatLng(40.373162864633706, -3.9188575744628906)).title("Holaaa").snippet("No se que es esto"));
+            googleMap.addMarker(new MarkerOptions().position(new LatLng(40.32293817775734, -3.868268993392121)).title("Mostoles").snippet("No se que es esto"));
+
+            CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.339288, -3.900129)).zoom(13).bearing(0).tilt(0).build();
+
+            mGoogleMap.setMyLocationEnabled(true);
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
+
         }
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(40.373162864633706, -3.9188575744628906)).title("Holaaa").snippet("No se que es esto"));
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(40.32293817775734, -3.868268993392121)).title("Mostoles").snippet("No se que es esto"));
-
-        CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.339288 , -3.900129)).zoom(13).bearing(0).tilt(0).build();
-
-        mGoogleMap.setMyLocationEnabled(true);
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
-
     }
+
+
 }

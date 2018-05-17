@@ -1,4 +1,4 @@
-package com.team.a404.a404team;
+package com.team.a404.a404team.Zona_lobby;
 
 import android.animation.Animator;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.team.a404.a404team.HomeActivities.HomeActivity;
+import com.team.a404.a404team.R;
 
 public class CreacionSuccessActivity extends AppCompatActivity {
     private LottieAnimationView lottieAnimationView;
@@ -48,12 +49,12 @@ public class CreacionSuccessActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animator) {
                 if (estado == 1){
-                    lottieAnimationView.setAnimation("anim_tick.json");
+                    lottieAnimationView.setAnimation("reload_OK.json");
                     updateColor(Color.parseColor("#2ecc71"));
                     gohome();
                 }else if (estado == 2){
                     updateColor(Color.parseColor("#FFCC2E31"));
-                    lottieAnimationView.setAnimation("anim_tick.json");
+                    lottieAnimationView.setAnimation("reload_ERROR.json");
                     gohome();
                 }else if (estado == 0){
                     lottieAnimationView.playAnimation();
