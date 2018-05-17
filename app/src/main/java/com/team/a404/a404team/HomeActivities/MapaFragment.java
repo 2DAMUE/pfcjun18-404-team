@@ -30,8 +30,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.team.a404.a404team.R;
 import com.team.a404.a404team.SplashScreen;
@@ -84,7 +86,13 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             mMapView.setVisibility(View.VISIBLE);
             googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             googleMap.addMarker(new MarkerOptions().position(new LatLng(40.373162864633706, -3.9188575744628906)).title("Holaaa").snippet("No se que es esto"));
-            googleMap.addMarker(new MarkerOptions().position(new LatLng(40.32293817775734, -3.868268993392121)).title("Mostoles").snippet("No se que es esto"));
+
+            final LatLng MELBOURNE = new LatLng(40.32293817775734, -3.868268993392121);
+            Marker melbourne = googleMap.addMarker(new MarkerOptions()
+                    .position(MELBOURNE)
+                    .title("Melbourne")
+                    .snippet("Population: 4,137,400")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholder)));
 
             CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.339288, -3.900129)).zoom(13).bearing(0).tilt(0).build();
 
