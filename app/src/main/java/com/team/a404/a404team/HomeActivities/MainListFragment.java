@@ -1,11 +1,10 @@
 package com.team.a404.a404team.HomeActivities;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.team.a404.a404team.R;
 
 public class MainListFragment extends Fragment {
@@ -18,7 +17,7 @@ public class MainListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_mapa, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_anuncios, container, false);
         return rootView;
     }
 

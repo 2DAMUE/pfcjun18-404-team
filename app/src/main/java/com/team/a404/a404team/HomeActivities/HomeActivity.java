@@ -8,14 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.team.a404.a404team.R;
-import com.team.a404.a404team.SplashScreen;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
@@ -59,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void IrAnuncios() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.container, new AnunciosFragment()).commit();
+        manager.beginTransaction().replace(R.id.container, new MainListFragment()).commit();
     }
     public void IrMaps() {
         FragmentManager manager = getSupportFragmentManager();
@@ -68,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void IrPerfil() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.container, new MapaFragment()).commit();
+        manager.beginTransaction().replace(R.id.container, new PerfilFragment()).commit();
     }
 
     public void requestStoragePermission() {
@@ -77,8 +75,8 @@ public class HomeActivity extends AppCompatActivity {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
 
                 new AlertDialog.Builder(this)
-                        .setTitle("Permisos Necesarios")
-                        .setMessage("Necesitamos permisos de Ubicación")
+                        .setTitle(getString(R.string.dialog_permission_title))
+                        .setMessage(getString(R.string.dialog_permission_content))
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
