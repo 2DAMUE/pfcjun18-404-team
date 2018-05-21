@@ -1,4 +1,4 @@
-package com.team.a404.a404team.Zona_lobby;
+package com.team.a404.a404team.VentanasEstado;
 
 import android.animation.Animator;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -17,62 +18,69 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.team.a404.a404team.HomeActivities.HomeActivity;
 import com.team.a404.a404team.R;
 
-public class CreacionSuccessActivity extends AppCompatActivity {
-    private LottieAnimationView lottieAnimationView;
-    private TextView v_text_ok;
-    private Button v_btn_next;
+public class ActivitySuccess extends AppCompatActivity {
+
+    private LottieAnimationView animationView;
     private FrameLayout v_fondo_color;
     public static int estado;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_creacion_success);
+        setContentView(R.layout.activity_estado_success);
         getSupportActionBar().hide();
-        v_text_ok = (TextView) findViewById(R.id.text_ok);
-        v_btn_next = (Button) findViewById(R.id.btn_next);
         v_fondo_color = (FrameLayout) findViewById(R.id.fondo_color);
 
-
-
-        v_text_ok.setVisibility(View.INVISIBLE);
-        v_btn_next.setVisibility(View.INVISIBLE);
         updateColor(Color.parseColor("#f1c40f"));
 
-        lottieAnimationView = (LottieAnimationView) findViewById(R.id.animationview);
-        lottieAnimationView.playAnimation();
-        lottieAnimationView.setScale(1);
-        lottieAnimationView.addAnimatorListener(new Animator.AnimatorListener() {
+        animationView = (LottieAnimationView) findViewById(R.id.animationview);
+        animationView.setAnimation("reload.json");
+        animationView.loop(true);
+        animationView.playAnimation();
+
+        animationView.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-
             }
+
             @Override
             public void onAnimationEnd(Animator animator) {
-                if (estado == 1){
-                    lottieAnimationView.setAnimation("reload_OK.json");
-                    updateColor(Color.parseColor("#2ecc71"));
-                    gohome();
-                }else if (estado == 2){
-                    updateColor(Color.parseColor("#FFCC2E31"));
-                    lottieAnimationView.setAnimation("reload_ERROR.json");
-                    gohome();
-                }else if (estado == 0){
-                    lottieAnimationView.playAnimation();
+                switch (estado){
+                    case 1:
+                        updateColor(Color.parseColor("#2ecc71"));
+                        animationView.setAnimation("reload_OK.json");
+                        animationView.playAnimation();
+                        estado = 10;
+                        break;
+                    case 2:
+                        updateColor(Color.parseColor("#cc2e2e"));
+                        animationView.setAnimation("reload_ERROR.json");
+                        animationView.playAnimation();
+                        estado = 10;
+                        break;
+                    case 10:
+                        animationView.cancelAnimation();
+                        startActivity(new Intent(ActivitySuccess.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                        break;
                 }
+
             }
 
             @Override
             public void onAnimationCancel(Animator animator) {
-
+                animationView.destroyDrawingCache();
             }
 
             @Override
             public void onAnimationRepeat(Animator animator) {
-
+                if (estado != 0){
+                    animationView.loop(false);
+                }
             }
         });
-
     }
+
     public void updateColor(int color){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             this.getWindow().setStatusBarColor(color);
@@ -87,11 +95,12 @@ public class CreacionSuccessActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(3000);
+                    sleep(1000);
+                    animationView.cancelAnimation();
                 }catch (Exception e){
 
                 } finally {
-                    startActivity(new Intent(CreacionSuccessActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    startActivity(new Intent(ActivitySuccess.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 }
             }

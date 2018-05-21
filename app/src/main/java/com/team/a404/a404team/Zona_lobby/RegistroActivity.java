@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.team.a404.a404team.R;
+import com.team.a404.a404team.VentanasEstado.ActivitySuccess;
 
 public class RegistroActivity extends AppCompatActivity {
     protected EditText v_mail, v_pass, v_nombre;
@@ -116,8 +117,8 @@ public class RegistroActivity extends AppCompatActivity {
         DataRef2.child("nombre").setValue(name);
         DataRef2.child("email").setValue(usuario2.getEmail());
 
-        CreacionSuccessActivity.estado = 1;
-        startActivity(new Intent(RegistroActivity.this, CreacionSuccessActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        ActivitySuccess.estado = 1;
+        startActivity(new Intent(RegistroActivity.this, ActivitySuccess.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }

@@ -10,6 +10,7 @@
     <color name="colorRojoRosaOscuro">#a60143</color>
     <color name="colorGris">#5f5f5f</color>
     <color name="colorVerdeCorrecto">#2ecc71</color>
+    <color name="colorRojoError">#cc2e2e</color>
     <color name="azulInter">#0000e6</color>
 
 </resources>

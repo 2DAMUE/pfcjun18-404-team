@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 
 import com.team.a404.a404team.R;
 
-public class MainListFragment extends Fragment {
+public class PerfilFragment extends Fragment {
 
-    public MainListFragment() {
+    public PerfilFragment() {
         // Required empty public constructor
     }
 
@@ -18,7 +18,7 @@ public class MainListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_mapa, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_perfil, container, false);
         return rootView;
     }
 
