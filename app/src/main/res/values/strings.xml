@@ -37,6 +37,8 @@
     <string name="btn_map">Mapa</string>
     <string name="btn_profile">Perfil</string>
     <string name="google_map_api">AIzaSyCRGTpx__yJEuFFdNeBRqLGrtl2MEpJ6_A</string>
-    <string name="dialog_permission_title">Permisos necesarios</string>
-    <string name="dialog_permission_content">Necesitamos permisos de ubicación</string>
+    <string name="title_activity_esto">esto</string>
+    <string name="large_text">
+        holiwi
+    </string>
 </resources>

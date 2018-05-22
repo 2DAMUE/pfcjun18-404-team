@@ -34,6 +34,4 @@
     <string name="btn_map">Map</string>
     <string name="btn_profile">Profile</string>
     <string name="google_map_api">AIzaSyCRGTpx__yJEuFFdNeBRqLGrtl2MEpJ6_A</string>
-    <string name="dialog_permission_title">Permissions needed</string>
-    <string name="dialog_permission_content">Location permissions are needed</string>
 </resources>

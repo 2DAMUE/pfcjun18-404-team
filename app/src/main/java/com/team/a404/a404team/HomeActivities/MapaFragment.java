@@ -30,6 +30,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -46,6 +47,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private MapView mMapView;
     private View mView;
     private LinearLayout v_vista_error_carga;
+    private double longitud,latitud;
+    private LatLng actual;
+    private boolean contador;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         v_vista_error_carga = (LinearLayout) mView.findViewById(R.id.vista_error_carga);
 
         mMapView.setVisibility(View.INVISIBLE);
+        contador = true;
 
         if (mMapView != null) {
             mMapView.onCreate(null);
@@ -71,36 +76,73 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             v_vista_error_carga.setVisibility(View.VISIBLE);
             return;
         }else{
-
+            mGoogleMap = googleMap;
             mMapView.setVisibility(View.VISIBLE);
             MapsInitializer.initialize(getContext());
-            mGoogleMap = googleMap;
 
 
-            mMapView.setVisibility(View.VISIBLE);
-            googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            googleMap.addMarker(new MarkerOptions().position(new LatLng(40.373162864633706, -3.9188575744628906)).title("Holaaa").snippet("No se que es esto"));
+            UiSettings uiSettings = mGoogleMap.getUiSettings();
+
+
+            mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
 
             final LatLng MELBOURNE = new LatLng(40.32293817775734, -3.868268993392121);
             Marker melbourne = googleMap.addMarker(new MarkerOptions()
                     .position(MELBOURNE)
-                    .title("Melbourne")
-                    .snippet("Population: 4,137,400")
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.placeholder)));
+                    .title("Tomoe")
+                    .snippet(String.valueOf(R.layout.fragment_anuncios))
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps)));
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MELBOURNE,15));
 
-            CameraPosition Liberty = CameraPosition.builder().target(new LatLng(40.339288, -3.900129)).zoom(13).bearing(0).tilt(0).build();
-
+            mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    LatLng posicionClick = marker.getPosition();
+                    Toast.makeText(getActivity().getApplicationContext(), "has pulsado en el marcador y su posición " + posicionClick, Toast.LENGTH_LONG).show();
+/*
+                DialogDetalleMarket ddm = new DialogDetalleMarket();
+                ddm.show(getFragmentManager(), "ddm");
+*/
+                    return false;
+                }
+            });
             mGoogleMap.setMyLocationEnabled(true);
-            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
 
         }
     }
+
+    public void MiUbucacion() {
+
+        mGoogleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                longitud = location.getLongitude();
+                latitud = location.getLatitude();
+                Log.v("lat", String.valueOf(latitud));
+                //setLatLng(location.getLatitude(),location.getLongitude());
+                LatLng actual = new LatLng(latitud, longitud);
+
+                if (contador){
+                    mGoogleMap.clear();
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 13));
+                    contador = false;
+                }
+
+                // mMap.setInfoWindowAdapter();
+            }
+        });
+    }
+
+
 
 
 }

@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.team.a404.a404team.R;
+import com.team.a404.a404team.SplashScreen;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
@@ -27,10 +31,13 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_home);
+        getSupportActionBar().hide();
+
+
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        IrMaps();
-        getSupportActionBar().hide();
+        navigation.setSelectedItemId(R.id.navigation_map);
     }
 
 
@@ -45,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
                     IrAnuncios();
                     return true;
                 case R.id.navigation_map:
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                     IrMaps();
                     return true;
                 case R.id.navigation_profile:
@@ -57,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void IrAnuncios() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.container, new MainListFragment()).commit();
+        manager.beginTransaction().replace(R.id.container, new AnunciosFragment()).commit();
     }
     public void IrMaps() {
         FragmentManager manager = getSupportFragmentManager();
@@ -73,24 +81,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.dialog_permission_title))
-                        .setMessage(getString(R.string.dialog_permission_content))
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(HomeActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, STORAGE_PERMISSION_CODE);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .create().show();
-
+                ActivityCompat.requestPermissions(HomeActivity.this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, STORAGE_PERMISSION_CODE);
             } else {
                 ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, STORAGE_PERMISSION_CODE);
             }

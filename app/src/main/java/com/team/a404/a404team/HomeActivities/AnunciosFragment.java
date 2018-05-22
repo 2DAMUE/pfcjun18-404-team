@@ -8,17 +8,16 @@ import android.view.ViewGroup;
 
 import com.team.a404.a404team.R;
 
-public class PerfilFragment extends Fragment {
+public class AnunciosFragment extends Fragment {
 
-    public PerfilFragment() {
+    public AnunciosFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_perfil, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_anuncios, container, false);
         return rootView;
     }
-
 }

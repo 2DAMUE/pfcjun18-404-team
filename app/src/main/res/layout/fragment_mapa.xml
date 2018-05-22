@@ -36,7 +36,8 @@
             android:text="No se ha podido cargar el mapa"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Notification.Line2.Media"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 
 </FrameLayout>

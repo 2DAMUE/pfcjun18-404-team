@@ -46,6 +46,6 @@
         android:layout_height="111dp"
         android:layout_gravity="center|top"
         android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@mipmap/ic_logo_app" />
 
 </FrameLayout>
