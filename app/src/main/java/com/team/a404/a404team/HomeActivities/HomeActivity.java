@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.team.a404.a404team.R;
@@ -32,6 +33,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_home);
         getSupportActionBar().hide();
 
+
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_map);
@@ -49,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
                     IrAnuncios();
                     return true;
                 case R.id.navigation_map:
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                     IrMaps();
                     return true;
                 case R.id.navigation_profile:

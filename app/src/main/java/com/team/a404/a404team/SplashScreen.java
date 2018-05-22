@@ -6,6 +6,8 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.team.a404.a404team.HomeActivities.HomeActivity;
+import com.team.a404.a404team.VentanasEstado.ActivitySuccess;
 import com.team.a404.a404team.Zona_lobby.lobby;
 
 public class SplashScreen extends AppCompatActivity {
