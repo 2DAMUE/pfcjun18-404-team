@@ -23,8 +23,9 @@ import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
 public class HomeActivity extends AppCompatActivity {
 
-    AlertDialog alertDialog;
+    private AlertDialog alertDialog;
     private static int STORAGE_PERMISSION_CODE = 2;
+    private BottomNavigationView navigation;
 
 
     @Override
@@ -35,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_map);
     }
@@ -52,7 +53,6 @@ public class HomeActivity extends AppCompatActivity {
                     IrAnuncios();
                     return true;
                 case R.id.navigation_map:
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
                     IrMaps();
                     return true;
                 case R.id.navigation_profile:

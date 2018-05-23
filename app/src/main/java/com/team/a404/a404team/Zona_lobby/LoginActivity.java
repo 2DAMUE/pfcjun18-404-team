@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.team.a404.a404team.R;
 import com.team.a404.a404team.HomeActivities.HomeActivity;
+import com.team.a404.a404team.VentanasEstado.ActivitySuccess;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -53,8 +54,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                progressDialog.setMessage("Iniciando Sesión");
-                progressDialog.show();
+                ActivitySuccess.estado = 0;
+                startActivity(new Intent(LoginActivity.this, ActivitySuccess.class));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                //progressDialog.setMessage("Iniciando Sesión");
+                //progressDialog.show();
                 userLogin();
             }
         });
@@ -78,7 +83,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(usr)) {
             // email is empty
-            progressDialog.hide();
+            //progressDialog.hide();
+            ActivitySuccess.estado = 2;
             Snackbar.make(v_btn_login, getString(R.string.meteuser), Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
             return;
@@ -86,7 +92,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(pwd)) {
             // password is empty
-            progressDialog.hide();
+            //progressDialog.hide();
+            ActivitySuccess.estado = 2;
             Snackbar.make(v_btn_login, getString(R.string.metepass), Snackbar.LENGTH_LONG).setAction("Action", null).show();
             // para la ejecucion
             return;
@@ -98,11 +105,13 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             finish();
-                            progressDialog.hide();
-                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                            overridePendingTransition(R.anim.left_in, R.anim.zoom_back_out);
+                            //progressDialog.hide();
+                            ActivitySuccess.estado = 1;
+                            //startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            //overridePendingTransition(R.anim.left_in, R.anim.zoom_back_out);
                         } else {
-                            progressDialog.hide();
+                            //progressDialog.hide();
+                            ActivitySuccess.estado = 2;
                             Snackbar.make(v_btn_login, getString(R.string.nolog), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                         }
 

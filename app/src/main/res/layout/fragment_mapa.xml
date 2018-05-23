@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
+            android:shadowColor="@color/colorGris"
             android:text="No se ha podido cargar el mapa"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Notification.Line2.Media"
