@@ -83,11 +83,8 @@ public class RegistroActivity extends AppCompatActivity {
             return;
         }
         try{
-            ActivitySuccess.estado = 0;
-            startActivity(new Intent(RegistroActivity.this, ActivitySuccess.class));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            //progressDialog.setMessage(getString(R.string.registrando));
-            //progressDialog.show();
+            progressDialog.setMessage(getString(R.string.registrando));
+            progressDialog.show();
         }catch (Exception x){
             Log.v("Error TRY"," > "+x);
         }
@@ -99,12 +96,13 @@ public class RegistroActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     // Perfil creado , agregamos en nombre y correo.
                     SalvarDatos();
-                    //progressDialog.hide();
+                    progressDialog.hide();
+                    startActivity(new Intent(RegistroActivity.this, ActivitySuccess.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
                 } else {
-                    //Snackbar.make(v_btn_enviar, getString(R.string.noregistro), Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    //progressDialog.hide();
-                    ActivitySuccess.estado = 2;
+                    Snackbar.make(v_btn_enviar, getString(R.string.noregistro), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    progressDialog.hide();
                 }
             }
         });
@@ -120,8 +118,6 @@ public class RegistroActivity extends AppCompatActivity {
 
         DataRef2.child("nombre").setValue(name);
         DataRef2.child("email").setValue(usuario2.getEmail());
-
-        ActivitySuccess.estado = 1;
 
     }
 }

@@ -3,9 +3,12 @@ package com.team.a404.a404team.HomeActivities;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import com.team.a404.a404team.R;
 import com.team.a404.a404team.SplashScreen;
+import com.team.a404.a404team.VentanasEstado.ActivitySuccess;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
@@ -93,11 +97,30 @@ public class HomeActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == STORAGE_PERMISSION_CODE)  {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                IrMaps();
+                gohome();
             } else {
 
             }
         }
+    }
+
+    public void gohome(){
+        Thread t = new Thread(){
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void run() {
+                try {
+                    sleep(500);
+                }catch (Exception e){
+
+                } finally {
+                    IrMaps();
+                }
+            }
+        };
+        t.start();
+
+
     }
 
 }

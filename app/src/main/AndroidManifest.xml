@@ -15,7 +15,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo_app"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_logo_app"
         android:supportsRtl="true"
@@ -24,7 +24,7 @@
         <!-- Maps Google API -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_map_api" />
+            android:value="AIzaSyA-K8SFVZo8quWb3nIwaozWP6X-E9U58pg" />
         <!-- Maps Google API -->
 
         <activity

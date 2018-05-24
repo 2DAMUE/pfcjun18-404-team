@@ -20,6 +20,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.team.a404.a404team.R;
 import com.team.a404.a404team.HomeActivities.HomeActivity;
+import com.team.a404.a404team.SplashScreen;
+import com.team.a404.a404team.VentanasEstado.ActivitySuccess;
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -52,8 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         v_btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                progressDialog.setMessage("Iniciando Sesión");
+                progressDialog.setMessage("Iniciando Sesión...");
                 progressDialog.show();
                 userLogin();
             }
@@ -92,22 +93,21 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        firebaseAuth.signInWithEmailAndPassword(usr, pwd)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            finish();
-                            progressDialog.hide();
-                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                            overridePendingTransition(R.anim.left_in, R.anim.zoom_back_out);
-                        } else {
-                            progressDialog.hide();
-                            Snackbar.make(v_btn_login, getString(R.string.nolog), Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                        }
+        firebaseAuth.signInWithEmailAndPassword(usr, pwd).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    finish();
+                    progressDialog.hide();
+                    startActivity(new Intent(LoginActivity.this, ActivitySuccess.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                } else {
+                    progressDialog.hide();
+                    Snackbar.make(v_btn_login, getString(R.string.nolog), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
 
-                    }
-                });
+            }
+        });
     }
 }
 

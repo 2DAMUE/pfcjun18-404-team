@@ -26,7 +26,6 @@ public class ActivitySuccess extends AppCompatActivity {
     private LottieAnimationView animationView;
     private FrameLayout v_fondo_color;
     public static int estado;
-    public static String nota;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,57 +41,11 @@ public class ActivitySuccess extends AppCompatActivity {
         updateColor(Color.parseColor("#f1c40f"));
 
         animationView = (LottieAnimationView) findViewById(R.id.animationview);
-        animationView.setAnimation("reload.json");
-        animationView.loop(true);
+        updateColor(Color.parseColor("#2ecc71"));
+        v_fondo_color.setBackgroundResource(R.drawable.fondo_verdeazulado);
+        animationView.setAnimation("reload_OK.json");
         animationView.playAnimation();
-
-        animationView.addAnimatorListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                switch (estado){
-                    case 1:
-                        updateColor(Color.parseColor("#2ecc71"));
-                        v_fondo_color.setBackgroundResource(R.drawable.fondo_verdeazulado);
-                        animationView.setAnimation("reload_OK.json");
-                        animationView.playAnimation();
-                        estado = 10;
-                        break;
-                    case 2:
-                        updateColor(Color.parseColor("#cc2e2e"));
-                        v_fondo_color.setBackgroundResource(R.drawable.fondo_rojo);
-                        animationView.setAnimation("reload_ERROR.json");
-                        animationView.playAnimation();
-                        estado = 11;
-                        break;
-                    case 10:
-                        animationView.cancelAnimation();
-                        startActivity(new Intent(ActivitySuccess.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                        break;
-                    case 11:
-                        animationView.cancelAnimation();
-                        onBackPressed();
-                        break;
-                }
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-                animationView.destroyDrawingCache();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-                if (estado != 0){
-                    animationView.loop(false);
-                }
-            }
-        });
+        gohome();
     }
 
     public void updateColor(int color){
@@ -108,8 +61,7 @@ public class ActivitySuccess extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(1000);
-                    animationView.cancelAnimation();
+                    sleep(1500);
                 }catch (Exception e){
 
                 } finally {
