@@ -34,4 +34,7 @@
     <string name="btn_map">Map</string>
     <string name="btn_profile">Profile</string>
     <string name="google_map_api">AIzaSyCRGTpx__yJEuFFdNeBRqLGrtl2MEpJ6_A</string>
+    <string name="event_name">Event name:</string>
+    <string name="event_description">Event description:</string>
+    <string name="btn_accept">OK</string>
 </resources>

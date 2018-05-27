@@ -3,6 +3,7 @@ package com.team.a404.a404team.HomeActivities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,7 +23,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,8 +39,16 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.team.a404.a404team.Datos.AnuncioInformation;
 import com.team.a404.a404team.R;
 import com.team.a404.a404team.SplashScreen;
+
+import java.util.ArrayList;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
@@ -47,9 +58,11 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private MapView mMapView;
     private View mView;
     private LinearLayout v_vista_error_carga;
-    private double longitud,latitud;
+    private double longitud, latitud;
     private LatLng actual;
     private boolean contador;
+    private TextView nombre, descripcion;
+    private Button aceptar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,13 +90,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             v_vista_error_carga.setVisibility(View.VISIBLE);
             return;
-        }else{
+        } else {
             mGoogleMap = googleMap;
             mMapView.setVisibility(View.VISIBLE);
             MapsInitializer.initialize(getContext());
@@ -101,17 +113,45 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     .title("Tomoe")
                     .snippet(String.valueOf(R.layout.fragment_anuncios))
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps)));
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MELBOURNE,15));
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MELBOURNE, 15));
 
             mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     LatLng posicionClick = marker.getPosition();
-                    Toast.makeText(getActivity().getApplicationContext(), "has pulsado en el marcador y su posición " + posicionClick, Toast.LENGTH_LONG).show();
-/*
-                DialogDetalleMarket ddm = new DialogDetalleMarket();
-                ddm.show(getFragmentManager(), "ddm");
-*/
+                    String mark = marker.getTitle();
+                    final Dialog dialog = new Dialog(getContext());
+                    dialog.setContentView(R.layout.dialog_anuncio);
+                    dialog.setCanceledOnTouchOutside(true);
+                    dialog.show();
+                    nombre = (TextView) dialog.findViewById(R.id.event_name);
+                    descripcion = (TextView) dialog.findViewById(R.id.event_description);
+                    aceptar = (Button) dialog.findViewById(R.id.btn_accept);
+                    aceptar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("anuncios").child(mark);
+                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            ArrayList<AnuncioInformation> anuncio = new ArrayList<AnuncioInformation>();
+                            AnuncioInformation nuevo = dataSnapshot.getValue(AnuncioInformation.class);
+                            anuncio.add(nuevo);
+                            nombre.setText(nuevo.getNombre());
+                            descripcion.setText(nuevo.getDescripcion());
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                     return false;
                 }
             });
@@ -131,7 +171,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 //setLatLng(location.getLatitude(),location.getLongitude());
                 LatLng actual = new LatLng(latitud, longitud);
 
-                if (contador){
+                if (contador) {
                     mGoogleMap.clear();
                     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 13));
                     contador = false;
@@ -141,8 +181,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             }
         });
     }
-
-
 
 
 }

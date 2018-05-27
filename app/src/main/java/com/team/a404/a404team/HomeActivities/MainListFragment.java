@@ -9,6 +9,7 @@ import com.team.a404.a404team.R;
 
 public class MainListFragment extends Fragment {
 
+
     public MainListFragment() {
         // Required empty public constructor
     }

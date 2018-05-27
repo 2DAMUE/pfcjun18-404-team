@@ -2,6 +2,7 @@ package com.team.a404.a404team.Datos;
 
 public class UserInformation {
     private String username,phonenumber,urlphoto;
+
     public  UserInformation(){}
 
     public UserInformation(String username, String phonenumber, String urlphoto) {
