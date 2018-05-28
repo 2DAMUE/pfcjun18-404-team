@@ -1,31 +1,15 @@
 package com.team.a404.a404team.Datos;
 
 public class AnuncioInformation {
-    private double latitud,longitud;
-    private String nombre,descripcion;
-    public AnuncioInformation(){}
+    private String nombre,descripcion,raza,url_foto;
 
-    public AnuncioInformation(double latitud, double longitud, String nombre, String descripcion) {
-        this.latitud = latitud;
-        this.longitud = longitud;
+    public AnuncioInformation() { }
+
+    public AnuncioInformation(String descripcion, String nombre, String raza, String url_foto) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-    }
-
-    public double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
-    }
-
-    public double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
+        this.raza = raza;
+        this.url_foto = url_foto;
     }
 
     public String getNombre() {
@@ -44,5 +28,19 @@ public class AnuncioInformation {
         this.descripcion = descripcion;
     }
 
+    public String getRaza() {
+        return raza;
+    }
 
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+
+    public String getUrl_foto() {
+        return url_foto;
+    }
+
+    public void setUrl_foto(String url_foto) {
+        this.url_foto = url_foto;
+    }
 }

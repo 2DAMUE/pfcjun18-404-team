@@ -6,7 +6,7 @@
     <item
         android:id="@+id/navigation_news"
         android:icon="@mipmap/ic_huellaperro"
-        android:title="@string/btn_news" />
+        android:title="@string/btn_pets" />
 
     <item
         android:id="@+id/navigation_map"

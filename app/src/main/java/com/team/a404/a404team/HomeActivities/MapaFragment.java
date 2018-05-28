@@ -2,23 +2,12 @@ package com.team.a404.a404team.HomeActivities;
 
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,18 +23,18 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.team.a404.a404team.Datos.AnuncioInformation;
+import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.R;
-import com.team.a404.a404team.SplashScreen;
 
 import java.util.ArrayList;
 
@@ -63,6 +51,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private boolean contador;
     private TextView nombre, descripcion;
     private Button aceptar;
+    private DatabaseReference all_marcadores;
+    private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<>();
+    private int i = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,28 +93,71 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
 
             UiSettings uiSettings = mGoogleMap.getUiSettings();
-
-
             mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 
-            final LatLng MELBOURNE = new LatLng(40.32293817775734, -3.868268993392121);
-            Marker melbourne = googleMap.addMarker(new MarkerOptions()
-                    .position(MELBOURNE)
-                    .title("Tomoe")
-                    .snippet(String.valueOf(R.layout.fragment_anuncios))
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps)));
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MELBOURNE, 15));
+            MiUbucacion();
+
+            /** CREAR MARCADORES EN EL MAPA **/
+            all_marcadores = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas");
+            all_marcadores.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                    Marcadores_perdidos datos_marcador = dataSnapshot.getValue(Marcadores_perdidos.class);
+                    marcadores.add(datos_marcador);
+
+                    LatLng ubi = new LatLng(marcadores.get(i).getLatitud(), marcadores.get(i).getLongitud());
+
+                    Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
+                            .position(ubi)
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps)));
+
+                    map_marcador.setTag(marcadores.get(i).getId_mascota()+"##" + marcadores.get(i).getOwner());
+
+                    i++;
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+            /**  /CREAR MARCADORES EN EL MAPA **/
+
 
             mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     LatLng posicionClick = marker.getPosition();
-                    String mark = marker.getTitle();
+
+                    String tagAll = (String) marker.getTag();
+                    String[] info = tagAll.split("##");
+                    String id = info[0];
+                    String owner = info[1];
+
                     final Dialog dialog = new Dialog(getContext());
                     dialog.setContentView(R.layout.dialog_anuncio);
                     dialog.setCanceledOnTouchOutside(true);
                     dialog.show();
+
                     nombre = (TextView) dialog.findViewById(R.id.event_name);
                     descripcion = (TextView) dialog.findViewById(R.id.event_description);
                     aceptar = (Button) dialog.findViewById(R.id.btn_accept);
@@ -133,8 +167,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                             dialog.dismiss();
                         }
                     });
-                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("anuncios").child(mark);
-                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
+                    info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             ArrayList<AnuncioInformation> anuncio = new ArrayList<AnuncioInformation>();
@@ -160,6 +194,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    /**
+     * METODO PARA MOVER EL MAPA A TU UBICACION
+     */
+
     public void MiUbucacion() {
 
         mGoogleMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
@@ -172,8 +210,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 LatLng actual = new LatLng(latitud, longitud);
 
                 if (contador) {
-                    mGoogleMap.clear();
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 13));
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 15));
                     contador = false;
                 }
 
