@@ -51,7 +51,7 @@ public class lobby extends AppCompatActivity {
                 // con este tema personalizado evitamos los bordes por defecto
                 dialog = new Dialog(lobby.this, R.style.Theme_Dialog_Translucent);
                 //deshabilitamos el título por defecto
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#86000000")));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
 
                 dialog.setContentView(R.layout.login_dialog);
                 dialog.show();

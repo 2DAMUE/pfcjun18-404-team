@@ -1,6 +1,6 @@
 package com.team.a404.a404team.Datos;
 
-public class AnuncioInformation {
+public class AnuncioInformation extends Marcadores_perdidos {
     private String nombre,descripcion,raza,url_foto;
 
     public AnuncioInformation() { }

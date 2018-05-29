@@ -25,6 +25,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA-K8SFVZo8quWb3nIwaozWP6X-E9U58pg" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
         <!-- Maps Google API -->
 
         <activity
@@ -36,6 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Zona_lobby.LoginActivity"
             android:screenOrientation="portrait"

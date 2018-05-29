@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:google="http://schemas.android.com/tools"
-    android:id="@+id/pantalla"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:google="http://schemas.android.com/tools"
+android:id="@+id/pantalla"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="15dp">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_iniciarPorCorreo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:background="@drawable/button_background_lleno"
+        android:backgroundTint="#a60143"
+        android:text="@string/modo_log1"
+        android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/btn_iniciarPorCorreo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:background="@drawable/button_background_lleno"
-            android:backgroundTint="#a60143"
-            android:text="@string/modo_log1"
-            android:textColor="@android:color/white" />
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/btn_iniciarPorGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="61dp"
-            android:tooltipText="dddddd" />
-    </LinearLayout>
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_iniciarPorGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:tooltipText="dddddd" />
+</LinearLayout>
 
 </FrameLayout>
