@@ -39,7 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Zona_lobby.LoginActivity"
             android:screenOrientation="portrait"
@@ -62,6 +61,13 @@
             android:name=".HomeActivities.HomeActivity"
             android:label="@string/title_activity_main_map"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomeActivities.PerfilInfo"
+            android:label="@string/title_activity_perfil_info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HomeActivities.borrar"
+            android:label="@string/title_activity_borrar"></activity>
     </application>
 
 </manifest>

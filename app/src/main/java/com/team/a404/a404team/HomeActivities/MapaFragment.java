@@ -3,10 +3,14 @@ package com.team.a404.a404team.HomeActivities;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,6 +24,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,6 +42,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.team.a404.a404team.Datos.AnuncioInformation;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.R;
+import com.team.a404.a404team.SplashScreen;
 import com.team.a404.a404team.Zona_lobby.lobby;
 
 import java.util.ArrayList;
@@ -57,6 +63,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private DatabaseReference all_marcadores;
     private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
     AnuncioInformation af;
+    FloatingActionButton FAB;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,6 +89,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             mMapView.getMapAsync(this);
 
         }
+        userLocationFAB();
+
     }
 
 
@@ -101,12 +111,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
             MiUbucacion();
 
-            /** CREAR MARCADORES EN EL MAPA **/
-
-
-
-
-            /**  /CREAR MARCADORES EN EL MAPA **/
+            /**  /INFO DE LOS MARCADORES **/
 
 
             mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -160,13 +165,37 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     return false;
                 }
             });
+
             mGoogleMap.setMyLocationEnabled(true);
+            mGoogleMap.getUiSettings().setCompassEnabled(false);
+            mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         }
     }
 
 
- // ----------------------------------------------------------------------------------------------------------------------------------
+
+    // ----------------------------------------------------------------------------------------------------------------------------------
+
+    private void userLocationFAB(){
+        FAB = (FloatingActionButton) mView.findViewById(R.id.myLocationButton);
+        FAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mGoogleMap.getMyLocation() != null) { // Check to ensure coordinates aren't null, probably a better way of doing this...
+                    LatLng actual = new LatLng(mGoogleMap.getMyLocation().getLatitude(), mGoogleMap.getMyLocation().getLongitude());
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 16));
+                }
+            }
+        });
+    }
+
+    
+    
+    /**
+     *  CREAR MARCADORES EN EL MAPA
+     */
 
     public void CogerMarcadores(){
 

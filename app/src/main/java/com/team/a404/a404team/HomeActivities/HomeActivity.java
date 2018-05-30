@@ -2,9 +2,8 @@ package com.team.a404.a404team.HomeActivities;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,16 +11,12 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.team.a404.a404team.R;
-import com.team.a404.a404team.SplashScreen;
-import com.team.a404.a404team.VentanasEstado.ActivitySuccess;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
@@ -37,11 +32,15 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_home);
         getSupportActionBar().hide();
 
-
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_map);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(android.graphics.Color.parseColor("#25000000"));
+        }
     }
 
 
