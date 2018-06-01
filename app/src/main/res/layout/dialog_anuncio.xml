@@ -33,41 +33,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="MASCOTA PERDIDA"
+                android:text="@string/lost_pet"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorRojoError"
                 android:textSize="20sp"
                 app:fontFamily="@font/michroma" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="NOMBRE"
+                android:text="@string/username"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorNegro"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/race"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="RAZA"
+                android:text="@string/pet_race"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorNegro"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/descript"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="RASGOS"
+                android:text="@string/details"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorNegro"
                 android:textSize="18sp" />
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="INFORMACION ADICIONAL"
+                android:text="@string/plus_info"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp"
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="DUEÑO"
+                android:text="@string/owner"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorNegro"
                 android:textSize="18sp" />
@@ -113,22 +113,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="------------------" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:text="ULTIMA VEZ VISTO POR"
-                android:textColor="@color/colorNegro"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/event_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="--------------------" />
 
             <Button
                 android:id="@+id/btn_accept"

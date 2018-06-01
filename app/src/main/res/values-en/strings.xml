@@ -37,4 +37,9 @@
     <string name="event_name">Event name:</string>
     <string name="event_description">Event description:</string>
     <string name="btn_accept">OK</string>
+    <string name="lost_pet">LOST PET!</string>
+    <string name="pet_race">Race</string>
+    <string name="plus_info">Additional Info</string>
+    <string name="owner">Owner</string>
+    <string name="details">Characteristics</string>
 </resources>
