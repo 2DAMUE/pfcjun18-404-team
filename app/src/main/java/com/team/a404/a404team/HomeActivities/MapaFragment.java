@@ -55,7 +55,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private Button aceptar;
     private DatabaseReference all_marcadores;
     private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
-    AnuncioInformation af;
+    private AnuncioInformation af;
     FloatingActionButton FAB,nuevoAnuncio;
 
 
@@ -123,6 +123,61 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     LatLng posicionClick = marker.getPosition();
+
+                    String tagAll = (String) marker.getTag();
+                    String[] info = tagAll.split("##");
+                    String id = info[0];
+                    String owner = info[1];
+
+                    final Dialog dialog = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
+                    dialog.setContentView(R.layout.dialog_anuncio);
+                    dialog.setCanceledOnTouchOutside(true);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
+                    dialog.show();
+
+                    FrameLayout v_pantalla = (FrameLayout) dialog.findViewById(R.id.anuncio_pantalla);
+                    LinearLayout v_contenido_ventana = (LinearLayout) dialog.findViewById(R.id.contenido_ventana);
+
+                    v_pantalla.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.hide();
+                        }
+                    });
+                    //nombre = (TextView) dialog.findViewById(R.id.event_name);
+                    //descripcion = (TextView) dialog.findViewById(R.id.event_description);
+                    //aceptar = (Button) dialog.findViewById(R.id.btn_accept);
+
+
+                    DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
+                    info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            ArrayList<AnuncioInformation> anuncio = new ArrayList<AnuncioInformation>();
+                            AnuncioInformation nuevo = dataSnapshot.getValue(AnuncioInformation.class);
+                            anuncio.add(nuevo);
+                            //nombre.setText(nuevo.getNombre());
+                            //descripcion.setText(nuevo.getDescripcion());
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                    return false;
+                }
+            });
+
+            //--------------------------------------------------
+            /*
+            mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    LatLng posicionClick = marker.getPosition();
                     String mark = marker.getTag().toString();
                     final Dialog dialog = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
                     dialog.setContentView(R.layout.dialog_anuncio);
@@ -150,7 +205,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     return false;
                 }
             });
-
+            */
             mGoogleMap.setMyLocationEnabled(true);
             mGoogleMap.getUiSettings().setCompassEnabled(false);
             mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -217,7 +272,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 for (DataSnapshot dato : dataSnapshot.getChildren()) {
                     af = dato.getValue(AnuncioInformation.class);
                     marcadores.add(af);
-                    Log.v("datosUsuarios", af.toString());
+                    Log.v("datosUsuarios",af.toString());
                 }
                 MeterMarcadores();
             }
@@ -232,7 +287,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         mGoogleMap.clear();
         Log.v("ESTO__2", "" + marcadores.size());
         for (int i = 0; i < marcadores.size(); i++) {
-            Log.v("ESTO__3", "" + marcadores.size());
             LatLng ubi = new LatLng(marcadores.get(i).getLatitud(), marcadores.get(i).getLongitud());
 
             Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
@@ -240,7 +294,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps)));
 
             map_marcador.setTag(marcadores.get(i).getId_mascota() + "##" + marcadores.get(i).getOwner());
-
+            Log.v("ESTO__3", "" +ubi);
+            Log.v("ESTO__3", "" +marcadores.get(i).getId_mascota() + "##" + marcadores.get(i).getOwner());
         }
 
     }
