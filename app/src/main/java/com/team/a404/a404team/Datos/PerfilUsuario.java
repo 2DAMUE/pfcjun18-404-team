@@ -43,7 +43,7 @@ public class PerfilUsuario extends AppCompatActivity {
     private DatabaseReference DataRef = FirebaseDatabase.getInstance().getReference().child("usuarios");
     private TextView nombre, telefon;
     private Button guarda;
-    private EditText nomb, telf;
+    private EditText nomb;
     private ImageView imagenperfil;
     private CircularImageView imagen;
     private static final int PICK_IMAGE_REQUEST = 100;
@@ -56,9 +56,7 @@ public class PerfilUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
         nombre = findViewById(R.id.nombre);
-        telefon = findViewById(R.id.numeromod);
         nomb = findViewById(R.id.nombremodifica);
-        telf = findViewById(R.id.numeromodifica);
         guarda = findViewById(R.id.guarda);
         imagenperfil = findViewById(R.id.imagenperfil);
         imagen = findViewById(R.id.imagen);
@@ -84,7 +82,6 @@ public class PerfilUsuario extends AppCompatActivity {
                         UserInformation user = dataSnapshot.getValue(UserInformation.class);
                         Log.v("MSG",""+user.getUsername());
                         nomb.setText(user.getUsername());
-                        telf.setText(user.getPhonenumber());
                     }
 
                     @Override
@@ -168,9 +165,7 @@ public class PerfilUsuario extends AppCompatActivity {
     }
     private void GuardaDatos() {
         String nombre = nomb.getText().toString().trim();
-        String numero = telf.getText().toString().trim();
         DataRef.child(usuario.getUid()).child("nombre").setValue(nombre);
-        DataRef.child(usuario.getUid()).child("telefono").setValue(numero);
         Snackbar.make(guarda, getString(R.string.guardadatos), Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 }

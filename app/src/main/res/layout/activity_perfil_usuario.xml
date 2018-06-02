@@ -11,7 +11,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="190dp"
-        >
+        android:background="?attr/colorPrimary">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/imagen"
@@ -35,6 +35,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
+        android:background="@drawable/fondo_verdeazulado"
         android:orientation="vertical">
 
         <TextView
@@ -50,24 +51,12 @@
             android:ems="10"
             android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/numeromod"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Numero" />
-
-        <EditText
-            android:id="@+id/numeromodifica"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone" />
-
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_verdeazulado">
 
         <Button
             android:id="@+id/guarda"
