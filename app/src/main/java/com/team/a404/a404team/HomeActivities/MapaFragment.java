@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.team.a404.a404team.Datos.AnuncioInformation;
+import com.team.a404.a404team.Datos.DB_Datos_Mascotas;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.R;
 
@@ -55,7 +56,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private Button aceptar;
     private DatabaseReference all_marcadores;
     private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
-    private AnuncioInformation af;
     FloatingActionButton FAB,nuevoAnuncio;
 
 
@@ -145,7 +145,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                         }
                     });
                     v_mascota_nombre = (TextView) dialog.findViewById(R.id.mascota_nombre);
-                    v_mascota_raza = (TextView) dialog.findViewById(R.id.mascota_rasgos);
+                    v_mascota_raza = (TextView) dialog.findViewById(R.id.mascota_raza);
                     v_mascota_rasgos = (TextView) dialog.findViewById(R.id.mascota_rasgos);
 
 
@@ -153,11 +153,14 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            ArrayList<AnuncioInformation> anuncio = new ArrayList<AnuncioInformation>();
-                            AnuncioInformation nuevo = dataSnapshot.getValue(AnuncioInformation.class);
-                            anuncio.add(nuevo);
-                            v_mascota_nombre.setText(nuevo.getNombre());
-                            v_mascota_raza.setText(nuevo.getDescripcion());
+                            //ArrayList<DB_Datos_Mascotas> d_mascota = new ArrayList<DB_Datos_Mascotas>();
+
+                            DB_Datos_Mascotas d_mascota = dataSnapshot.getValue(DB_Datos_Mascotas.class);
+
+                            //d_mascota.add(nuevo);
+                            v_mascota_nombre.setText(d_mascota.getNombre());
+                            v_mascota_raza.setText(d_mascota.getRaza());
+                            v_mascota_rasgos.setText(d_mascota.getRasgos());
 
                         }
 
@@ -270,9 +273,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 marcadores = new ArrayList<>();
 
                 for (DataSnapshot dato : dataSnapshot.getChildren()) {
-                    af = dato.getValue(AnuncioInformation.class);
-                    marcadores.add(af);
-                    Log.v("datosUsuarios",af.toString());
+                    Marcadores_perdidos mp = dato.getValue(Marcadores_perdidos.class);
+                    marcadores.add(mp);
+                    Log.v("datosUsuarios",mp.toString());
                 }
                 MeterMarcadores();
             }
