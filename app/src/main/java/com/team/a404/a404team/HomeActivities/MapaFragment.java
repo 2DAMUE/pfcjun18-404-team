@@ -56,7 +56,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private DatabaseReference all_marcadores;
     private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
     AnuncioInformation af;
-    FloatingActionButton FAB;
+    FloatingActionButton FAB,nuevoAnuncio;
 
 
     @Override
@@ -83,6 +83,18 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
         }
         userLocationFAB();
+        nuevoAnuncio = (FloatingActionButton)mView.findViewById(R.id.nuevoMarcador);
+        nuevoAnuncio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mGoogleMap.getMyLocation() != null) { // Check to ensure coordinates aren't null, probably a better way of doing this...
+                    LatLng actual = new LatLng(mGoogleMap.getMyLocation().getLatitude(), mGoogleMap.getMyLocation().getLongitude());
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 16));
+                    CrearMarcador(actual);
+                }
+
+            }
+        });
 
     }
 
@@ -111,7 +123,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     LatLng posicionClick = marker.getPosition();
-                    String mark = marker.getTitle();
+                    String mark = marker.getTag().toString();
                     final Dialog dialog = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
                     dialog.setContentView(R.layout.dialog_anuncio);
                     dialog.setCanceledOnTouchOutside(true);
@@ -167,10 +179,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     /**
      * CREAR MARCADORES EN EL MAPA
      */
+    public void CrearMarcador(LatLng position){
 
+    }
     public void MostarInfo(String mark) {
-
-
         DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(mark);
         info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -54,4 +54,19 @@
         app:elevation="6dp"
         app:fabSize="normal"
         app:pressedTranslationZ="12dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/nuevoMarcador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="445dp"
+        android:src="@drawable/icono_localizacion"
+        app:backgroundTint="@color/colorBlanco"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp" />
 </FrameLayout>
