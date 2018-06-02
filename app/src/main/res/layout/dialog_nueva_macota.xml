@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/contenido_ventana"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="top"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
@@ -30,7 +30,8 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -43,11 +44,11 @@
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/ImagenMascota"
-                android:layout_width="130dp"
+                android:layout_width="92dp"
                 android:layout_height="94dp"
                 android:layout_gravity="center|top"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/akuro" />
+                android:src="@drawable/dog" />
 
             <EditText
                 android:id="@+id/nombre_m"
