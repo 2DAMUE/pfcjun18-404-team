@@ -4,9 +4,12 @@ package com.team.a404.a404team.HomeActivities;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -29,11 +32,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.team.a404.a404team.Datos.AnuncioInformation;
 import com.team.a404.a404team.Datos.DB_Datos_Mascotas;
 import com.team.a404.a404team.Datos.DB_Datos_Perfil;
@@ -54,10 +62,13 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private LatLng actual;
     private boolean contador;
     private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner;
+    private CircularImageView v_foto_mascota;
     private Button aceptar;
     private DatabaseReference all_marcadores;
     private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
     FloatingActionButton FAB,nuevoAnuncio;
+
+    private String id,owner ;
 
 
     @Override
@@ -127,8 +138,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
                     String tagAll = (String) marker.getTag();
                     String[] info = tagAll.split("##");
-                    String id = info[0];
-                    String owner = info[1];
+                    id = info[0];
+                    owner = info[1];
 
                     final Dialog dialog = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
                     dialog.setContentView(R.layout.dialog_anuncio);
@@ -142,13 +153,14 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     v_pantalla.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            dialog.hide();
+                            //dialog.hide();
                         }
                     });
                     v_mascota_nombre = (TextView) dialog.findViewById(R.id.mascota_nombre);
                     v_mascota_raza = (TextView) dialog.findViewById(R.id.mascota_raza);
                     v_mascota_rasgos = (TextView) dialog.findViewById(R.id.mascota_rasgos);
                     v_usuario_owner = (TextView) dialog.findViewById(R.id.usuario_owner);
+                    v_foto_mascota = (CircularImageView) dialog.findViewById(R.id.foto_mascota);
 
                     DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
                     info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -162,13 +174,11 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                             v_mascota_nombre.setText(d_mascota.getNombre());
                             v_mascota_raza.setText(d_mascota.getRaza());
                             v_mascota_rasgos.setText(d_mascota.getRasgos());
-
+                            CogerFotoMascota();
                         }
 
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
+                        public void onCancelled(DatabaseError databaseError) {}
                     });
                     DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
                     info_owner.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -177,12 +187,11 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                             DB_Datos_Perfil d_perfil = dataSnapshot.getValue(DB_Datos_Perfil.class);
 
                             v_usuario_owner.setText(d_perfil.getNombre());
+
                         }
 
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
+                        public void onCancelled(DatabaseError databaseError) {}
                     });
                     return false;
                 }
@@ -196,6 +205,24 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
 
     // ----------------------------------------------------------------------------------------------------------------------------------
+
+    private void CogerFotoMascota(){
+        StorageReference stor = FirebaseStorage.getInstance().getReference().child("images/" + owner.toString() + "/userphoto.jpg");  //Cambiar a foto de la mascota (Sergio)
+        final long ONE_MEGABYTE = 1024 * 1024;
+        stor.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                v_foto_mascota.setImageBitmap(bmp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                v_foto_mascota.setImageResource(R.drawable.logo_petaware);
+            }
+        });
+    }
+
 
     private void userLocationFAB() {
         FAB = (FloatingActionButton) mView.findViewById(R.id.myLocationButton);

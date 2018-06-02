@@ -35,11 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_map);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            getWindow().setStatusBarColor(android.graphics.Color.parseColor("#25000000"));
-        }
+
     }
 
 
@@ -67,15 +63,32 @@ public class HomeActivity extends AppCompatActivity {
     };
 
     public void IrAnuncios() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            getWindow().setStatusBarColor(android.graphics.Color.parseColor("#a60143"));
+        }
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.container, new MascotasFragment()).commit();
     }
+
     public void IrMaps() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(android.graphics.Color.parseColor("#25000000"));
+        }
         FragmentManager manager = getSupportFragmentManager();
         requestStoragePermission();
         manager.beginTransaction().replace(R.id.container, new MapaFragment()).commit();
     }
+
     public void IrPerfil() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            getWindow().setStatusBarColor(android.graphics.Color.parseColor("#25000000"));
+        }
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.container, new PerfilFragment()).commit();
     }

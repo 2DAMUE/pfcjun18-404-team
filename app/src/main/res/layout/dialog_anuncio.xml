@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/anuncio_pantalla"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -14,18 +15,20 @@
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="75dp"
         android:background="@drawable/dialogo_blanco"
+        android:elevation="3dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="45dp"
-            android:background="@drawable/dialogo_blanco"
+            android:background="@drawable/sombras"
+            android:elevation="3dp"
             android:orientation="vertical">
 
             <TextView
@@ -47,7 +50,8 @@
                 android:text="@string/username"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorNegro"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/mascota_nombre"
@@ -56,7 +60,9 @@
                 android:gravity="center"
                 android:text="------------------"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="@color/colorNegro" />
+                android:textColor="@color/colorNegro"
+                android:textSize="16sp"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/race"
@@ -67,14 +73,19 @@
                 android:text="@string/pet_race"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorNegro"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/mascota_raza"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="------------------" />
+                android:text="------------------"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorNegro"
+                android:textSize="16sp"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/descript"
@@ -85,14 +96,19 @@
                 android:text="@string/details"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorNegro"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/mascota_rasgos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="------------------" />
+                android:text="------------------"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorNegro"
+                android:textSize="16sp"
+                android:textStyle="italic" />
 
         </LinearLayout>
 
@@ -101,6 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@drawable/dialogo_blanco"
+            android:elevation="3dp"
             android:orientation="vertical">
 
             <TextView
@@ -127,44 +144,55 @@
                 android:text="@string/owner"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorNegro"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/usuario_owner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="------------------------" />
-
-            <Button
-                android:id="@+id/btn_accept"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="70dp"
-                android:background="@drawable/button_background_lleno"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:text="Visto"
-                android:textColor="@android:color/white" />
+                android:text="------------------"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorNegro"
+                android:textSize="16sp"
+                android:textStyle="italic" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_accept"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/button_background_lleno"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="Visto"
+            android:elevation="3dp"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/anuncio_pantalla"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/picture_circle"
+        android:elevation="4dp"
         android:padding="4dp">
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/foto_mascota"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:layout_gravity="center|top"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/dog"
+            app:layout_anchor="@+id/app_bar"
+            app:civ_border_color="@color/colorPrimary"
             app:srcCompat="@drawable/dog" />
+
     </FrameLayout>
 
 

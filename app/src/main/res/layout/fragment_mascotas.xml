@@ -7,39 +7,22 @@ android:layout_height="match_parent"
 tools:context=".HomeActivities.HomeActivity">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <ListView
+        android:id="@+id/listmascotas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/my_pets"
-            android:textSize="24sp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/michroma"/>
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/nuevaMascota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="15dp"
         android:src="@drawable/add"
         android:tint="@color/colorBlanco"
         app:backgroundTint="@color/colorRojoRosaOscuro"
         app:srcCompat="@drawable/add" />
-
-    <ListView
-        android:id="@+id/listmascotas"
-        android:layout_width="match_parent"
-        android:layout_height="456dp"
-        android:layout_gravity="bottom" />
 </FrameLayout>
