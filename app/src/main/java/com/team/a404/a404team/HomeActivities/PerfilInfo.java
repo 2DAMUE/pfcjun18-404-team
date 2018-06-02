@@ -33,7 +33,7 @@ public class PerfilInfo extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference DataRef = FirebaseDatabase.getInstance().getReference().child("usuarios");
-    private Button button2;
+
     private CircularImageView imagen;
     Uri imageUri;
     private static final int PICK_IMAGE_REQUEST = 100;
@@ -47,16 +47,10 @@ public class PerfilInfo extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        button2 = (Button) findViewById(R.id.button2);
+
         imagen = findViewById(R.id.imagen);
 
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent1 = new Intent(PerfilInfo.this, PerfilUsuario.class);
-                startActivity(intent1);
-            }
-        });
+
     }
     protected void onActivityResult(int requestcode, int resultcode, Intent data) {
         super.onActivityResult(requestcode, resultcode, data);
