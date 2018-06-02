@@ -65,9 +65,8 @@
             android:name=".HomeActivities.PerfilInfo"
             android:label="@string/title_activity_perfil_info"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".HomeActivities.borrar"
-            android:label="@string/title_activity_borrar"></activity>
+
+        <activity android:name=".Datos.PerfilUsuario"></activity>
     </application>
 
 </manifest>
