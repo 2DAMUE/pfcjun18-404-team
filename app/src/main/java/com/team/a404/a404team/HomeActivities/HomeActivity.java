@@ -3,7 +3,6 @@ package com.team.a404.a404team.HomeActivities;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -50,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
             switch (item.getItemId()) {
                 case R.id.navigation_news:
                     IrAnuncios();
@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void IrAnuncios() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.container, new AnunciosFragment()).commit();
+        manager.beginTransaction().replace(R.id.container, new MascotasFragment()).commit();
     }
     public void IrMaps() {
         FragmentManager manager = getSupportFragmentManager();

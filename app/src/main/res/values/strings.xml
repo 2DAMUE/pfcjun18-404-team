@@ -121,4 +121,7 @@
     <string name="plus_info">Información Adicional</string>
     <string name="owner">Dueño</string>
     <string name="details">Rasgos</string>
+    <string name="new_pet">Registrar Mascota</string>
+    <string name="btn_save">Guardar</string>
+    <string name="my_pets">Mis mascotas</string>
 </resources>

@@ -42,4 +42,7 @@
     <string name="plus_info">Additional Info</string>
     <string name="owner">Owner</string>
     <string name="details">Characteristics</string>
+    <string name="new_pet">Pet Registry</string>
+    <string name="btn_save">Save</string>
+    <string name="my_pets">My Pets</string>
 </resources>
