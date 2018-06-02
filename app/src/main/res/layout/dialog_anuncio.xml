@@ -2,7 +2,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/anuncio_pantalla"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -56,8 +55,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="------------------"
-                android:textAppearance="@style/TextAppearance.AppCompat"
-                app:fontFamily="sans-serif" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorNegro" />
 
             <TextView
                 android:id="@+id/race"
@@ -131,11 +130,11 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/event_name"
+                android:id="@+id/usuario_owner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="------------------" />
+                android:text="------------------------" />
 
             <Button
                 android:id="@+id/btn_accept"
@@ -153,6 +152,7 @@
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/anuncio_pantalla"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"

@@ -36,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.team.a404.a404team.Datos.AnuncioInformation;
 import com.team.a404.a404team.Datos.DB_Datos_Mascotas;
+import com.team.a404.a404team.Datos.DB_Datos_Perfil;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.R;
 
@@ -52,7 +53,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private double longitud, latitud;
     private LatLng actual;
     private boolean contador;
-    private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, owner;
+    private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner;
     private Button aceptar;
     private DatabaseReference all_marcadores;
     private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
@@ -147,7 +148,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     v_mascota_nombre = (TextView) dialog.findViewById(R.id.mascota_nombre);
                     v_mascota_raza = (TextView) dialog.findViewById(R.id.mascota_raza);
                     v_mascota_rasgos = (TextView) dialog.findViewById(R.id.mascota_rasgos);
-
+                    v_usuario_owner = (TextView) dialog.findViewById(R.id.usuario_owner);
 
                     DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
                     info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -169,46 +170,23 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
                         }
                     });
-
-
-                    return false;
-                }
-            });
-
-            //--------------------------------------------------
-            /*
-            mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    LatLng posicionClick = marker.getPosition();
-                    String mark = marker.getTag().toString();
-                    final Dialog dialog = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
-                    dialog.setContentView(R.layout.dialog_anuncio);
-                    dialog.setCanceledOnTouchOutside(true);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
-                    dialog.show();
-
-                    FrameLayout v_pantalla = (FrameLayout) dialog.findViewById(R.id.anuncio_pantalla);
-                    LinearLayout v_contenido_ventana = (LinearLayout) dialog.findViewById(R.id.contenido_ventana);
-
-                    v_pantalla.setOnClickListener(new View.OnClickListener() {
+                    DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
+                    info_owner.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onClick(View view) {
-                            dialog.hide();
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            DB_Datos_Perfil d_perfil = dataSnapshot.getValue(DB_Datos_Perfil.class);
+
+                            v_usuario_owner.setText(d_perfil.getNombre());
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
                         }
                     });
-                    nombre = (TextView) dialog.findViewById(R.id.name);
-                    descripcion = (TextView) dialog.findViewById(R.id.descript);
-                    raza = (TextView) dialog.findViewById(R.id.race);
-                    owner = (TextView) dialog.findViewById(R.id.event_name);
-                    aceptar = (Button) dialog.findViewById(R.id.btn_accept);
-                    MostarInfo(mark);
-
-
                     return false;
                 }
             });
-            */
             mGoogleMap.setMyLocationEnabled(true);
             mGoogleMap.getUiSettings().setCompassEnabled(false);
             mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -233,36 +211,13 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
+    private void CrearMarcador(LatLng actual) {
+
+    }
 
     /**
      * CREAR MARCADORES EN EL MAPA
      */
-    public void CrearMarcador(LatLng position){
-
-    }
-    public void MostarInfo(String mark) {
-        DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(mark);
-        info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<AnuncioInformation> anuncio = new ArrayList<AnuncioInformation>();
-                AnuncioInformation nuevo = dataSnapshot.getValue(AnuncioInformation.class);
-                anuncio.add(nuevo);
-                v_mascota_nombre.setText(nuevo.getNombre());
-                v_mascota_rasgos.setText(nuevo.getDescripcion());
-                v_mascota_raza.setText(nuevo.getRaza());
-                owner.setText(nuevo.getOwner());
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
 
     public void CogerMarcadores() {
 

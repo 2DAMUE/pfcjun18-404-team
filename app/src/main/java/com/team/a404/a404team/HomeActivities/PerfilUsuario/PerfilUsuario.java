@@ -1,4 +1,4 @@
-package com.team.a404.a404team.Datos;
+package com.team.a404.a404team.HomeActivities.PerfilUsuario;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.team.a404.a404team.Datos.UserInformation;
 import com.team.a404.a404team.R;
 
 import java.io.ByteArrayOutputStream;

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo_verdeazulado"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".HomeActivities.PerfilInfo"
+    tools:context=".HomeActivities.PerfilUsuario.PerfilInfo"
     tools:showIn="@layout/activity_perfil_info">
 
 

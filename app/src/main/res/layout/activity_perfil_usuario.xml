@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.team.a404.a404team.Datos.PerfilUsuario">
+    tools:context="com.team.a404.a404team.HomeActivities.PerfilUsuario.PerfilUsuario">
 
 
     <FrameLayout
