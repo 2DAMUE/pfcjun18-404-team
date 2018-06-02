@@ -51,7 +51,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private double longitud, latitud;
     private LatLng actual;
     private boolean contador;
-    private TextView nombre, descripcion, raza, owner;
+    private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, owner;
     private Button aceptar;
     private DatabaseReference all_marcadores;
     private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
@@ -144,9 +144,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                             dialog.hide();
                         }
                     });
-                    //nombre = (TextView) dialog.findViewById(R.id.event_name);
-                    //descripcion = (TextView) dialog.findViewById(R.id.event_description);
-                    //aceptar = (Button) dialog.findViewById(R.id.btn_accept);
+                    v_mascota_nombre = (TextView) dialog.findViewById(R.id.mascota_nombre);
+                    v_mascota_raza = (TextView) dialog.findViewById(R.id.mascota_rasgos);
+                    v_mascota_rasgos = (TextView) dialog.findViewById(R.id.mascota_rasgos);
 
 
                     DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
@@ -156,8 +156,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                             ArrayList<AnuncioInformation> anuncio = new ArrayList<AnuncioInformation>();
                             AnuncioInformation nuevo = dataSnapshot.getValue(AnuncioInformation.class);
                             anuncio.add(nuevo);
-                            //nombre.setText(nuevo.getNombre());
-                            //descripcion.setText(nuevo.getDescripcion());
+                            v_mascota_nombre.setText(nuevo.getNombre());
+                            v_mascota_raza.setText(nuevo.getDescripcion());
 
                         }
 
@@ -245,9 +245,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 ArrayList<AnuncioInformation> anuncio = new ArrayList<AnuncioInformation>();
                 AnuncioInformation nuevo = dataSnapshot.getValue(AnuncioInformation.class);
                 anuncio.add(nuevo);
-                nombre.setText(nuevo.getNombre());
-                descripcion.setText(nuevo.getDescripcion());
-                raza.setText(nuevo.getRaza());
+                v_mascota_nombre.setText(nuevo.getNombre());
+                v_mascota_rasgos.setText(nuevo.getDescripcion());
+                v_mascota_raza.setText(nuevo.getRaza());
                 owner.setText(nuevo.getOwner());
 
             }

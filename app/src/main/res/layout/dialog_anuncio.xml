@@ -51,6 +51,13 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/mascota_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="------------------" />
+
+            <TextView
                 android:id="@+id/race"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,6 +69,13 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/mascota_raza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="------------------" />
+
+            <TextView
                 android:id="@+id/descript"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,6 +85,13 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorNegro"
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/mascota_rasgos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="------------------" />
 
         </LinearLayout>
 
