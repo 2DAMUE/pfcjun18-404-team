@@ -3,6 +3,7 @@ package com.team.a404.a404team.HomeActivities;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +11,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -42,10 +43,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
-import com.team.a404.a404team.Datos.AnuncioInformation;
 import com.team.a404.a404team.Datos.DB_Datos_Mascotas;
 import com.team.a404.a404team.Datos.DB_Datos_Perfil;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
+import com.team.a404.a404team.HomeActivities.MiMascotaPerdida.CreateMarcadorPerdida;
 import com.team.a404.a404team.R;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private Button aceptar;
     private DatabaseReference all_marcadores;
     private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
-    FloatingActionButton FAB,nuevoAnuncio;
+    private FloatingActionButton FAB ,v_fab_EncontreMascota,v_fab_Paseo ,v_fab_PerdiMiMascota;
 
     private String id,owner ;
 
@@ -95,19 +96,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
         }
         userLocationFAB();
-        nuevoAnuncio = (FloatingActionButton)mView.findViewById(R.id.nuevoMarcador);
-        nuevoAnuncio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mGoogleMap.getMyLocation() != null) { // Check to ensure coordinates aren't null, probably a better way of doing this...
-                    LatLng actual = new LatLng(mGoogleMap.getMyLocation().getLatitude(), mGoogleMap.getMyLocation().getLongitude());
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 16));
-                    CrearMarcador(actual);
-                }
-
-            }
-        });
-
+        PerdiMiMascota();
+        Paseo();
+        EncontreMascota();
     }
 
 
@@ -166,8 +157,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            //ArrayList<DB_Datos_Mascotas> d_mascota = new ArrayList<DB_Datos_Mascotas>();
-
                             DB_Datos_Mascotas d_mascota = dataSnapshot.getValue(DB_Datos_Mascotas.class);
 
                             //d_mascota.add(nuevo);
@@ -185,9 +174,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             DB_Datos_Perfil d_perfil = dataSnapshot.getValue(DB_Datos_Perfil.class);
-
                             v_usuario_owner.setText(d_perfil.getNombre());
-
                         }
 
                         @Override
@@ -205,6 +192,43 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
 
     // ----------------------------------------------------------------------------------------------------------------------------------
+
+    private void PerdiMiMascota(){
+        v_fab_PerdiMiMascota = (FloatingActionButton) mView.findViewById(R.id.fab_PerdiMiMascota);
+        v_fab_PerdiMiMascota.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent1 = new Intent(getActivity(), CreateMarcadorPerdida.class);
+                        startActivity(intent1);
+                    }
+                });
+    }
+
+    private void Paseo(){
+        v_fab_Paseo = (FloatingActionButton) mView.findViewById(R.id.fab_Paseo);
+        v_fab_Paseo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                    }
+                });
+    }
+
+    private void EncontreMascota(){
+        v_fab_EncontreMascota = (FloatingActionButton) mView.findViewById(R.id.fab_EncontreMascota);
+        v_fab_EncontreMascota.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                    }
+                });
+    }
+
+
+
+
 
     private void CogerFotoMascota(){
         StorageReference stor = FirebaseStorage.getInstance().getReference().child("images/" + owner.toString() + "/userphoto.jpg");  //Cambiar a foto de la mascota (Sergio)
@@ -236,10 +260,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-    }
-
-    private void CrearMarcador(LatLng actual) {
-
     }
 
     /**

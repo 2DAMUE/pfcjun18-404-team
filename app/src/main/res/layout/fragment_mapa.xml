@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivities.HomeActivity">
@@ -40,32 +41,55 @@
             android:textStyle="bold|italic" />
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/myLocationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="45dp"
-        android:src="@drawable/icono_localizacion"
-        app:backgroundTint="@color/colorBlanco"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        app:fabSize="normal"
-        app:pressedTranslationZ="12dp" />
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="16dp"
+        app:fab_colorNormal="@color/colorBlanco"
+        app:fab_colorPressed="#99FFFFFF"
+        app:fab_icon="@drawable/ic_icono_localizacion_azul"
+        app:fab_size="normal" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/nuevoMarcador"
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/icono_localizacion"
-        app:backgroundTint="@color/colorBlanco"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        app:fabSize="normal"
-        app:pressedTranslationZ="12dp" />
+        android:layout_marginBottom="135dp"
+        android:layout_marginRight="16dp"
+        app:fab_addButtonColorNormal="@color/colorPrimary"
+        app:fab_addButtonColorPressed="#9901a5a6"
+        app:fab_labelStyle="@drawable/fab_menu_tipo1"
+        app:fab_labelsPosition="left">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_EncontreMascota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@mipmap/ic_huellaperro"
+            app:fab_size="mini" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_Paseo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorVerdeCorrecto"
+            app:fab_colorPressed="#992ecc71"
+            app:fab_icon="@drawable/ic_icono_paseando"
+            app:fab_size="mini" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_PerdiMiMascota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorPrimaryDark"
+            app:fab_colorPressed="#99a60143"
+            app:fab_icon="@mipmap/ic_huellaperro"
+            app:fab_size="mini" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
 </FrameLayout>

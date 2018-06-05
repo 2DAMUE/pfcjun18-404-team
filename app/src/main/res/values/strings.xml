@@ -124,4 +124,6 @@
     <string name="new_pet">Registrar Mascota</string>
     <string name="btn_save">Guardar</string>
     <string name="my_pets">Mis mascotas</string>
+    <string name="title_activity_create_marcador_perdida">CreateMarcadorPerdida</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

@@ -65,8 +65,12 @@
             android:name=".HomeActivities.PerfilUsuario.PerfilInfo"
             android:label="@string/title_activity_perfil_info"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".HomeActivities.PerfilUsuario.PerfilUsuario"></activity>
+        <activity android:name=".HomeActivities.PerfilUsuario.PerfilUsuario" />
+        <activity
+            android:name=".HomeActivities.MiMascotaPerdida.CreateMarcadorPerdida"
+            android:label="@string/title_activity_create_marcador_perdida"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".HomeActivities.MiMascotaPerdida.SelecionMascotaPerdidaFragment"></activity>
     </application>
 
 </manifest>

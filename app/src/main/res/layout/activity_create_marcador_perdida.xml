@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<android.support.v4.view.ViewPager
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+</android.support.v4.view.ViewPager>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/text_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:text="ATRAS"
+            android:textColor="@color/colorBlanco"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:text="SIGUIENTE"
+            android:textColor="@color/colorBlanco"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <!--<android.support.design.widget.BottomNavigationView
+    android:id="@+id/navigation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/windowBackground"
+    android:layout_alignParentBottom="true"
+    app:menu="@menu/navigation" /> -->
+
+</RelativeLayout>
