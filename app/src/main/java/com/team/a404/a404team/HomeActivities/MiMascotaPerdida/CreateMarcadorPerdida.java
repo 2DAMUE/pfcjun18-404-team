@@ -38,7 +38,25 @@ public class CreateMarcadorPerdida extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
 
+        v_text_left = (TextView) findViewById(R.id.text_left);
+        v_text_right = (TextView) findViewById(R.id.text_left);
 
+
+        v_text_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.container, new SelecionMascotaPerdidaFragment()).commit();
+            }
+        });
+
+        v_text_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.container, new SelecionarUbicacionMapaFragment()).commit();
+            }
+        });
 
     }
 
@@ -65,10 +83,9 @@ public class CreateMarcadorPerdida extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public static class PlaceholderFragment extends Fragment {
 
-        public static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
@@ -88,7 +105,6 @@ public class CreateMarcadorPerdida extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_create_marcador_perdida, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-
             return rootView;
         }
     }
@@ -107,6 +123,7 @@ public class CreateMarcadorPerdida extends AppCompatActivity {
                     v_text_left.setVisibility(View.INVISIBLE);
                     return new SelecionMascotaPerdidaFragment();
                 case 1:
+                    v_text_left.setVisibility(View.VISIBLE);
                     return new SelecionarUbicacionMapaFragment();
                 default:
                     return null;
