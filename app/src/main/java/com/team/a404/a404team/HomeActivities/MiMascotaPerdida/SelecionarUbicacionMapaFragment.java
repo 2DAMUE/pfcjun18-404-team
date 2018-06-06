@@ -5,6 +5,9 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -23,11 +26,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.stepstone.stepper.BlockingStep;
+import com.stepstone.stepper.StepperLayout;
+import com.stepstone.stepper.VerificationError;
 import com.team.a404.a404team.R;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
-public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapReadyCallback {
+public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapReadyCallback, BlockingStep {
 
     private GoogleMap mGoogleMap;
     private MapView mMapView;
@@ -35,6 +41,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
     private double longitud, latitud;
     private boolean contador;
     private FloatingActionButton FAB;
+    private Marker map_marcador;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,10 +103,11 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
     private void PonerMarcador(){
         LatLng ubi = new LatLng(latitud, longitud);
 
-        Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
-                .position(ubi)
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps))
-                .draggable(true));
+        map_marcador = mGoogleMap.addMarker(new MarkerOptions()
+            .position(ubi)
+            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps))
+            .draggable(true));
+
 
     }
 
@@ -129,7 +137,6 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
             public void onMyLocationChange(Location location) {
                 longitud = location.getLongitude();
                 latitud = location.getLatitude();
-                Log.v("lat", String.valueOf(latitud));
                 //setLatLng(location.getLatitude(),location.getLongitude());
                 LatLng actual = new LatLng(latitud, longitud);
 
@@ -145,4 +152,40 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
     }
 
 
+    @Nullable
+    @Override
+    public VerificationError verifyStep() {
+        return null;
+    }
+
+    @Override
+    public void onSelected() {
+
+    }
+
+    @Override
+    public void onError(@NonNull VerificationError error) {
+
+    }
+
+    @Override
+    public void onNextClicked(StepperLayout.OnNextClickedCallback callback) {
+
+    }
+
+    @Override
+    public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
+        Log.e("UBI"," > "+map_marcador.getPosition());
+        //getActivity().finish();
+    }
+
+    @Override
+    public void onBackClicked(final StepperLayout.OnBackClickedCallback callback) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                callback.goToPrevStep();
+            }
+        }, 0L);
+    }
 }

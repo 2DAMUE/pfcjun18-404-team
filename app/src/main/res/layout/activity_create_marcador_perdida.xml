@@ -1,56 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-
-<android.support.v4.view.ViewPager
-    android:id="@+id/container"
+<com.stepstone.stepper.StepperLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/stepperLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+    android:background="@drawable/fondo_verdeazulado"
+    android:color="@color/ms_white"
+    app:ms_activeStepColor="@color/colorPrimaryDark"
+    app:ms_bottomNavigationBackground="@color/colorVerdeAzul"
+    app:ms_inactiveStepColor="@color/colorBlanco"
+    app:ms_nextButtonColor="@color/colorBlanco"
+    app:ms_backButtonColor="@color/colorBlanco"
+    app:ms_showBackButtonOnFirstStep="true"
+    app:ms_stepperType="dots">
 
-</android.support.v4.view.ViewPager>
+</com.stepstone.stepper.StepperLayout>
 
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorAccent"
-        android:padding="15dp">
-
-        <TextView
-            android:id="@+id/text_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginLeft="10dp"
-            android:text="ATRAS"
-            android:textColor="@color/colorBlanco"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/text_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="10dp"
-            android:text="SIGUIENTE"
-            android:textColor="@color/colorBlanco"
-            android:textStyle="bold" />
-
-    </FrameLayout>
-
-    <!--<android.support.design.widget.BottomNavigationView
-    android:id="@+id/navigation"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:attr/windowBackground"
-    android:layout_alignParentBottom="true"
-    app:menu="@menu/navigation" /> -->
-
-</RelativeLayout>
+    <!-- app:ms_activeStepColor="@color/colorGreen"
+        app:ms_backButtonColor="@color/colorDarkGreen"
+        app:ms_bottomNavigationBackground="@android:color/holo_green_dark"
+        app:ms_completeButtonColor="@color/colorDarkGreen"
+        app:ms_inactiveStepColor="@color/colorDarkGreen"
+        app:ms_nextButtonColor="@color/colorDarkGreen"-->

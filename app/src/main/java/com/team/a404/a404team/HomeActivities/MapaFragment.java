@@ -230,20 +230,25 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
 
     private void CogerFotoMascota(){
-        StorageReference stor = FirebaseStorage.getInstance().getReference().child("images/" + owner.toString() + "/userphoto.jpg");  //Cambiar a foto de la mascota (Sergio)
-        final long ONE_MEGABYTE = 1024 * 1024;
-        stor.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                v_foto_mascota.setImageBitmap(bmp);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                v_foto_mascota.setImageResource(R.drawable.logo_petaware);
-            }
-        });
+        try{
+            StorageReference stor = FirebaseStorage.getInstance().getReference().child("images/" + owner.toString() + "/userphoto.jpg");  //Cambiar a foto de la mascota (Sergio)
+            final long ONE_MEGABYTE = 1024 * 1024;
+            stor.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    v_foto_mascota.setImageBitmap(bmp);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    v_foto_mascota.setImageResource(R.drawable.dog);
+                }
+            });
+        }catch (Exception x){
+            v_foto_mascota.setImageResource(R.drawable.dog);
+        }
+
     }
 
 
