@@ -86,6 +86,17 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
             MiUbucacion();
 
+            mGoogleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                @Override
+                public void onMapLongClick(LatLng latLng) {
+                    mGoogleMap.clear();
+                    map_marcador = mGoogleMap.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps))
+                            .draggable(true));
+                }
+            });
+
             /**  /INFO DE LOS MARCADORES **/
 
 
@@ -141,8 +152,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
                 LatLng actual = new LatLng(latitud, longitud);
 
                 if (contador) {
-                    PonerMarcador();
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 15));
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(actual, 15));
                     contador = false;
                 }
 

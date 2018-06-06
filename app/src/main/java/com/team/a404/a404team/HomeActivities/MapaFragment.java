@@ -226,9 +226,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-
-
-
     private void CogerFotoMascota(){
         try{
             StorageReference stor = FirebaseStorage.getInstance().getReference().child("images/" + owner.toString() + "/userphoto.jpg");  //Cambiar a foto de la mascota (Sergio)
@@ -260,7 +257,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
                 if (mGoogleMap.getMyLocation() != null) { // Check to ensure coordinates aren't null, probably a better way of doing this...
                     LatLng actual = new LatLng(mGoogleMap.getMyLocation().getLatitude(), mGoogleMap.getMyLocation().getLongitude());
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 16));
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(actual, 16));
                 }
             }
         });
@@ -326,7 +323,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
                 if (contador) {
                     CogerMarcadores();
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 15));
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(actual, 15));
                     contador = false;
                 }
 
