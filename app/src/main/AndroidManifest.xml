@@ -70,7 +70,8 @@
             android:name=".HomeActivities.MiMascotaPerdida.CreateMarcadorPerdida"
             android:label="@string/title_activity_create_marcador_perdida"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HomeActivities.MiMascotaPerdida.SelecionMascotaPerdidaFragment"></activity>
+        <activity android:name=".HomeActivities.MiMascotaPerdida.SelecionMascotaPerdidaFragment" />
+        <activity android:name=".HomeActivities.PerfilUsuario.InfoMascota"></activity>
     </application>
 
 </manifest>

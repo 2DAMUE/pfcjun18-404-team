@@ -2,7 +2,7 @@ package com.team.a404.a404team.Datos;
 
 public class AnuncioInformation extends Marcadores_perdidos {
     private String nombre;
-    private String descripcion;
+    private String rasgos;
     private String raza;
     private String url_foto;
 
@@ -10,7 +10,7 @@ public class AnuncioInformation extends Marcadores_perdidos {
 
     public AnuncioInformation(String descripcion, String nombre, String raza, String url_foto) {
         this.nombre = nombre;
-        this.descripcion = descripcion;
+        this.rasgos = descripcion;
         this.raza = raza;
         this.url_foto = url_foto;
     }
@@ -23,12 +23,12 @@ public class AnuncioInformation extends Marcadores_perdidos {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getRasgos() {
+        return rasgos;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setRasgos(String descripcion) {
+        this.rasgos = descripcion;
     }
 
     public String getRaza() {

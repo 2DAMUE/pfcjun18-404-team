@@ -3,6 +3,7 @@ package com.team.a404.a404team.HomeActivities;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,6 +37,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 import com.team.a404.a404team.Datos.AnuncioInformation;
 import com.team.a404.a404team.R;
 
@@ -72,8 +74,8 @@ public class MascotasFragment extends Fragment {
         informacionMascotas.clear();
         nombreMascotas.clear();
         DataRef = FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mascotas");
-        listaMascotas = (ListView)rootView.findViewById(R.id.listmascotas);
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, nombreMascotas);
+        listaMascotas = (ListView) rootView.findViewById(R.id.listmascotas);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, nombreMascotas);
         listaMascotas.setAdapter(arrayAdapter);
         listaMascotas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -111,7 +113,7 @@ public class MascotasFragment extends Fragment {
             }
         });
 
-        nuevaMascota = (FloatingActionButton)rootView.findViewById(R.id.nuevaMascota);
+        nuevaMascota = (FloatingActionButton) rootView.findViewById(R.id.nuevaMascota);
         nuevaMascota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,19 +123,22 @@ public class MascotasFragment extends Fragment {
                 dialog.show();
                 final DatabaseReference datosMascota = FirebaseDatabase.getInstance().getReference("usuarios")
                         .child(firebaseAuth.getCurrentUser().getUid()).child("mascotas");
-                nombre = (EditText)dialog.findViewById(R.id.nombre_m);
-                raza = (EditText)dialog.findViewById(R.id.raza_m);
-                descripcion = (EditText)dialog.findViewById(R.id.descripcion_m);
+                nombre = (EditText) dialog.findViewById(R.id.nombre_m);
+                raza = (EditText) dialog.findViewById(R.id.raza_m);
+                descripcion = (EditText) dialog.findViewById(R.id.descripcion_m);
                 saveButton = (Button) dialog.findViewById(R.id.btn_enviar);
-                imageNueva = (CircularImageView)dialog.findViewById(R.id.img_nuevamascota);
+                imageNueva = (CircularImageView) dialog.findViewById(R.id.img_nuevamascota);
                 imageNueva.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         nom_mascota = nombre.getText().toString().trim();
-                        if(TextUtils.isEmpty(nom_mascota)){
+                        if (TextUtils.isEmpty(nom_mascota)
+                                && TextUtils.isEmpty(raza.getText().toString())
+                                && TextUtils.isEmpty(descripcion.getText().toString())) {
                             Toast.makeText(getContext(), "Introduzca primero los datos de la mascota.", Toast.LENGTH_SHORT).show();
-                        }else{
-                        OpenGallery();}
+                        } else {
+                            OpenGallery();
+                        }
                     }
                 });
                 saveButton.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +149,7 @@ public class MascotasFragment extends Fragment {
                         String desc = descripcion.getText().toString().trim();
                         datosMascota.child(nom).child("nombre").setValue(nom);
                         datosMascota.child(nom).child("raza").setValue(rac);
-                        datosMascota.child(nom).child("descripcion").setValue(desc);
+                        datosMascota.child(nom).child("rasgos").setValue(desc);
                         listaMascotas.invalidateViews();
                         arrayAdapter.notifyDataSetChanged();
                         dialog.dismiss();
@@ -154,19 +159,21 @@ public class MascotasFragment extends Fragment {
         });
         return rootView;
     }
+
     private void OpenGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
+
     @Override
     public void onActivityResult(int requestcode, int resultcode, Intent data) {
         super.onActivityResult(requestcode, resultcode, data);
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getInstance().getReference().child("images").child(firebaseAuth.getCurrentUser().getUid())
-                .child("mascotas").child(nom_mascota).child(nom_mascota+".jpg");
+                .child("mascotas").child(nom_mascota).child(nom_mascota + ".jpg");
         if (resultcode == RESULT_OK && requestcode == PICK_IMAGE_REQUEST) {
             imageUri = data.getData();
-            nuevaMascota.setImageURI(imageUri);
+            imageNueva.setImageURI(imageUri);
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imageUri);
@@ -186,8 +193,13 @@ public class MascotasFragment extends Fragment {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    DataRef.child(nom_mascota).child("url_foto").setValue(downloadUrl.toString());
-                    Log.d("downloadUrl-->", "" + downloadUrl); }
+                    try {
+                        DataRef.child(nom_mascota).child("url_foto").setValue(downloadUrl.toString());
+                    } catch (NullPointerException e) {
+                        Log.d("WWW", e.getMessage());
+                    }
+                    Log.d("downloadUrl-->", "" + downloadUrl);
+                }
             });
         }
     }
