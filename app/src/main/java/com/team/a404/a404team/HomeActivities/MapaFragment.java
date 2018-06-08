@@ -3,6 +3,7 @@ package com.team.a404.a404team.HomeActivities;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,16 +13,15 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -59,14 +59,13 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private View mView;
     private LinearLayout v_vista_error_carga;
     private double longitud, latitud;
-    private LatLng actual;
     private boolean contador;
     private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner;
     private CircularImageView v_foto_mascota;
-    private Button aceptar;
     private DatabaseReference all_marcadores;
     private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
-    private FloatingActionButton FAB ,v_fab_EncontreMascota,v_fab_Paseo ,v_fab_PerdiMiMascota;
+    private FloatingActionButton v_fab_myloca ,v_fab_EncontreMascota,v_fab_Paseo ,v_fab_PerdiMiMascota;
+    private FloatingActionsMenu v_fab_menu;
 
     private String id,owner ;
 
@@ -84,8 +83,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
         mMapView = (MapView) mView.findViewById(R.id.map);
         v_vista_error_carga = (LinearLayout) mView.findViewById(R.id.vista_error_carga);
+        v_fab_myloca = (FloatingActionButton) mView.findViewById(R.id.myLocationButton);
+        v_fab_menu = (FloatingActionsMenu) mView.findViewById(R.id.fab_menu);
 
         mMapView.setVisibility(View.INVISIBLE);
+        v_fab_myloca.setVisibility(View.INVISIBLE);
+        v_fab_menu.setVisibility(View.INVISIBLE);
         contador = true;
 
         if (mMapView != null) {
@@ -109,6 +112,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         } else {
             mGoogleMap = googleMap;
             mMapView.setVisibility(View.VISIBLE);
+            v_fab_menu.setVisibility(View.VISIBLE);
+            v_fab_myloca.setVisibility(View.VISIBLE);
             MapsInitializer.initialize(getContext());
 
 
@@ -250,8 +255,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
 
     private void userLocationFAB() {
-        FAB = (FloatingActionButton) mView.findViewById(R.id.myLocationButton);
-        FAB.setOnClickListener(new View.OnClickListener() {
+        v_fab_myloca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

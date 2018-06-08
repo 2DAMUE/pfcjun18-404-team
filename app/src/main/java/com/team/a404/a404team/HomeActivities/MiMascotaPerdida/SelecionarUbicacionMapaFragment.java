@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,6 +27,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
@@ -42,6 +46,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
     private boolean contador;
     private FloatingActionButton FAB;
     private Marker map_marcador;
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,8 +97,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
                     mGoogleMap.clear();
                     map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                             .position(latLng)
-                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps))
-                            .draggable(true));
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps)));
                 }
             });
 
@@ -116,8 +120,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
         map_marcador = mGoogleMap.addMarker(new MarkerOptions()
             .position(ubi)
-            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps))
-            .draggable(true));
+            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps)));
 
 
     }
@@ -131,7 +134,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
                 if (mGoogleMap.getMyLocation() != null) { // Check to ensure coordinates aren't null, probably a better way of doing this...
                     LatLng actual = new LatLng(mGoogleMap.getMyLocation().getLatitude(), mGoogleMap.getMyLocation().getLongitude());
-                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(actual, 16));
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(actual, 16));
                 }
             }
         });
@@ -152,6 +155,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
                 LatLng actual = new LatLng(latitud, longitud);
 
                 if (contador) {
+                    PonerMarcador();
                     mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(actual, 15));
                     contador = false;
                 }
@@ -185,8 +189,11 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
+        Log.e("ID"," > "+SelecionMascotaPerdidaFragment.v_id_mascota);
         Log.e("UBI"," > "+map_marcador.getPosition());
-        //getActivity().finish();
+        EnviarDatos();
+        Toast.makeText(getActivity(), "Tu marcador de a creado", Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 
     @Override
@@ -197,5 +204,14 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
                 callback.goToPrevStep();
             }
         }, 0L);
+    }
+
+
+    public void EnviarDatos(){
+        DatabaseReference db_marcador_perdida = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").push();
+        db_marcador_perdida.child("id_mascota").setValue(SelecionMascotaPerdidaFragment.v_id_mascota);
+        db_marcador_perdida.child("latitud").setValue(map_marcador.getPosition().latitude);
+        db_marcador_perdida.child("longitud").setValue(map_marcador.getPosition().longitude);
+        db_marcador_perdida.child("owner").setValue(firebaseAuth.getCurrentUser().getUid());
     }
 }

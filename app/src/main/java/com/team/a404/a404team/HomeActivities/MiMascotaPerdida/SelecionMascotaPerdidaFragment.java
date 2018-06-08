@@ -1,10 +1,12 @@
 package com.team.a404.a404team.HomeActivities.MiMascotaPerdida;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,9 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
     private DatabaseReference DataRef;
     private ArrayList<AnuncioInformation> informacionMascotas = new ArrayList<>();
     private ArrayList<String> nombreMascotas = new ArrayList<>();
+    private ArrayList<String> id_mascota_perfil = new ArrayList<>();
+    public static String v_id_mascota;
+
 
     public SelecionMascotaPerdidaFragment() {
         // Required empty public constructor
@@ -50,9 +55,8 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
     @Override
     public void onViewCreated(View view, Bundle savedInstanceStade) {
         super.onViewCreated(view, savedInstanceStade);
-
-
         informacionMascotas.clear();
+        id_mascota_perfil.clear();
         nombreMascotas.clear();
         DataRef = FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mascotas");
         listaMascotas = (ListView)mView.findViewById(R.id.listmascotas);
@@ -61,6 +65,8 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
         listaMascotas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.v("INFO"," > "+id_mascota_perfil.get(i));
+                v_id_mascota = id_mascota_perfil.get(i);
 
             }
         });
@@ -68,6 +74,7 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 AnuncioInformation pet = dataSnapshot.getValue(AnuncioInformation.class);
+                id_mascota_perfil.add(dataSnapshot.getKey());
                 nombreMascotas.add(pet.getNombre());
                 informacionMascotas.add(pet);
                 arrayAdapter.notifyDataSetChanged();
@@ -99,14 +106,17 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
     @Override
     public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
 
-        Toast.makeText(getActivity(), "Seleccione una mascota", Toast.LENGTH_SHORT).show();
+        if ((v_id_mascota != null)) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    callback.goToNextStep();
+                }
+            }, 0L);
+        } else {
+            Toast.makeText(getActivity(), "Seleccione una mascota", Toast.LENGTH_SHORT).show();
+        }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                callback.goToNextStep();
-            }
-        }, 0L);
 
     }
 
