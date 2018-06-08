@@ -3,7 +3,6 @@ package com.team.a404.a404team.HomeActivities;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,6 +12,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -89,6 +90,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         mMapView.setVisibility(View.INVISIBLE);
         v_fab_myloca.setVisibility(View.INVISIBLE);
         v_fab_menu.setVisibility(View.INVISIBLE);
+
+
         contador = true;
 
         if (mMapView != null) {

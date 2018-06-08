@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
+import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.R;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -209,9 +210,6 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
     public void EnviarDatos(){
         DatabaseReference db_marcador_perdida = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").push();
-        db_marcador_perdida.child("id_mascota").setValue(SelecionMascotaPerdidaFragment.v_id_mascota);
-        db_marcador_perdida.child("latitud").setValue(map_marcador.getPosition().latitude);
-        db_marcador_perdida.child("longitud").setValue(map_marcador.getPosition().longitude);
-        db_marcador_perdida.child("owner").setValue(firebaseAuth.getCurrentUser().getUid());
+        db_marcador_perdida.setValue(new Marcadores_perdidos(SelecionMascotaPerdidaFragment.v_id_mascota, map_marcador.getPosition().latitude, map_marcador.getPosition().longitude, firebaseAuth.getCurrentUser().getUid()));
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.team.a404.a404team">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -65,13 +66,19 @@
             android:name=".HomeActivities.PerfilUsuario.PerfilInfo"
             android:label="@string/title_activity_perfil_info"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HomeActivities.PerfilUsuario.PerfilUsuario" />
+        <activity
+            android:name=".HomeActivities.PerfilUsuario.PerfilUsuario"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".HomeActivities.MiMascotaPerdida.CreateMarcadorPerdida"
             android:label="@string/title_activity_create_marcador_perdida"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HomeActivities.MiMascotaPerdida.SelecionMascotaPerdidaFragment" />
-        <activity android:name=".HomeActivities.PerfilUsuario.InfoMascota" />
+        <activity
+            android:name=".HomeActivities.MiMascotaPerdida.SelecionMascotaPerdidaFragment"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".HomeActivities.PerfilUsuario.InfoMascota"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
