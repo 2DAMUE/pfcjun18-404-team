@@ -92,9 +92,10 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
             MiUbucacion();
 
-            mGoogleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+
+            mGoogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
-                public void onMapLongClick(LatLng latLng) {
+                public void onMapClick(LatLng latLng) {
                     mGoogleMap.clear();
                     map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                             .position(latLng)

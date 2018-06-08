@@ -1,6 +1,5 @@
 package com.team.a404.a404team.HomeActivities.MiMascotaPerdida;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -58,6 +57,12 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
         informacionMascotas.clear();
         id_mascota_perfil.clear();
         nombreMascotas.clear();
+        v_id_mascota = null;
+        CargarMascotasLista();
+
+    }
+
+    private void CargarMascotasLista(){
         DataRef = FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mascotas");
         listaMascotas = (ListView)mView.findViewById(R.id.listmascotas);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, nombreMascotas);
@@ -100,7 +105,6 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
 
             }
         });
-
     }
 
     @Override

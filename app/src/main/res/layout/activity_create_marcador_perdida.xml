@@ -6,13 +6,22 @@
     android:layout_height="match_parent"
     android:background="@drawable/fondo_verdeazulado"
     android:color="@color/ms_white"
-    app:ms_activeStepColor="@color/colorPrimaryDark"
+
     app:ms_bottomNavigationBackground="@color/colorVerdeAzul"
-    app:ms_inactiveStepColor="@color/colorBlanco"
+
+    app:ms_activeStepColor="@color/colorRojoError"
+    app:ms_inactiveStepColor="@color/ms_unselectedColor"
+
     app:ms_nextButtonColor="@color/colorBlanco"
+
     app:ms_backButtonColor="@color/colorBlanco"
+
+    app:ms_completeButtonColor="@color/colorBlanco"
+    app:ms_completeButtonBackground="@color/colorPrimaryDark"
+    app:ms_completeButtonText="  COMPLETAR  "
+
     app:ms_showBackButtonOnFirstStep="true"
-    app:ms_stepperType="dots">
+    app:ms_stepperType="progress_bar">
 
 </com.stepstone.stepper.StepperLayout>
 

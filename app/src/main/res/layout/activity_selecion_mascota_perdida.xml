@@ -25,9 +25,9 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Seleccione la mascota que ha perdido "
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="18sp"
