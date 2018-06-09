@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.team.a404.a404team.HomeActivities.PerfilUsuario.PerfilUsuario">
+    tools:context="com.team.a404.a404team.HomeActivities.PerfilUsuario.PerfilUsuario"
+    android:background="@drawable/fondo_verdeazulado">
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="190dp"
-        android:background="?attr/colorPrimary">
+        android:background="@drawable/fondo_naranja">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/imagen"
@@ -32,9 +33,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
         android:background="@drawable/fondo_verdeazulado"
         android:orientation="vertical">
 
@@ -42,12 +40,35 @@
             android:id="@+id/nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
             android:text="Nombre" />
 
         <EditText
             android:id="@+id/nombremodifica"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/correoElectronico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:text="Correo Electronico" />
+
+        <EditText
+            android:id="@+id/correoElectronicomodifica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:ems="10"
             android:inputType="textPersonName" />
 
