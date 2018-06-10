@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,6 +76,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<Marcadores_perdidos> marcadores_rojo = new ArrayList<Marcadores_perdidos>();
     private ArrayList<Marcadores_paseo> marcadores_azul = new ArrayList<Marcadores_paseo>();
     private ArrayList<String> marcadores_rojo_id = new ArrayList<String>();
+    private ArrayList<String> marcadores_azul_id = new ArrayList<String>();
     private FloatingActionButton v_fab_myloca ,v_fab_EncontreMascota,v_fab_Paseo ,v_fab_PerdiMiMascota;
     private FloatingActionsMenu v_fab_menu;
     private String id,owner,id_marcador ;
@@ -230,6 +232,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         }else {
             v_icon_borar.setVisibility(View.INVISIBLE);
         }
+
         v_mascota_nombre = (TextView) dialog_info_perdido.findViewById(R.id.mascota_nombre);
         v_mascota_raza = (TextView) dialog_info_perdido.findViewById(R.id.mascota_raza);
         v_mascota_text_raza = (TextView) dialog_info_perdido.findViewById(R.id.text_rasgos);
@@ -243,15 +246,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DB_Datos_Mascotas d_mascota = dataSnapshot.getValue(DB_Datos_Mascotas.class);
 
-                if (d_mascota.getNombre() != ""){
-                    v_mascota_nombre.setText(d_mascota.getNombre());
-                }else
-                    v_mascota_nombre.setVisibility(View.INVISIBLE);
+                v_mascota_nombre.setText(d_mascota.getNombre());
+                v_mascota_raza.setText(d_mascota.getRaza());
 
-                if (d_mascota.getRaza() != ""){
-                    v_mascota_raza.setText(d_mascota.getRaza());
-                }else
-                    v_mascota_raza.setVisibility(View.INVISIBLE);
 
                 if (d_mascota.getRasgos().length() > 2){
                     v_mascota_rasgos.setText(d_mascota.getRasgos());
@@ -281,43 +278,30 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setCancelable(true);
-                builder.setTitle("Borrar Marcador");
-                builder.setMessage("¿Esta seguro que quiere borrarlo este marcador?");
-                builder.setPositiveButton("SI",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                DatabaseReference borrar_marcador = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(id_marcador);
-                                borrar_marcador.removeValue();
-                                CogerTodosMarcadores();
-                                dialog_info_perdido.hide();
-                            }
-                        });
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-                AlertDialog dialog_confirmar = builder.create();
-                dialog_confirmar.show();
+                BorrarMarcador(id_marcador,dialog_info_perdido,1);
             }
         });
 
     }
 
     private void InfoDialogoPaseo() {
-        final Dialog dialog = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
-        dialog.setContentView(R.layout.dialog_mapa_info_paseo);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
-        dialog.show();
+        final Dialog dialog_info_paseo = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
+        dialog_info_paseo.setContentView(R.layout.dialog_mapa_info_paseo);
+        dialog_info_paseo.setCanceledOnTouchOutside(true);
+        dialog_info_paseo.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
+        dialog_info_paseo.show();
 
-        FrameLayout v_pantalla = (FrameLayout) dialog.findViewById(R.id.anuncio_pantalla);
-        LinearLayout v_contenido_ventana = (LinearLayout) dialog.findViewById(R.id.contenido_ventana);
-        v_usuario_owner = (TextView) dialog.findViewById(R.id.usuario_owner);
+        FrameLayout v_pantalla = (FrameLayout) dialog_info_paseo.findViewById(R.id.anuncio_pantalla);
+        LinearLayout v_contenido_ventana = (LinearLayout) dialog_info_paseo.findViewById(R.id.contenido_ventana);
+        v_usuario_owner = (TextView) dialog_info_paseo.findViewById(R.id.usuario_owner);
 
+        v_icon_borar = (ImageView) dialog_info_paseo.findViewById(R.id.icon_borrar);
+
+        if (owner.equals(firebaseAuth.getCurrentUser().getUid())) {
+            v_icon_borar.setVisibility(View.VISIBLE);
+        }else {
+            v_icon_borar.setVisibility(View.INVISIBLE);
+        }
 
         DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
         info_owner.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -330,9 +314,50 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+
+        v_icon_borar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BorrarMarcador(id_marcador,dialog_info_paseo,2);
+            }
+        });
+
+
     }
-
-
+    /**
+     * BORRAR MARCADOR
+     */
+    private void BorrarMarcador(final String id_marcador_total, final Dialog dialog_total, final int tipo){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(true);
+        builder.setTitle("Borrar Marcador");
+        builder.setMessage("¿Esta seguro que quiere borrarlo este marcador?");
+        builder.setPositiveButton("SI",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseReference borrar_marcador = null;
+                        switch (tipo){
+                            case 1:
+                                borrar_marcador =  FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(id_marcador_total);
+                                break;
+                            case 2:
+                                borrar_marcador =  FirebaseDatabase.getInstance().getReference("marcadores").child("paseo").child(id_marcador_total);
+                                break;
+                        }
+                        borrar_marcador.removeValue();
+                        CogerTodosMarcadores();
+                        dialog_total.hide();
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        AlertDialog dialog_confirmar = builder.create();
+        dialog_confirmar.show();
+    }
 
     private void CogerFotoMascota(){
         try{
@@ -382,6 +407,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 marcadores_rojo = new ArrayList<>();
+                marcadores_rojo_id.clear();
                 for (DataSnapshot dato : dataSnapshot.getChildren()) {
                     Marcadores_perdidos mp = dato.getValue(Marcadores_perdidos.class);
                     marcadores_rojo.add(mp);
@@ -420,10 +446,11 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 marcadores_azul = new ArrayList<>();
-
+                marcadores_rojo_id.clear();
                 for (DataSnapshot dato : dataSnapshot.getChildren()) {
                     Marcadores_paseo mpaseo = dato.getValue(Marcadores_paseo.class);
                     marcadores_azul.add(mpaseo);
+                    marcadores_azul_id.add(dato.getKey());
                 }
                 MeterMarcadoresAzul();
             }
@@ -441,25 +468,49 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                     .position(ubi)
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_azul)));
-            map_marcador.setTag("nada##" + marcadores_azul.get(i).getOwner()+"##2");
+            Log.e("TTT","> "+marcadores_azul_id.get(i));
+            map_marcador.setTag("nada##" + marcadores_azul.get(i).getOwner()+"##2##"+marcadores_azul_id.get(i));
         }
 
     }
 
-
-    /**
-     * BORRAR MARCADOR
-     */
-
-
-    private void Borrar_marcador(){
-
-    }
-
     private void CogerTodosMarcadores(){
-        mGoogleMap.clear();
-        CogerMarcadoresPerdidas();
-        CogerMarcadoresPaseo();
+
+        DatabaseReference marcadores_todos = FirebaseDatabase.getInstance().getReference("marcadores");
+
+        marcadores_todos.orderByValue().addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                mGoogleMap.clear();
+                CogerMarcadoresPerdidas();
+                CogerMarcadoresPaseo();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                mGoogleMap.clear();
+                CogerMarcadoresPerdidas();
+                CogerMarcadoresPaseo();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                mGoogleMap.clear();
+                CogerMarcadoresPerdidas();
+                CogerMarcadoresPaseo();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     /**
