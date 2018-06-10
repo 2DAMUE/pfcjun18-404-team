@@ -2,7 +2,9 @@ package com.team.a404.a404team.HomeActivities;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -35,6 +38,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,9 +49,11 @@ import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.team.a404.a404team.Datos.DB_Datos_Mascotas;
 import com.team.a404.a404team.Datos.DB_Datos_Perfil;
+import com.team.a404.a404team.Datos.Marcadores_paseo;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.HomeActivities.MiMascotaPerdida.CreateMarcadorPerdida;
 import com.team.a404.a404team.R;
+import com.team.a404.a404team.pruebas.pruebas_dialogo;
 
 import java.util.ArrayList;
 
@@ -61,14 +67,18 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private LinearLayout v_vista_error_carga;
     private double longitud, latitud;
     private boolean contador;
-    private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner;
+    private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner,v_mascota_text_raza;
+    private ImageView v_icon_borar;
     private CircularImageView v_foto_mascota;
     private DatabaseReference all_marcadores;
-    private ArrayList<Marcadores_perdidos> marcadores = new ArrayList<Marcadores_perdidos>();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private ArrayList<Marcadores_perdidos> marcadores_rojo = new ArrayList<Marcadores_perdidos>();
+    private ArrayList<Marcadores_paseo> marcadores_azul = new ArrayList<Marcadores_paseo>();
+    private ArrayList<String> marcadores_rojo_id = new ArrayList<String>();
     private FloatingActionButton v_fab_myloca ,v_fab_EncontreMascota,v_fab_Paseo ,v_fab_PerdiMiMascota;
     private FloatingActionsMenu v_fab_menu;
+    private String id,owner,id_marcador ;
 
-    private String id,owner ;
 
 
     @Override
@@ -77,6 +87,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         return mView;
 
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceStade) {
@@ -138,55 +149,22 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     String[] info = tagAll.split("##");
                     id = info[0];
                     owner = info[1];
+                    int tipo = Integer.parseInt(info[2]);
+                    id_marcador = info[3];
+                    Log.e("LOGG"," > "+id_marcador);
 
-                    final Dialog dialog = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
-                    dialog.setContentView(R.layout.dialog_anuncio);
-                    dialog.setCanceledOnTouchOutside(true);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
-                    dialog.show();
+                    switch (tipo){
+                        case 1:
+                            InfoDialogoPerdido();
+                            break;
+                        case 2:
+                            InfoDialogoPaseo();
+                            break;
+                        case 3:
+                            break;
+                    }
 
-                    FrameLayout v_pantalla = (FrameLayout) dialog.findViewById(R.id.anuncio_pantalla);
-                    LinearLayout v_contenido_ventana = (LinearLayout) dialog.findViewById(R.id.contenido_ventana);
 
-                    v_pantalla.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            //dialog.hide();
-                        }
-                    });
-                    v_mascota_nombre = (TextView) dialog.findViewById(R.id.mascota_nombre);
-                    v_mascota_raza = (TextView) dialog.findViewById(R.id.mascota_raza);
-                    v_mascota_rasgos = (TextView) dialog.findViewById(R.id.mascota_rasgos);
-                    v_usuario_owner = (TextView) dialog.findViewById(R.id.usuario_owner);
-                    v_foto_mascota = (CircularImageView) dialog.findViewById(R.id.foto_mascota);
-
-                    DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
-                    info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            DB_Datos_Mascotas d_mascota = dataSnapshot.getValue(DB_Datos_Mascotas.class);
-
-                            //d_mascota.add(nuevo);
-                            v_mascota_nombre.setText(d_mascota.getNombre());
-                            v_mascota_raza.setText(d_mascota.getRaza());
-                            v_mascota_rasgos.setText(d_mascota.getRasgos());
-                            CogerFotoMascota();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {}
-                    });
-                    DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
-                    info_owner.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            DB_Datos_Perfil d_perfil = dataSnapshot.getValue(DB_Datos_Perfil.class);
-                            v_usuario_owner.setText(d_perfil.getNombre());
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {}
-                    });
                     return false;
                 }
             });
@@ -216,7 +194,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         v_fab_Paseo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent1 = new Intent(getActivity(), pruebas_dialogo.class);
+                        startActivity(intent1);
 
                     }
                 });
@@ -232,6 +211,127 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     }
                 });
     }
+
+
+    private void InfoDialogoPerdido() {
+        final Dialog dialog_info_perdido = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
+        dialog_info_perdido.setContentView(R.layout.dialog_mapa_info_perdida);
+        dialog_info_perdido.setCanceledOnTouchOutside(true);
+        dialog_info_perdido.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#30000000")));
+        dialog_info_perdido.show();
+
+        FrameLayout v_pantalla = (FrameLayout) dialog_info_perdido.findViewById(R.id.anuncio_pantalla);
+        LinearLayout v_contenido_ventana = (LinearLayout) dialog_info_perdido.findViewById(R.id.contenido_ventana);
+
+        v_icon_borar = (ImageView) dialog_info_perdido.findViewById(R.id.icon_borrar);
+
+        if (owner.equals(firebaseAuth.getCurrentUser().getUid())) {
+            v_icon_borar.setVisibility(View.VISIBLE);
+        }else {
+            v_icon_borar.setVisibility(View.INVISIBLE);
+        }
+        v_mascota_nombre = (TextView) dialog_info_perdido.findViewById(R.id.mascota_nombre);
+        v_mascota_raza = (TextView) dialog_info_perdido.findViewById(R.id.mascota_raza);
+        v_mascota_text_raza = (TextView) dialog_info_perdido.findViewById(R.id.text_rasgos);
+        v_mascota_rasgos = (TextView) dialog_info_perdido.findViewById(R.id.mascota_rasgos);
+        v_usuario_owner = (TextView) dialog_info_perdido.findViewById(R.id.usuario_owner);
+        v_foto_mascota = (CircularImageView) dialog_info_perdido.findViewById(R.id.foto_mascota);
+
+        DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
+        info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DB_Datos_Mascotas d_mascota = dataSnapshot.getValue(DB_Datos_Mascotas.class);
+
+                if (d_mascota.getNombre() != ""){
+                    v_mascota_nombre.setText(d_mascota.getNombre());
+                }else
+                    v_mascota_nombre.setVisibility(View.INVISIBLE);
+
+                if (d_mascota.getRaza() != ""){
+                    v_mascota_raza.setText(d_mascota.getRaza());
+                }else
+                    v_mascota_raza.setVisibility(View.INVISIBLE);
+
+                if (d_mascota.getRasgos().length() > 2){
+                    v_mascota_rasgos.setText(d_mascota.getRasgos());
+                }else {
+                    v_mascota_text_raza.setVisibility(View.INVISIBLE);
+                    v_mascota_rasgos.setVisibility(View.INVISIBLE);
+                }
+                CogerFotoMascota();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+        DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
+        info_owner.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DB_Datos_Perfil d_perfil = dataSnapshot.getValue(DB_Datos_Perfil.class);
+                v_usuario_owner.setText(d_perfil.getNombre());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        v_icon_borar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setTitle("Borrar Marcador");
+                builder.setMessage("¿Esta seguro que quiere borrarlo este marcador?");
+                builder.setPositiveButton("SI",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseReference borrar_marcador = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(id_marcador);
+                                borrar_marcador.removeValue();
+                                CogerTodosMarcadores();
+                                dialog_info_perdido.hide();
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog dialog_confirmar = builder.create();
+                dialog_confirmar.show();
+            }
+        });
+
+    }
+
+    private void InfoDialogoPaseo() {
+        final Dialog dialog = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
+        dialog.setContentView(R.layout.dialog_mapa_info_paseo);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
+        dialog.show();
+
+        FrameLayout v_pantalla = (FrameLayout) dialog.findViewById(R.id.anuncio_pantalla);
+        LinearLayout v_contenido_ventana = (LinearLayout) dialog.findViewById(R.id.contenido_ventana);
+        v_usuario_owner = (TextView) dialog.findViewById(R.id.usuario_owner);
+
+
+        DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
+        info_owner.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DB_Datos_Perfil d_perfil = dataSnapshot.getValue(DB_Datos_Perfil.class);
+                v_usuario_owner.setText(d_perfil.getNombre());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
 
 
     private void CogerFotoMascota(){
@@ -256,6 +356,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    /** IR A MI UBICACION BOTON FAB */
 
     private void userLocationFAB() {
         v_fab_myloca.setOnClickListener(new View.OnClickListener() {
@@ -271,23 +372,22 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     }
 
     /**
-     * CREAR MARCADORES EN EL MAPA
+     * CREAR MARCADORES EN EL MAPA PERDIDO , ROJO
      */
 
-    public void CogerMarcadores() {
+    public void CogerMarcadoresPerdidas() {
 
         all_marcadores = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas");
         all_marcadores.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                marcadores = new ArrayList<>();
-
+                marcadores_rojo = new ArrayList<>();
                 for (DataSnapshot dato : dataSnapshot.getChildren()) {
                     Marcadores_perdidos mp = dato.getValue(Marcadores_perdidos.class);
-                    marcadores.add(mp);
-                    Log.v("datosUsuarios",mp.toString());
+                    marcadores_rojo.add(mp);
+                    marcadores_rojo_id.add(dato.getKey());
                 }
-                MeterMarcadores();
+                MeterMarcadoresRojo();
             }
 
             public void onCancelled(DatabaseError databaseError) {
@@ -296,21 +396,70 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    public void MeterMarcadores() {
-        mGoogleMap.clear();
-        Log.v("ESTO__2", "" + marcadores.size());
-        for (int i = 0; i < marcadores.size(); i++) {
-            LatLng ubi = new LatLng(marcadores.get(i).getLatitud(), marcadores.get(i).getLongitud());
+    public void MeterMarcadoresRojo() {
+        for (int i = 0; i < marcadores_rojo.size(); i++) {
+            LatLng ubi = new LatLng(marcadores_rojo.get(i).getLatitud(), marcadores_rojo.get(i).getLongitud());
 
             Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                     .position(ubi)
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_logomaps)));
-
-            map_marcador.setTag(marcadores.get(i).getId_mascota() + "##" + marcadores.get(i).getOwner());
-            Log.v("ESTO__3", "" +ubi);
-            Log.v("ESTO__3", "" +marcadores.get(i).getId_mascota() + "##" + marcadores.get(i).getOwner());
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_rojo)));
+            map_marcador.setTag(marcadores_rojo.get(i).getId_mascota() + "##" + marcadores_rojo.get(i).getOwner()+"##1##"+marcadores_rojo_id.get(i));
         }
 
+    }
+
+
+    /**
+     * CREAR MARCADORES EN EL MAPA PASO AZUL
+     */
+
+    public void CogerMarcadoresPaseo() {
+
+        all_marcadores = FirebaseDatabase.getInstance().getReference("marcadores").child("paseo");
+        all_marcadores.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                marcadores_azul = new ArrayList<>();
+
+                for (DataSnapshot dato : dataSnapshot.getChildren()) {
+                    Marcadores_paseo mpaseo = dato.getValue(Marcadores_paseo.class);
+                    marcadores_azul.add(mpaseo);
+                }
+                MeterMarcadoresAzul();
+            }
+
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
+
+    public void MeterMarcadoresAzul() {
+        for (int i = 0; i < marcadores_azul.size(); i++) {
+            LatLng ubi = new LatLng(marcadores_azul.get(i).getLatitud(), marcadores_azul.get(i).getLongitud());
+
+            Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
+                    .position(ubi)
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_azul)));
+            map_marcador.setTag("nada##" + marcadores_azul.get(i).getOwner()+"##2");
+        }
+
+    }
+
+
+    /**
+     * BORRAR MARCADOR
+     */
+
+
+    private void Borrar_marcador(){
+
+    }
+
+    private void CogerTodosMarcadores(){
+        mGoogleMap.clear();
+        CogerMarcadoresPerdidas();
+        CogerMarcadoresPaseo();
     }
 
     /**
@@ -329,15 +478,15 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 LatLng actual = new LatLng(latitud, longitud);
 
                 if (contador) {
-                    CogerMarcadores();
+
                     mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(actual, 15));
                     contador = false;
+                    CogerTodosMarcadores();
                 }
 
                 // mMap.setInfoWindowAdapter();
             }
         });
     }
-
 
 }

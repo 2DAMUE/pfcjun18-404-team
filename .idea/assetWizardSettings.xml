@@ -16,27 +16,13 @@
                             <entry key="actionbar">
                               <value>
                                 <PersistentState>
-                                  <option name="children">
-                                    <map>
-                                      <entry key="image">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="trimmed" value="true" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                    </map>
-                                  </option>
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="D:\StudioProjects\pfcjun18-404-team\app\src\main\res\drawable\paseando_al_perro.png" />
+                                      <entry key="imageAsset" value="D:\StudioProjects\pfcjun18-404-team\app\src\main\res\drawable\marcador_rojo.png" />
                                       <entry key="outputName" value="ic_icono_paseando" />
                                       <entry key="theme" value="HOLO_DARK" />
+                                      <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -48,6 +34,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
+                                      <entry key="backgroundColor" value="e5000a" />
+                                      <entry key="iconShape" value="NONE" />
+                                      <entry key="imageAsset" value="D:\StudioProjects\pfcjun18-404-team\app\src\main\res\drawable\papelera_roja.png" />
+                                      <entry key="outputName" value="ic_papelera_roja" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -57,7 +47,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
+                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>
