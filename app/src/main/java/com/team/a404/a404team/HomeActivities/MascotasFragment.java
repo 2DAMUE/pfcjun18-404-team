@@ -2,15 +2,11 @@ package com.team.a404.a404team.HomeActivities;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,23 +17,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.mikhaellopez.circularimageview.CircularImageView;
 import com.team.a404.a404team.Datos.AnuncioInformation;
+import com.team.a404.a404team.HomeActivities.PerfilUsuario.InfoMascota;
 import com.team.a404.a404team.R;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
@@ -48,13 +38,10 @@ public class MascotasFragment extends Fragment {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference DataRef;
     private EditText nombre, raza, descripcion;
-    private CircularImageView imageNueva;
     private Button saveButton;
     private ArrayList<AnuncioInformation> informacionMascotas = new ArrayList<>();
     private ArrayList<String> nombreMascotas = new ArrayList<>();
-    private String nom_mascota;
-    private static final int PICK_IMAGE_REQUEST = 100;
-    Uri imageUri;
+
 
     public MascotasFragment() {
         // Required empty public constructor
@@ -64,16 +51,50 @@ public class MascotasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mascotas, container, false);
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         informacionMascotas.clear();
         nombreMascotas.clear();
         DataRef = FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mascotas");
-        listaMascotas = (ListView) rootView.findViewById(R.id.listmascotas);
+        listaMascotas = (ListView) view.findViewById(R.id.listmascotas);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, nombreMascotas);
         listaMascotas.setAdapter(arrayAdapter);
         listaMascotas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (nombreMascotas.get(i).equals(informacionMascotas.get(i).getNombre())) {
+                    String nombre = informacionMascotas.get(i).getNombre();
+                    String raza = informacionMascotas.get(i).getRaza();
+                    String descript = informacionMascotas.get(i).getRasgos();
+                    String url = informacionMascotas.get(i).getUrl_foto();
+                    Intent intent = new Intent(getContext(), InfoMascota.class);
+                    intent.putExtra("nombre", nombre);
+                    intent.putExtra("raza", raza);
+                    intent.putExtra("rasgos", descript);
+                    intent.putExtra("url", url);
+                    startActivity(intent);
 
+                } else {
+                    for (String nom : nombreMascotas) {
+                        if (informacionMascotas.get(i).getNombre().equals(nom)) {
+                            String nombre = informacionMascotas.get(i).getNombre();
+                            String raza = informacionMascotas.get(i).getRaza();
+                            String descript = informacionMascotas.get(i).getRasgos();
+                            String url = informacionMascotas.get(i).getUrl_foto();
+                            Intent intent = new Intent(getContext(), InfoMascota.class);
+                            intent.putExtra("nombre", nombre);
+                            intent.putExtra("raza", raza);
+                            intent.putExtra("rasgos", descript);
+                            intent.putExtra("url", url);
+                            startActivity(intent);
+                        }
+                    }
+                }
             }
         });
         DataRef.addChildEventListener(new ChildEventListener() {
@@ -105,13 +126,11 @@ public class MascotasFragment extends Fragment {
 
             }
         });
-
-        nuevaMascota = (FloatingActionButton) rootView.findViewById(R.id.nuevaMascota);
-        nuevaMascota.setOnClickListener(new View.OnClickListener() {
+        nuevaMascota = (FloatingActionButton) view.findViewById(R.id.nuevaMascota);
+        nuevaMascota.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(getContext());
-                nom_mascota = "";
                 dialog.setContentView(R.layout.dialog_nueva_macota);
                 dialog.show();
                 final DatabaseReference datosMascota = FirebaseDatabase.getInstance().getReference("usuarios")
@@ -120,80 +139,31 @@ public class MascotasFragment extends Fragment {
                 raza = (EditText) dialog.findViewById(R.id.raza_m);
                 descripcion = (EditText) dialog.findViewById(R.id.descripcion_m);
                 saveButton = (Button) dialog.findViewById(R.id.btn_enviar);
-                imageNueva = (CircularImageView) dialog.findViewById(R.id.img_nuevamascota);
-                imageNueva.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        nom_mascota = nombre.getText().toString().trim();
-                        if (TextUtils.isEmpty(nom_mascota)
-                                && TextUtils.isEmpty(raza.getText().toString())
-                                && TextUtils.isEmpty(descripcion.getText().toString())) {
-                            Toast.makeText(getContext(), "Introduzca primero los datos de la mascota.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            OpenGallery();
-                        }
-                    }
-                });
                 saveButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String nom = nombre.getText().toString().trim();
                         String rac = raza.getText().toString().trim();
                         String desc = descripcion.getText().toString().trim();
-                        datosMascota.child(nom).child("nombre").setValue(nom);
-                        datosMascota.child(nom).child("raza").setValue(rac);
-                        datosMascota.child(nom).child("rasgos").setValue(desc);
-                        listaMascotas.invalidateViews();
-                        arrayAdapter.notifyDataSetChanged();
-                        dialog.dismiss();
+                        if (TextUtils.isEmpty(nom) && TextUtils.isEmpty(rac) && TextUtils.isEmpty(desc)) {
+                            Toast.makeText(getContext(), getString(R.string.toast_no_pet_data),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            datosMascota.child(nom).child("nombre").setValue(nom);
+                            datosMascota.child(nom).child("raza").setValue(rac);
+                            datosMascota.child(nom).child("rasgos").setValue(desc);
+                            datosMascota.child(nom).child("url_foto").setValue("");
+                            listaMascotas.invalidateViews();
+                            arrayAdapter.notifyDataSetChanged();
+                            Toast.makeText(getContext(), getString(R.string.toast_no_image),
+                                    Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+
                     }
                 });
             }
         });
-        return rootView;
-    }
 
-    private void OpenGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    public void onActivityResult(int requestcode, int resultcode, Intent data) {
-        super.onActivityResult(requestcode, resultcode, data);
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getInstance().getReference().child("images").child(firebaseAuth.getCurrentUser().getUid())
-                .child("mascotas").child(nom_mascota).child(nom_mascota + ".jpg");
-        if (resultcode == RESULT_OK && requestcode == PICK_IMAGE_REQUEST) {
-            imageUri = data.getData();
-            imageNueva.setImageURI(imageUri);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imageUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-            byte[] img = baos.toByteArray();
-            UploadTask uploadTask = storageRef.putBytes(img);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    try {
-                        DataRef.child(nom_mascota).child("url_foto").setValue(downloadUrl.toString());
-                    } catch (NullPointerException e) {
-                        Log.d("WWW", e.getMessage());
-                    }
-                    Log.d("downloadUrl-->", "" + downloadUrl);
-                }
-            });
-        }
     }
 }

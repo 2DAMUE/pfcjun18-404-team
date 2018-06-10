@@ -44,6 +44,12 @@
     <string name="btn_accept">Aceptar</string>
     <string name="title_activity_perfil_info">PerfilInfo</string>
     <string name="title_activity_borrar">borrar</string>
+    <string name="toast_no_pet_data">Todos los campos deben de estar llenos.</string>
+    <string name="toast_no_image">Por favor, introduzca una imagen para la nueva mascota registrada.</string>
+    <string name="pet_data">Datos de la mascota</string>
+    <string name="complete">  COMPLETAR  </string>
+    <string name="select_lost">Seleccione la mascota que se ha perdido</string>
+    <string name="select_place">Toque el lugar donde desee crear el marcador</string>
 
     <!-- Strings related to Settings -->
 
@@ -130,4 +136,6 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
+    <string name="btn_seen">Visto</string>
+    <string name="btn_delete">Borrar Mascota</string>
 </resources>

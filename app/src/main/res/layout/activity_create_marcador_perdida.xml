@@ -18,7 +18,7 @@
 
     app:ms_completeButtonColor="@color/colorBlanco"
     app:ms_completeButtonBackground="@color/colorPrimaryDark"
-    app:ms_completeButtonText="  COMPLETAR  "
+    app:ms_completeButtonText="@string/complete"
 
     app:ms_showBackButtonOnFirstStep="true"
     app:ms_stepperType="progress_bar">

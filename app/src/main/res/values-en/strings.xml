@@ -45,4 +45,12 @@
     <string name="new_pet">Pet Registry</string>
     <string name="btn_save">Save</string>
     <string name="my_pets">My Pets</string>
+    <string name="btn_seen">Visto</string>
+    <string name="toast_no_pet_data">All fields must be filled.</string>
+    <string name="toast_no_image">Please, upload an image of the new pet.</string>
+    <string name="pet_data">Pet data</string>
+    <string name="btn_delete">Delete this pet</string>
+    <string name="complete">  COMPLETE  </string>
+    <string name="select_lost">Select the lost pet</string>
+    <string name="select_place">Touch the map to create a marker on the desired place</string>
 </resources>

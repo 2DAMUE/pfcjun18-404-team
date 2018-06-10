@@ -78,7 +78,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".HomeActivities.PerfilUsuario.InfoMascota"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".HomeActivities.HomeActivity"/>
     </application>
 
 </manifest>

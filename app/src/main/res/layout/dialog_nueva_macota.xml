@@ -30,9 +30,9 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="327dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/new_pet"
@@ -41,14 +41,6 @@
                 android:textSize="20sp"
                 app:fontFamily="@font/michroma" />
 
-
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/img_nuevamascota"
-                android:layout_width="92dp"
-                android:layout_height="94dp"
-                android:layout_gravity="center|top"
-                android:layout_weight="1"
-                android:src="@drawable/dog" />
 
             <EditText
                 android:id="@+id/nombre_m"
@@ -81,7 +73,7 @@
 
 
                 android:id="@+id/btn_enviar"
-                android:layout_width="match_parent"
+                android:layout_width="330dp"
                 android:layout_height="wrap_content"
 
 
