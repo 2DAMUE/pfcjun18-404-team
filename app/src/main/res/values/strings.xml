@@ -52,6 +52,7 @@
     <string name="select_place">Toque el lugar donde desee crear el marcador</string>
     <string name="toast_pet_select">Seleccione una mascota</string>
     <string name="toast_set_phone">Introduzca un número de teléfono válido</string>
+    <string name="toast_pet_deleted">Se ha borrado la mascota de la base de datos</string>
 
     <!-- Strings related to Settings -->
 

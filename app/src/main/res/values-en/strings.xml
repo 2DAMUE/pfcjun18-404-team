@@ -56,4 +56,5 @@
     <string name="hint_phone">Introduzca un teléfono de contacto</string>
     <string name="toast_pet_select">Select one of your pets!</string>
     <string name="toast_set_phone">Please insert a valid phone number</string>
+    <string name="toast_pet_deleted">The selected pet was deleted successfully</string>
 </resources>

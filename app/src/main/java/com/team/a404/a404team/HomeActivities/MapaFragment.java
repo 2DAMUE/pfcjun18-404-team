@@ -61,6 +61,7 @@ import com.team.a404.a404team.Datos.Marcadores_paseo;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.HomeActivities.HoraDelPaseo.CreateMarcadorPaseo;
 import com.team.a404.a404team.HomeActivities.MiMascotaPerdida.CreateMarcadorPerdida;
+import com.team.a404.a404team.HomeActivities.OtraMascotaPerdida.CreateMarcardorOtra;
 import com.team.a404.a404team.R;
 import com.team.a404.a404team.pruebas.pruebas_dialogo;
 
@@ -77,7 +78,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private double longitud, latitud;
     private boolean contador;
     private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner,v_mascota_text_raza;
-    private ImageView v_icon_borar;
+    private ImageView v_icon_borrar;
     private CircularImageView v_foto_mascota;
     private DatabaseReference all_marcadores;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -228,7 +229,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         v_fab_EncontreMascota.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent new_ventana = new Intent(getActivity(), CreateMarcardorOtra.class);
+                        startActivity(new_ventana);
 
                     }
                 });
@@ -248,12 +250,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         dialog_info_perdido.show();
         */
 
-        v_icon_borar = (ImageView) dialog_info_perdido.findViewById(R.id.icon_borrar);
+        v_icon_borrar = (ImageView) dialog_info_perdido.findViewById(R.id.icon_borrar);
 
         if (owner.equals(firebaseAuth.getCurrentUser().getUid())) {
-            v_icon_borar.setVisibility(View.VISIBLE);
+            v_icon_borrar.setVisibility(View.VISIBLE);
         }else {
-            v_icon_borar.setVisibility(View.INVISIBLE);
+            v_icon_borrar.setVisibility(View.INVISIBLE);
         }
 
         v_mascota_nombre = (TextView) dialog_info_perdido.findViewById(R.id.mascota_nombre);
@@ -297,7 +299,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        v_icon_borar.setOnClickListener(new View.OnClickListener() {
+        v_icon_borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -325,12 +327,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         LinearLayout v_contenido_ventana = (LinearLayout) dialog_info_paseo.findViewById(R.id.contenido_ventana);
         v_usuario_owner = (TextView) dialog_info_paseo.findViewById(R.id.usuario_owner);
 
-        v_icon_borar = (ImageView) dialog_info_paseo.findViewById(R.id.icon_borrar);
+        v_icon_borrar = (ImageView) dialog_info_paseo.findViewById(R.id.icon_borrar);
 
         if (owner.equals(firebaseAuth.getCurrentUser().getUid())) {
-            v_icon_borar.setVisibility(View.VISIBLE);
+            v_icon_borrar.setVisibility(View.VISIBLE);
         }else {
-            v_icon_borar.setVisibility(View.INVISIBLE);
+            v_icon_borrar.setVisibility(View.INVISIBLE);
         }
 
         DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
@@ -345,7 +347,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        v_icon_borar.setOnClickListener(new View.OnClickListener() {
+        v_icon_borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BorrarMarcador(id_marcador,dialog_info_paseo,2);
