@@ -5,12 +5,14 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,7 +39,9 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
     private ArrayList<AnuncioInformation> informacionMascotas = new ArrayList<>();
     private ArrayList<String> nombreMascotas = new ArrayList<>();
     private ArrayList<String> id_mascota_perfil = new ArrayList<>();
+    private EditText telf_contacto;
     public static String v_id_mascota;
+    public static String telefono;
 
 
     public SelecionMascotaPerdidaFragment() {
@@ -58,21 +62,26 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
         id_mascota_perfil.clear();
         nombreMascotas.clear();
         v_id_mascota = null;
+        telf_contacto = (EditText) view.findViewById(R.id.telf_contact);
         CargarMascotasLista();
 
     }
 
-    private void CargarMascotasLista(){
+    private void CargarMascotasLista() {
         DataRef = FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mascotas");
-        listaMascotas = (ListView)mView.findViewById(R.id.listmascotas);
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, nombreMascotas);
+        listaMascotas = (ListView) mView.findViewById(R.id.listmascotas);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, nombreMascotas);
         listaMascotas.setAdapter(arrayAdapter);
         listaMascotas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.v("INFO"," > "+id_mascota_perfil.get(i));
-                v_id_mascota = id_mascota_perfil.get(i);
-
+                Log.v("INFO", " > " + id_mascota_perfil.get(i));
+                telefono = telf_contacto.getText().toString().trim();
+                if (!TextUtils.isEmpty(telefono)) {
+                    v_id_mascota = id_mascota_perfil.get(i);
+                } else {
+                    Toast.makeText(getActivity(), getString(R.string.toast_set_phone), Toast.LENGTH_SHORT).show();
+                }
             }
         });
         DataRef.addChildEventListener(new ChildEventListener() {
@@ -118,7 +127,7 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
                 }
             }, 0L);
         } else {
-            Toast.makeText(getActivity(), "Seleccione una mascota", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.toast_pet_select), Toast.LENGTH_SHORT).show();
         }
 
 

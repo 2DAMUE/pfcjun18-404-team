@@ -1,16 +1,20 @@
 package com.team.a404.a404team.Datos;
 
 public class Marcadores_perdidos {
-    private double latitud,longitud;
-    private String id_mascota,owner;
+    private double latitud, longitud;
+    private String id_mascota;
+    private String owner;
+    private String telefono;
 
-    public Marcadores_perdidos(){}
+    public Marcadores_perdidos() {
+    }
 
-    public Marcadores_perdidos(String id_mascota ,double latitud, double longitud, String owner) {
+    public Marcadores_perdidos(String id_mascota, double latitud, double longitud, String owner, String telefono) {
         this.id_mascota = id_mascota;
         this.latitud = latitud;
         this.longitud = longitud;
         this.owner = owner;
+        this.telefono = telefono;
     }
 
     public double getLatitud() {
@@ -43,5 +47,13 @@ public class Marcadores_perdidos {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

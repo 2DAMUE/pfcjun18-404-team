@@ -50,6 +50,8 @@
     <string name="complete">  COMPLETAR  </string>
     <string name="select_lost">Seleccione la mascota que se ha perdido</string>
     <string name="select_place">Toque el lugar donde desee crear el marcador</string>
+    <string name="toast_pet_select">Seleccione una mascota</string>
+    <string name="toast_set_phone">Introduzca un número de teléfono válido</string>
 
     <!-- Strings related to Settings -->
 
@@ -138,4 +140,5 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="btn_seen">Visto</string>
     <string name="btn_delete">Borrar Mascota</string>
+    <string name="hint_phone">Introduzca un teléfono de contacto</string>
 </resources>

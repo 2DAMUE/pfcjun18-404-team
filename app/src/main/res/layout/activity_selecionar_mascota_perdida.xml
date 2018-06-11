@@ -11,6 +11,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <EditText
+            android:id="@+id/telf_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:ems="10"
+            android:hint="@string/hint_phone"
+            android:inputType="textPersonName" />
         <LinearLayout
             android:id="@+id/contenido_ventana"
             android:layout_width="match_parent"
@@ -28,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Seleccione la mascota que ha perdido "
+                android:text="@string/select_lost"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="18sp"
                 android:typeface="normal" />
@@ -51,7 +59,10 @@
                 android:id="@+id/listmascotas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom" />
+                android:layout_gravity="bottom" >
+
+
+            </ListView>
         </LinearLayout>
 
     </LinearLayout>
