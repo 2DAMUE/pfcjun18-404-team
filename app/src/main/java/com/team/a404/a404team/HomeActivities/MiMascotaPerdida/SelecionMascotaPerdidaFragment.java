@@ -46,7 +46,7 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.activity_selecion_mascota_perdida, container, false);
+        mView = inflater.inflate(R.layout.activity_selecionar_mascota_perdida, container, false);
         return mView;
     }
 

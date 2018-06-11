@@ -29,4 +29,9 @@
         <item name="android:textColor">@color/common_google_signin_btn_text_dark_disabled</item>
     </style>
 
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_menu_tipo1</item>
+        <item name="android:textColor">@color/colorBlanco</item>
+    </style>
+
 </resources>

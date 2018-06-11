@@ -1,4 +1,4 @@
-package com.team.a404.a404team.HomeActivities.MiMascotaPerdida;
+package com.team.a404.a404team.HomeActivities.HoraDelPaseo;
 
 
 import android.Manifest;
@@ -33,12 +33,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
+import com.team.a404.a404team.Datos.Marcadores_paseo;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.R;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
-public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapReadyCallback, BlockingStep {
+public class SelecionarUbicacionMapaPaseoFragment extends Fragment implements OnMapReadyCallback, BlockingStep {
 
     private GoogleMap mGoogleMap;
     private MapView mMapView;
@@ -99,7 +100,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
                     mGoogleMap.clear();
                     map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                             .position(latLng)
-                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_rojo)));
+                            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_azul)));
                 }
             });
 
@@ -122,7 +123,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
         map_marcador = mGoogleMap.addMarker(new MarkerOptions()
             .position(ubi)
-            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_rojo)));
+            .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_azul)));
 
 
     }
@@ -191,7 +192,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
-        Log.e("ID"," > "+SelecionMascotaPerdidaFragment.v_id_mascota);
+        Log.e("ID"," > "+ SelecionMascotaTiempoFragment.v_id_mascota);
         Log.e("UBI"," > "+map_marcador.getPosition());
         EnviarDatos();
         Toast.makeText(getActivity(), "Tu marcador de a creado", Toast.LENGTH_SHORT).show();
@@ -210,9 +211,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
 
     public void EnviarDatos(){
-        DatabaseReference db_marcador_perdida = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").push();
-        db_marcador_perdida.setValue(new Marcadores_perdidos(SelecionMascotaPerdidaFragment.v_id_mascota, map_marcador.getPosition().latitude, map_marcador.getPosition().longitude, firebaseAuth.getCurrentUser().getUid()));
-        DatabaseReference db_mi_marcador_perdida = FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mis_marcadores").push();
-        db_mi_marcador_perdida.setValue(db_marcador_perdida.getKey());
+        DatabaseReference db_marcador_perdida = FirebaseDatabase.getInstance().getReference("marcadores").child("paseo").push();
+        db_marcador_perdida.setValue(new Marcadores_paseo(map_marcador.getPosition().latitude, map_marcador.getPosition().longitude, firebaseAuth.getCurrentUser().getUid()));
     }
 }

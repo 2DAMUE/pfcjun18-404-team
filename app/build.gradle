@@ -60,5 +60,7 @@ dependencies {
 
     implementation 'com.r0adkll:slidableactivity:2.0.6'
 
+    implementation 'com.github.andreilisun:swipedismissdialog:0.1'
+
 }
 apply plugin: 'com.google.gms.google-services'

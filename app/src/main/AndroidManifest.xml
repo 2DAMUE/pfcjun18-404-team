@@ -80,6 +80,11 @@
             android:name=".HomeActivities.PerfilUsuario.InfoMascota"
             android:screenOrientation="portrait"
             android:parentActivityName=".HomeActivities.HomeActivity"/>
+
+        <activity
+            android:name=".HomeActivities.HoraDelPaseo.CreateMarcadorPaseo"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".HomeActivities.HomeActivity"/>
     </application>
 
 </manifest>

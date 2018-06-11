@@ -13,4 +13,6 @@
     <color name="colorRojoError">#cc2e2e</color>
     <color name="azulInter">#0000e6</color>
 
+    <color name="colorOscuroTrasparente">#7d000000</color>
+
 </resources>

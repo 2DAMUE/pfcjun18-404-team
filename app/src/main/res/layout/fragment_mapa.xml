@@ -2,7 +2,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivities.HomeActivity">
@@ -54,6 +53,12 @@
         app:fab_size="normal" />
 
 
+    <FrameLayout
+        android:id="@+id/fl_interceptor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants" />
+
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab_menu"
         android:layout_width="wrap_content"
@@ -63,33 +68,36 @@
         android:layout_marginRight="16dp"
         app:fab_addButtonColorNormal="@color/colorPrimary"
         app:fab_addButtonColorPressed="#9901a5a6"
-        app:fab_labelStyle="@drawable/fab_menu_tipo1"
-        app:fab_labelsPosition="left">
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_EncontreMascota"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_icon="@mipmap/ic_huellaperro"
-            app:fab_size="mini" />
+        app:fab_labelsPosition="left"
+        app:fab_labelStyle="@style/menu_labels_style">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_Paseo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:fab_icon="@mipmap/ic_huellaperro"
+            app:fab_size="mini"
+            app:fab_title="Hora del paseo"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_EncontreMascota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:fab_colorNormal="@color/colorVerdeCorrecto"
             app:fab_colorPressed="#992ecc71"
-            app:fab_icon="@drawable/ic_icono_paseando"
-            app:fab_size="mini" />
+            app:fab_icon="@mipmap/ic_huellaperro"
+            app:fab_size="mini"
+            app:fab_title="Encontre una mascota"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_PerdiMiMascota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorPrimaryDark"
-            app:fab_colorPressed="#99a60143"
+            app:fab_colorNormal="#e3004f"
+            app:fab_colorPressed="#b70040"
             app:fab_icon="@mipmap/ic_huellaperro"
-            app:fab_size="mini" />
+            app:fab_size="mini"
+            app:fab_title="Perdi mi mascota" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

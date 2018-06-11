@@ -9,23 +9,30 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.github.andreilisun.swipedismissdialog.OnSwipeDismissListener;
+import com.github.andreilisun.swipedismissdialog.SwipeDismissDialog;
+import com.github.andreilisun.swipedismissdialog.SwipeDismissDirection;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -52,6 +59,7 @@ import com.team.a404.a404team.Datos.DB_Datos_Mascotas;
 import com.team.a404.a404team.Datos.DB_Datos_Perfil;
 import com.team.a404.a404team.Datos.Marcadores_paseo;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
+import com.team.a404.a404team.HomeActivities.HoraDelPaseo.CreateMarcadorPaseo;
 import com.team.a404.a404team.HomeActivities.MiMascotaPerdida.CreateMarcadorPerdida;
 import com.team.a404.a404team.R;
 import com.team.a404.a404team.pruebas.pruebas_dialogo;
@@ -80,6 +88,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private FloatingActionButton v_fab_myloca ,v_fab_EncontreMascota,v_fab_Paseo ,v_fab_PerdiMiMascota;
     private FloatingActionsMenu v_fab_menu;
     private String id,owner,id_marcador ;
+    private FrameLayout fl_interceptor;
+
+    //SwipeDismissDialog
 
 
 
@@ -90,7 +101,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceStade) {
         super.onViewCreated(view, savedInstanceStade);
@@ -100,10 +110,21 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         v_fab_myloca = (FloatingActionButton) mView.findViewById(R.id.myLocationButton);
         v_fab_menu = (FloatingActionsMenu) mView.findViewById(R.id.fab_menu);
 
+        fl_interceptor = (FrameLayout) mView.findViewById(R.id.fl_interceptor);
+
         mMapView.setVisibility(View.INVISIBLE);
         v_fab_myloca.setVisibility(View.INVISIBLE);
         v_fab_menu.setVisibility(View.INVISIBLE);
 
+        fl_interceptor.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (v_fab_menu.isExpanded()) {
+                    v_fab_menu.collapse();
+                }
+                return false;
+            }
+        });
 
         contador = true;
 
@@ -111,7 +132,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             mMapView.onCreate(null);
             mMapView.onResume();
             mMapView.getMapAsync(this);
-
         }
         userLocationFAB();
         PerdiMiMascota();
@@ -196,8 +216,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         v_fab_Paseo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent1 = new Intent(getActivity(), pruebas_dialogo.class);
-                        startActivity(intent1);
+                        Intent new_ventana = new Intent(getActivity(), CreateMarcadorPaseo.class);
+                        startActivity(new_ventana);
 
                     }
                 });
@@ -214,16 +234,19 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 });
     }
 
-
     private void InfoDialogoPerdido() {
-        final Dialog dialog_info_perdido = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
-        dialog_info_perdido.setContentView(R.layout.dialog_mapa_info_perdida);
-        dialog_info_perdido.setCanceledOnTouchOutside(true);
-        dialog_info_perdido.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#30000000")));
-        dialog_info_perdido.show();
 
-        FrameLayout v_pantalla = (FrameLayout) dialog_info_perdido.findViewById(R.id.anuncio_pantalla);
-        LinearLayout v_contenido_ventana = (LinearLayout) dialog_info_perdido.findViewById(R.id.contenido_ventana);
+        final SwipeDismissDialog dialog_info_perdido = new SwipeDismissDialog.Builder(getContext())
+                .setLayoutResId(R.layout.dialog_mapa_info_perdida)
+                .build()
+                .show();
+
+        /*
+        dinal Dialog dialog_info_perdido = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
+        dialog_info_perdido.setContentView(R.layout.dialog_mapa_info_perdida);
+        dialog_info_perdido.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#30000000")));
+        dialog_info_perdido.show();
+        */
 
         v_icon_borar = (ImageView) dialog_info_perdido.findViewById(R.id.icon_borrar);
 
@@ -285,11 +308,18 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void InfoDialogoPaseo() {
+
+        final SwipeDismissDialog dialog_info_paseo = new SwipeDismissDialog.Builder(getContext())
+                .setLayoutResId(R.layout.dialog_mapa_info_paseo)
+                .build()
+                .show();
+        /*
         final Dialog dialog_info_paseo = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
         dialog_info_paseo.setContentView(R.layout.dialog_mapa_info_paseo);
         dialog_info_paseo.setCanceledOnTouchOutside(true);
         dialog_info_paseo.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
         dialog_info_paseo.show();
+        */
 
         FrameLayout v_pantalla = (FrameLayout) dialog_info_paseo.findViewById(R.id.anuncio_pantalla);
         LinearLayout v_contenido_ventana = (LinearLayout) dialog_info_paseo.findViewById(R.id.contenido_ventana);
@@ -327,7 +357,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     /**
      * BORRAR MARCADOR
      */
-    private void BorrarMarcador(final String id_marcador_total, final Dialog dialog_total, final int tipo){
+    private void BorrarMarcador(final String id_marcador_total, final SwipeDismissDialog dialog_total, final int tipo){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setCancelable(true);
         builder.setTitle("Borrar Marcador");
@@ -347,7 +377,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                         }
                         borrar_marcador.removeValue();
                         CogerTodosMarcadores();
-                        dialog_total.hide();
+                        dialog_total.dismiss();
                     }
                 });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -473,6 +503,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         }
 
     }
+
+    /**
+     * METODO PARA ACTUALIZAR Y CARGAR LOS MARCADORES EN EL MAPA
+     */
 
     private void CogerTodosMarcadores(){
 
