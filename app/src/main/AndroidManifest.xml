@@ -68,23 +68,23 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomeActivities.PerfilUsuario.PerfilUsuario"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HomeActivities.MiMascotaPerdida.CreateMarcadorPerdida"
             android:label="@string/title_activity_create_marcador_perdida"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomeActivities.MiMascotaPerdida.SelecionMascotaPerdidaFragment"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HomeActivities.PerfilUsuario.InfoMascota"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".HomeActivities.HomeActivity"/>
-
+            android:parentActivityName=".HomeActivities.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HomeActivities.HoraDelPaseo.CreateMarcadorPaseo"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".HomeActivities.HomeActivity"/>
+            android:parentActivityName=".HomeActivities.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".HomeActivities.OtraMascotaPerdida.CreateMarcardorOtra"></activity>
     </application>
 
 </manifest>
