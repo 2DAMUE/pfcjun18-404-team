@@ -12,11 +12,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -58,6 +61,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.team.a404.a404team.Datos.DB_Datos_Mascotas;
 import com.team.a404.a404team.Datos.DB_Datos_Perfil;
+import com.team.a404.a404team.Datos.DatosMascota;
 import com.team.a404.a404team.Datos.Marcadores_paseo;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.HomeActivities.HoraDelPaseo.CreateMarcadorPaseo;
@@ -78,7 +82,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private LinearLayout v_vista_error_carga;
     private double longitud, latitud;
     private boolean contador;
-    private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner, v_mascota_text_raza;
+    private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner, v_mascota_text_raza, v_telefono;
     private ImageView v_icon_borrar;
     private CircularImageView v_foto_mascota;
     private DatabaseReference all_marcadores;
@@ -89,7 +93,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<String> marcadores_azul_id = new ArrayList<String>();
     private FloatingActionButton v_fab_myloca, v_fab_EncontreMascota, v_fab_Paseo, v_fab_PerdiMiMascota;
     private FloatingActionsMenu v_fab_menu;
-    private String id, owner, id_marcador;
+    private String id, owner, id_marcador, markerid;
     private FrameLayout fl_interceptor;
 
     //SwipeDismissDialog
@@ -243,13 +247,6 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 .build()
                 .show();
 
-        /*
-        dinal Dialog dialog_info_perdido = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
-        dialog_info_perdido.setContentView(R.layout.dialog_mapa_info_perdida);
-        dialog_info_perdido.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#30000000")));
-        dialog_info_perdido.show();
-        */
-
         v_icon_borrar = (ImageView) dialog_info_perdido.findViewById(R.id.icon_borrar);
 
         if (owner.equals(firebaseAuth.getCurrentUser().getUid())) {
@@ -264,16 +261,32 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         v_mascota_rasgos = (TextView) dialog_info_perdido.findViewById(R.id.mascota_rasgos);
         v_usuario_owner = (TextView) dialog_info_perdido.findViewById(R.id.usuario_owner);
         v_foto_mascota = (CircularImageView) dialog_info_perdido.findViewById(R.id.foto_mascota);
+        v_telefono = (TextView) dialog_info_perdido.findViewById(R.id.usuario_telefono);
+
 
         DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
         info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                DB_Datos_Mascotas d_mascota = dataSnapshot.getValue(DB_Datos_Mascotas.class);
+                DatosMascota d_mascota = dataSnapshot.getValue(DatosMascota.class);
 
                 v_mascota_nombre.setText(d_mascota.getNombre());
                 v_mascota_raza.setText(d_mascota.getRaza());
+                markerid = d_mascota.getMarker_id();
+                DatabaseReference info_marker = FirebaseDatabase.getInstance().getReference("marcadores")
+                        .child("perdidas").child(markerid);
+                info_marker.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Marcadores_perdidos mark = dataSnapshot.getValue(Marcadores_perdidos.class);
+                        v_telefono.setText(mark.getTelefono());
+                    }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
                 if (d_mascota.getRasgos().length() > 2) {
                     v_mascota_rasgos.setText(d_mascota.getRasgos());
@@ -288,6 +301,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
         DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
         info_owner.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -308,7 +322,28 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 BorrarMarcador(id_marcador, dialog_info_perdido, 1);
             }
         });
+        v_telefono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                realizarLlamada(v_telefono.getText().toString());
+            }
+        });
 
+    }
+
+    public void realizarLlamada(String telf) {
+        final int request = 1;
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:"+telf));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (ActivityCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.CALL_PHONE}, request);
+            } else {
+                startActivity(callIntent);
+            }
+        }
     }
 
     private void InfoDialogoPaseo() {
