@@ -3,6 +3,7 @@ package com.team.a404.a404team.Zona_lobby;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.team.a404.a404team.HomeActivities.HomeActivity;
 import com.team.a404.a404team.R;
 
@@ -41,6 +44,7 @@ public class lobby extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
     private static final String TAG = "GoogleActivity";
     GoogleSignInClient mGoogleSignInClient;
+    private DatabaseReference DataRef;
     /*
 
     // Choose authentication providers
@@ -142,7 +146,6 @@ public class lobby extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
         firebaseAuth.addAuthStateListener(firebaseAuthState);
     }
     @Override
@@ -151,11 +154,30 @@ public class lobby extends AppCompatActivity {
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
+
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
+                String personName = "person";
+                String personEmail = "email";
                 // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
+                GoogleSignInAccount acct = task.getResult(ApiException.class);
+                String personID = "ID";
+                if (acct != null) {
+                    personID = acct.getId();
+                    personName = acct.getDisplayName();
+                    String personGivenName = acct.getGivenName();
+                    String personFamilyName = acct.getFamilyName();
+                    personEmail = acct.getEmail();
+                    Uri personPhoto = acct.getPhotoUrl();
+                }
+
+                FirebaseAuth firebaseAuth2 = FirebaseAuth.getInstance();
+                FirebaseUser usuario = firebaseAuth2.getCurrentUser();
+                DataRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(personID);
+                DataRef.child("nombre").setValue(personName);
+                DataRef.child("email").setValue(personEmail);
+                firebaseAuthWithGoogle(acct);
+
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);

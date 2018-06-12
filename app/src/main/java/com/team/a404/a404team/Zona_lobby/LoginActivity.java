@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.support.design.widget.Snackbar;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInApi;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,13 +26,14 @@ import com.team.a404.a404team.HomeActivities.HomeActivity;
 import com.team.a404.a404team.SplashScreen;
 import com.team.a404.a404team.VentanasEstado.ActivitySuccess;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
     private FirebaseAuth firebaseAuth;
 
     private EditText v_user, v_pass;
     private Button v_btn_login;
     private TextView nopass;
     private ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +112,16 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
 

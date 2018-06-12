@@ -42,9 +42,8 @@ public class PerfilUsuario extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference DataRef = FirebaseDatabase.getInstance().getReference().child("usuarios");
-    private TextView nombre, telefon;
     private Button guarda;
-    private EditText nomb;
+    private EditText nomb, email;
     private ImageView imagenperfil;
     private CircularImageView imagen;
     private static final int PICK_IMAGE_REQUEST = 100;
@@ -56,8 +55,8 @@ public class PerfilUsuario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
-        nombre = findViewById(R.id.nombre);
         nomb = findViewById(R.id.nombremodifica);
+        email = findViewById(R.id.correoElectronicomodifica);
         guarda = findViewById(R.id.guarda);
         imagenperfil = findViewById(R.id.imagenperfil);
         imagen = findViewById(R.id.imagen);
@@ -82,7 +81,8 @@ public class PerfilUsuario extends AppCompatActivity {
 
                         UserInformation user = dataSnapshot.getValue(UserInformation.class);
                         Log.v("MSG",""+user.getUsername());
-                        nomb.setText(user.getUsername());
+                        nomb.setText(user.getNombre());
+                        email.setText(user.getEmail());
                     }
 
                     @Override
@@ -166,7 +166,9 @@ public class PerfilUsuario extends AppCompatActivity {
     }
     private void GuardaDatos() {
         String nombre = nomb.getText().toString().trim();
+        String em = email.getText().toString().trim();
         DataRef.child(usuario.getUid()).child("nombre").setValue(nombre);
+        DataRef.child(usuario.getUid()).child("email").setValue(em);
         Snackbar.make(guarda, getString(R.string.guardadatos), Snackbar.LENGTH_LONG).setAction("Action", null).show();
     }
 }

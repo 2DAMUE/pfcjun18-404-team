@@ -7,14 +7,20 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.team.a404.a404team.Datos.UserInformation;
 import com.team.a404.a404team.R;
 
 import java.io.IOException;
@@ -26,6 +32,7 @@ public class PerfilInfo extends AppCompatActivity {
 
     private CircularImageView imagen;
     Uri imageUri;
+    TextView textView2;
     private static final int PICK_IMAGE_REQUEST = 100;
     StorageReference storageReference;
     FirebaseUser usuario = firebaseAuth.getCurrentUser();
@@ -37,9 +44,24 @@ public class PerfilInfo extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        textView2 = findViewById(R.id.textView2);
         imagen = findViewById(R.id.imagen);
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("usuarios/"+usuario.getUid());
+        //userlist.add(user);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                UserInformation user = dataSnapshot.getValue(UserInformation.class);
+                Log.v("MSG",""+user.getUsername());
+                textView2.setText(user.getUsername());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
     protected void onActivityResult(int requestcode, int resultcode, Intent data) {
