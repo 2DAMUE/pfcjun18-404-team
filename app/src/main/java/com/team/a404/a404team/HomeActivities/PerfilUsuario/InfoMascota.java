@@ -88,23 +88,19 @@ public class InfoMascota extends AppCompatActivity {
 
     public void deleteMascota() {
         final DatabaseReference deleteData = FirebaseDatabase.getInstance().getReference("usuarios")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("mascotas");
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("mascotas").child(nombre);
         if (!TextUtils.isEmpty(url_foto)) {
             StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(url_foto);
             photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    deleteData.child("url_foto").setValue("");
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    deleteData.child("url_foto").setValue("");
-
                 }
             });
         }
-        deleteData.child("url_foto").setValue("");
         deleteData.child("nombre").removeValue();
         deleteData.child("raza").removeValue();
         deleteData.child("rasgos").removeValue();

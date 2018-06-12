@@ -3,6 +3,7 @@ package com.team.a404.a404team.HomeActivities;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -65,23 +66,12 @@ public class MascotasFragment extends Fragment {
         listaMascotas.setAdapter(arrayAdapter);
         listaMascotas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (nombreMascotas.get(i).equals(informacionMascotas.get(i).getNombre())) {
-                    String nombre = informacionMascotas.get(i).getNombre();
-                    String raza = informacionMascotas.get(i).getRaza();
-                    String descript = informacionMascotas.get(i).getRasgos();
-                    String url = informacionMascotas.get(i).getUrl_foto();
-                    Intent intent = new Intent(getContext(), InfoMascota.class);
-                    intent.putExtra("nombre", nombre);
-                    intent.putExtra("raza", raza);
-                    intent.putExtra("rasgos", descript);
-                    intent.putExtra("url", url);
-                    startActivity(intent);
-
-                } else {
-                    for (String nom : nombreMascotas) {
-                        if (informacionMascotas.get(i).getNombre().equals(nom)) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
                             String nombre = informacionMascotas.get(i).getNombre();
                             String raza = informacionMascotas.get(i).getRaza();
                             String descript = informacionMascotas.get(i).getRasgos();
@@ -92,6 +82,29 @@ public class MascotasFragment extends Fragment {
                             intent.putExtra("rasgos", descript);
                             intent.putExtra("url", url);
                             startActivity(intent);
+                        }
+                    }, 3000);
+
+
+                } else {
+                    for (String nom : nombreMascotas) {
+                        if (informacionMascotas.get(i).getNombre().equals(nom)) {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                public void run() {
+                                    String nombre = informacionMascotas.get(i).getNombre();
+                                    String raza = informacionMascotas.get(i).getRaza();
+                                    String descript = informacionMascotas.get(i).getRasgos();
+                                    String url = informacionMascotas.get(i).getUrl_foto();
+                                    Intent intent = new Intent(getContext(), InfoMascota.class);
+                                    intent.putExtra("nombre", nombre);
+                                    intent.putExtra("raza", raza);
+                                    intent.putExtra("rasgos", descript);
+                                    intent.putExtra("url", url);
+                                    startActivity(intent);
+                                }
+                            }, 3000);
+
                         }
                     }
                 }
