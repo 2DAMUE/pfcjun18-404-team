@@ -33,7 +33,7 @@ import java.io.IOException;
 public class InfoMascota extends AppCompatActivity {
     private CircularImageView fotomascota;
     private TextView pnombre, praza, prasgos;
-    private String nombre, raza, rasgos, url_foto;
+    private String nombre, raza, rasgos, url_foto,marker_id;
     private Button btn_borrar;
     private DatabaseReference DataRef = FirebaseDatabase.getInstance().getReference("usuarios")
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("mascotas");
@@ -69,6 +69,7 @@ public class InfoMascota extends AppCompatActivity {
             raza = extras.getString("raza");
             rasgos = extras.getString("rasgos");
             url_foto = extras.getString("url");
+            marker_id = extras.getString("marker_id");
             pnombre.setText(nombre);
             praza.setText(raza);
             prasgos.setText(rasgos);
@@ -101,16 +102,27 @@ public class InfoMascota extends AppCompatActivity {
                 }
             });
         }
+        if(!TextUtils.isEmpty(marker_id)){
+            deleteMarcador();
+        }
         deleteData.child("nombre").removeValue();
         deleteData.child("raza").removeValue();
         deleteData.child("rasgos").removeValue();
         deleteData.child("url_foto").removeValue();
-
-
+        deleteData.child("marker_id").removeValue();
         Toast.makeText(InfoMascota.this, getString(R.string.toast_pet_deleted), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(InfoMascota.this, HomeActivity.class);
         startActivity(intent);
         finish();
+    }
+    public void deleteMarcador(){
+        DatabaseReference deleteMarker = FirebaseDatabase.getInstance().getReference("marcadores")
+                .child("perdidas").child(marker_id);
+        deleteMarker.child("id_mascota").removeValue();
+        deleteMarker.child("latitud").removeValue();
+        deleteMarker.child("longitud").removeValue();
+        deleteMarker.child("owner").removeValue();
+        deleteMarker.child("telefono").removeValue();
     }
 
     @Override

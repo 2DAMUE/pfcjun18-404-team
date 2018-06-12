@@ -25,13 +25,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.team.a404.a404team.Datos.AnuncioInformation;
+import com.team.a404.a404team.Datos.DatosMascota;
 import com.team.a404.a404team.HomeActivities.PerfilUsuario.InfoMascota;
 import com.team.a404.a404team.R;
 
 import java.util.ArrayList;
-
-import static android.app.Activity.RESULT_OK;
 
 public class MascotasFragment extends Fragment {
     private FloatingActionButton nuevaMascota;
@@ -40,7 +38,7 @@ public class MascotasFragment extends Fragment {
     private DatabaseReference DataRef;
     private EditText nombre, raza, descripcion;
     private Button saveButton;
-    private ArrayList<AnuncioInformation> informacionMascotas = new ArrayList<>();
+    private ArrayList<DatosMascota> informacionMascotas = new ArrayList<>();
     private ArrayList<String> nombreMascotas = new ArrayList<>();
 
 
@@ -76,14 +74,16 @@ public class MascotasFragment extends Fragment {
                             String raza = informacionMascotas.get(i).getRaza();
                             String descript = informacionMascotas.get(i).getRasgos();
                             String url = informacionMascotas.get(i).getUrl_foto();
+                            String idmark = informacionMascotas.get(i).getMarker_id();
                             Intent intent = new Intent(getContext(), InfoMascota.class);
                             intent.putExtra("nombre", nombre);
                             intent.putExtra("raza", raza);
                             intent.putExtra("rasgos", descript);
                             intent.putExtra("url", url);
+                            intent.putExtra("marker_id",idmark);
                             startActivity(intent);
                         }
-                    }, 3000);
+                    }, 1000);
 
 
                 } else {
@@ -96,14 +96,16 @@ public class MascotasFragment extends Fragment {
                                     String raza = informacionMascotas.get(i).getRaza();
                                     String descript = informacionMascotas.get(i).getRasgos();
                                     String url = informacionMascotas.get(i).getUrl_foto();
+                                    String idmark = informacionMascotas.get(i).getMarker_id();
                                     Intent intent = new Intent(getContext(), InfoMascota.class);
                                     intent.putExtra("nombre", nombre);
                                     intent.putExtra("raza", raza);
                                     intent.putExtra("rasgos", descript);
                                     intent.putExtra("url", url);
+                                    intent.putExtra("marker_id",idmark);
                                     startActivity(intent);
                                 }
-                            }, 3000);
+                            }, 1000);
 
                         }
                     }
@@ -113,7 +115,7 @@ public class MascotasFragment extends Fragment {
         DataRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                AnuncioInformation pet = dataSnapshot.getValue(AnuncioInformation.class);
+                DatosMascota pet = dataSnapshot.getValue(DatosMascota.class);
                 nombreMascotas.add(pet.getNombre());
                 informacionMascotas.add(pet);
                 arrayAdapter.notifyDataSetChanged();
@@ -166,6 +168,7 @@ public class MascotasFragment extends Fragment {
                             datosMascota.child(nom).child("raza").setValue(rac);
                             datosMascota.child(nom).child("rasgos").setValue(desc);
                             datosMascota.child(nom).child("url_foto").setValue("");
+                            datosMascota.child(nom).child("marker_id").setValue("");
                             listaMascotas.invalidateViews();
                             arrayAdapter.notifyDataSetChanged();
                             Toast.makeText(getContext(), getString(R.string.toast_no_image),

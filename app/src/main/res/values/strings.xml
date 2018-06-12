@@ -51,8 +51,9 @@
     <string name="select_lost">Seleccione la mascota que se ha perdido</string>
     <string name="select_place">Toque el lugar donde desee crear el marcador</string>
     <string name="toast_pet_select">Seleccione una mascota</string>
-    <string name="toast_set_phone">Introduzca un número de teléfono válido</string>
+    <string name="toast_set_phone">El número de teléfono no es válido</string>
     <string name="toast_pet_deleted">Se ha borrado la mascota de la base de datos</string>
+    <string name="toast_marker_created">¡El marcador se ha creado con éxito!</string>
 
     <!-- Strings related to Settings -->
 

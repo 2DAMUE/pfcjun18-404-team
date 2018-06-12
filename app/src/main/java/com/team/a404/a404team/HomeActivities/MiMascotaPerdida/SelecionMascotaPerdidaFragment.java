@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
-import com.team.a404.a404team.Datos.AnuncioInformation;
+import com.team.a404.a404team.Datos.DatosMascota;
 import com.team.a404.a404team.R;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
     private ListView listaMascotas;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference DataRef;
-    private ArrayList<AnuncioInformation> informacionMascotas = new ArrayList<>();
+    private ArrayList<DatosMascota> informacionMascotas = new ArrayList<>();
     private ArrayList<String> nombreMascotas = new ArrayList<>();
     private ArrayList<String> id_mascota_perfil = new ArrayList<>();
     private EditText telf_contacto;
@@ -87,7 +87,7 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
         DataRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                AnuncioInformation pet = dataSnapshot.getValue(AnuncioInformation.class);
+                DatosMascota pet = dataSnapshot.getValue(DatosMascota.class);
                 id_mascota_perfil.add(dataSnapshot.getKey());
                 nombreMascotas.add(pet.getNombre());
                 informacionMascotas.add(pet);

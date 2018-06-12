@@ -55,6 +55,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 import com.team.a404.a404team.Datos.DB_Datos_Mascotas;
 import com.team.a404.a404team.Datos.DB_Datos_Perfil;
 import com.team.a404.a404team.Datos.Marcadores_paseo;
@@ -77,7 +78,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private LinearLayout v_vista_error_carga;
     private double longitud, latitud;
     private boolean contador;
-    private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner,v_mascota_text_raza;
+    private TextView v_mascota_nombre, v_mascota_raza, v_mascota_rasgos, v_usuario_owner, v_mascota_text_raza;
     private ImageView v_icon_borrar;
     private CircularImageView v_foto_mascota;
     private DatabaseReference all_marcadores;
@@ -86,13 +87,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<Marcadores_paseo> marcadores_azul = new ArrayList<Marcadores_paseo>();
     private ArrayList<String> marcadores_rojo_id = new ArrayList<String>();
     private ArrayList<String> marcadores_azul_id = new ArrayList<String>();
-    private FloatingActionButton v_fab_myloca ,v_fab_EncontreMascota,v_fab_Paseo ,v_fab_PerdiMiMascota;
+    private FloatingActionButton v_fab_myloca, v_fab_EncontreMascota, v_fab_Paseo, v_fab_PerdiMiMascota;
     private FloatingActionsMenu v_fab_menu;
-    private String id,owner,id_marcador ;
+    private String id, owner, id_marcador;
     private FrameLayout fl_interceptor;
 
     //SwipeDismissDialog
-
 
 
     @Override
@@ -174,9 +174,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     owner = info[1];
                     int tipo = Integer.parseInt(info[2]);
                     id_marcador = info[3];
-                    Log.e("LOGG"," > "+id_marcador);
+                    Log.e("LOGG", " > " + id_marcador);
 
-                    switch (tipo){
+                    switch (tipo) {
                         case 1:
                             InfoDialogoPerdido();
                             break;
@@ -201,39 +201,39 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
     // ----------------------------------------------------------------------------------------------------------------------------------
 
-    private void PerdiMiMascota(){
+    private void PerdiMiMascota() {
         v_fab_PerdiMiMascota = (FloatingActionButton) mView.findViewById(R.id.fab_PerdiMiMascota);
         v_fab_PerdiMiMascota.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent1 = new Intent(getActivity(), CreateMarcadorPerdida.class);
-                        startActivity(intent1);
-                    }
-                });
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(), CreateMarcadorPerdida.class);
+                startActivity(intent1);
+            }
+        });
     }
 
-    private void Paseo(){
+    private void Paseo() {
         v_fab_Paseo = (FloatingActionButton) mView.findViewById(R.id.fab_Paseo);
         v_fab_Paseo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent new_ventana = new Intent(getActivity(), CreateMarcadorPaseo.class);
-                        startActivity(new_ventana);
+            @Override
+            public void onClick(View v) {
+                Intent new_ventana = new Intent(getActivity(), CreateMarcadorPaseo.class);
+                startActivity(new_ventana);
 
-                    }
-                });
+            }
+        });
     }
 
-    private void EncontreMascota(){
+    private void EncontreMascota() {
         v_fab_EncontreMascota = (FloatingActionButton) mView.findViewById(R.id.fab_EncontreMascota);
         v_fab_EncontreMascota.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent new_ventana = new Intent(getActivity(), CreateMarcardorOtra.class);
-                        startActivity(new_ventana);
+            @Override
+            public void onClick(View v) {
+                Intent new_ventana = new Intent(getActivity(), CreateMarcardorOtra.class);
+                startActivity(new_ventana);
 
-                    }
-                });
+            }
+        });
     }
 
     private void InfoDialogoPerdido() {
@@ -254,7 +254,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
         if (owner.equals(firebaseAuth.getCurrentUser().getUid())) {
             v_icon_borrar.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             v_icon_borrar.setVisibility(View.INVISIBLE);
         }
 
@@ -275,17 +275,18 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 v_mascota_raza.setText(d_mascota.getRaza());
 
 
-                if (d_mascota.getRasgos().length() > 2){
+                if (d_mascota.getRasgos().length() > 2) {
                     v_mascota_rasgos.setText(d_mascota.getRasgos());
-                }else {
+                } else {
                     v_mascota_text_raza.setVisibility(View.INVISIBLE);
                     v_mascota_rasgos.setVisibility(View.INVISIBLE);
                 }
-                CogerFotoMascota();
+                Picasso.get().load(d_mascota.getUrl_foto()).into(v_foto_mascota);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
         DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
         info_owner.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -296,14 +297,15 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
 
         v_icon_borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                BorrarMarcador(id_marcador,dialog_info_perdido,1);
+                BorrarMarcador(id_marcador, dialog_info_perdido, 1);
             }
         });
 
@@ -331,7 +333,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
         if (owner.equals(firebaseAuth.getCurrentUser().getUid())) {
             v_icon_borrar.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             v_icon_borrar.setVisibility(View.INVISIBLE);
         }
 
@@ -344,22 +346,24 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
 
         v_icon_borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BorrarMarcador(id_marcador,dialog_info_paseo,2);
+                BorrarMarcador(id_marcador, dialog_info_paseo, 2);
             }
         });
 
 
     }
+
     /**
      * BORRAR MARCADOR
      */
-    private void BorrarMarcador(final String id_marcador_total, final SwipeDismissDialog dialog_total, final int tipo){
+    private void BorrarMarcador(final String id_marcador_total, final SwipeDismissDialog dialog_total, final int tipo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setCancelable(true);
         builder.setTitle("Borrar Marcador");
@@ -369,12 +373,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DatabaseReference borrar_marcador = null;
-                        switch (tipo){
+                        switch (tipo) {
                             case 1:
-                                borrar_marcador =  FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(id_marcador_total);
+                                borrar_marcador = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(id_marcador_total);
                                 break;
                             case 2:
-                                borrar_marcador =  FirebaseDatabase.getInstance().getReference("marcadores").child("paseo").child(id_marcador_total);
+                                borrar_marcador = FirebaseDatabase.getInstance().getReference("marcadores").child("paseo").child(id_marcador_total);
                                 break;
                         }
                         borrar_marcador.removeValue();
@@ -391,29 +395,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         dialog_confirmar.show();
     }
 
-    private void CogerFotoMascota(){
-        try{
-            StorageReference stor = FirebaseStorage.getInstance().getReference().child("images/" + owner.toString() + "/userphoto.jpg");  //Cambiar a foto de la mascota (Sergio)
-            final long ONE_MEGABYTE = 1024 * 1024;
-            stor.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    v_foto_mascota.setImageBitmap(bmp);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    v_foto_mascota.setImageResource(R.drawable.dog);
-                }
-            });
-        }catch (Exception x){
-            v_foto_mascota.setImageResource(R.drawable.dog);
-        }
-
-    }
-
-    /** IR A MI UBICACION BOTON FAB */
+    /**
+     * IR A MI UBICACION BOTON FAB
+     */
 
     private void userLocationFAB() {
         v_fab_myloca.setOnClickListener(new View.OnClickListener() {
@@ -461,7 +445,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                     .position(ubi)
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_rojo)));
-            map_marcador.setTag(marcadores_rojo.get(i).getId_mascota() + "##" + marcadores_rojo.get(i).getOwner()+"##1##"+marcadores_rojo_id.get(i));
+            map_marcador.setTag(marcadores_rojo.get(i).getId_mascota() + "##" + marcadores_rojo.get(i).getOwner() + "##1##" + marcadores_rojo_id.get(i));
         }
 
     }
@@ -500,8 +484,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                     .position(ubi)
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_azul)));
-            Log.e("TTT","> "+marcadores_azul_id.get(i));
-            map_marcador.setTag("nada##" + marcadores_azul.get(i).getOwner()+"##2##"+marcadores_azul_id.get(i));
+            Log.e("TTT", "> " + marcadores_azul_id.get(i));
+            map_marcador.setTag("nada##" + marcadores_azul.get(i).getOwner() + "##2##" + marcadores_azul_id.get(i));
         }
 
     }
@@ -510,7 +494,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
      * METODO PARA ACTUALIZAR Y CARGAR LOS MARCADORES EN EL MAPA
      */
 
-    private void CogerTodosMarcadores(){
+    private void CogerTodosMarcadores() {
 
         DatabaseReference marcadores_todos = FirebaseDatabase.getInstance().getReference("marcadores");
 

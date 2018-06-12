@@ -13,8 +13,8 @@
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/imagen_mascota"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center" />
 
             <TextView
@@ -22,37 +22,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/username"
-                android:textColor="@color/colorNegro" />
+                android:textColor="@color/colorRojoRosaOscuro"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/pet_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/pet_race"
-                android:textColor="@color/colorNegro" />
+                android:textColor="@color/colorRojoRosaOscuro"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/pet_race"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/details"
-                android:textColor="@color/colorNegro" />
+                android:textColor="@color/colorRojoRosaOscuro"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/pet_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="false"/>
+                android:singleLine="false"
+                android:textSize="18sp"/>
 
             <Button
                 android:id="@+id/btn_borrar"

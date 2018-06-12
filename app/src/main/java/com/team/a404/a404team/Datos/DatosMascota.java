@@ -1,18 +1,21 @@
 package com.team.a404.a404team.Datos;
 
-public class AnuncioInformation extends Marcadores_perdidos {
+public class DatosMascota extends Marcadores_perdidos {
     private String nombre;
     private String rasgos;
     private String raza;
     private String url_foto;
+    private String marker_id;
 
-    public AnuncioInformation() { }
 
-    public AnuncioInformation(String descripcion, String nombre, String raza, String url_foto) {
+    public DatosMascota() { }
+
+    public DatosMascota(String descripcion, String nombre, String raza, String url_foto,String marker_id) {
         this.nombre = nombre;
         this.rasgos = descripcion;
         this.raza = raza;
         this.url_foto = url_foto;
+        this.marker_id = marker_id;
     }
 
     public String getNombre() {
@@ -46,5 +49,15 @@ public class AnuncioInformation extends Marcadores_perdidos {
     public void setUrl_foto(String url_foto) {
         this.url_foto = url_foto;
     }
+
+    public String getMarker_id() {
+        return marker_id;
+    }
+
+    public void setMarker_id(String marker_id) {
+        this.marker_id = marker_id;
+    }
+
+
 
 }
