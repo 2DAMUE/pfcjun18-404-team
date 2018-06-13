@@ -25,7 +25,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/ir_editar_perfil"
@@ -35,6 +35,17 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="@string/btn_change_profile" />
+
+            <Button
+                android:id="@+id/log_out_perfil"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/button_background_rojo"
+                android:textColor="@color/colorRojoRosaOscuro"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/btn_logout" />
 
         </LinearLayout>
 

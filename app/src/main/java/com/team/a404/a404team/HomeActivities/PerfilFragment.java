@@ -21,13 +21,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.team.a404.a404team.Datos.UserInformation;
 import com.team.a404.a404team.HomeActivities.PerfilUsuario.PerfilUsuario;
 import com.team.a404.a404team.R;
+import com.team.a404.a404team.Zona_lobby.lobby;
 
 
 public class PerfilFragment extends Fragment {
 
     private View mView;
     private Toolbar toolbar;
-    private Button v_ir_editar_perfil;
+    private Button v_ir_editar_perfil, v_logout;
     private TextView textView2;
 
     public PerfilFragment() {
@@ -74,7 +75,20 @@ public class PerfilFragment extends Fragment {
                 startActivity(intent1);
             }
         });
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        v_logout = (Button) mView.findViewById(R.id.log_out_perfil);
+        v_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                        firebaseAuth.signOut();
+                        Intent intent = new Intent(getContext(), lobby.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+
+            }
+        });
 
 
     }

@@ -33,6 +33,7 @@
     <string name="btn_pets">Pets</string>
     <string name="btn_map">Map</string>
     <string name="btn_profile">Profile</string>
+    <string name="btn_logout">Log out</string>
     <string name="google_map_api">AIzaSyCRGTpx__yJEuFFdNeBRqLGrtl2MEpJ6_A</string>
     <string name="event_name">Event name:</string>
     <string name="event_description">Event description:</string>

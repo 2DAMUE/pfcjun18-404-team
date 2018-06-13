@@ -36,6 +36,7 @@ public class PerfilInfo extends AppCompatActivity {
     private CircularImageView imagen;
     Uri imageUri;
     TextView textView2;
+
     private static final int PICK_IMAGE_REQUEST = 100;
     StorageReference storageReference;
     FirebaseUser usuario = firebaseAuth.getCurrentUser();
