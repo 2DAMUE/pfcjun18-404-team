@@ -17,7 +17,7 @@ public class CreateMarcardorOtra extends AppCompatActivity implements StepperLay
         setContentView(R.layout.activity_create_marcador_perdida);
 
         mStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
-        mStepperLayout.setAdapter(new StepperAdapterPaseo(getSupportFragmentManager(), this));
+        mStepperLayout.setAdapter(new StepperAdapterOtra(getSupportFragmentManager(), this));
         mStepperLayout.setListener(this);
     }
 

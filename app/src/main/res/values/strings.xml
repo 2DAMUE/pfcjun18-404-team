@@ -152,4 +152,5 @@
     <string name="btn_delete">Borrar Mascota</string>
     <string name="hint_phone">Introduzca un teléfono de contacto</string>
     <string name="btn_change_profile">Editar Perfil</string>
+    <string name="select_photo" >Saque una foto de la mascota</string>
 </resources>
