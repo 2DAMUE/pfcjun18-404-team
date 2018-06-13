@@ -17,7 +17,7 @@ public class CreateMarcadorPerdida extends AppCompatActivity implements StepperL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_marcador_perdida);
         mStepperLayout = (StepperLayout) findViewById(R.id.stepperLayout);
-        mStepperLayout.setAdapter(new StepperAdapter(getSupportFragmentManager(), this));
+        mStepperLayout.setAdapter(new StepperAdapterPerdida(getSupportFragmentManager(), this));
         mStepperLayout.setListener(this);
     }
 

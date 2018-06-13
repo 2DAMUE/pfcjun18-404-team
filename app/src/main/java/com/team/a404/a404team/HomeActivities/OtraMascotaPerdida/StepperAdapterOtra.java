@@ -9,10 +9,10 @@ import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter;
 import com.team.a404.a404team.HomeActivities.MiMascotaPerdida.SelecionMascotaPerdidaFragment;
 import com.team.a404.a404team.HomeActivities.MiMascotaPerdida.SelecionarUbicacionMapaFragment;
 
-public class StepperAdapter extends AbstractFragmentStepAdapter {
+public class StepperAdapterOtra extends AbstractFragmentStepAdapter {
     private static final String CURRENT_STEP_POSITION_KEY = "messageResourceId";
 
-    public StepperAdapter(FragmentManager fm, Context context) {
+    public StepperAdapterOtra(FragmentManager fm, Context context) {
         super(fm, context);
     }
 

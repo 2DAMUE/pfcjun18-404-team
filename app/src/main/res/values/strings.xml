@@ -47,7 +47,7 @@
     <string name="toast_no_pet_data">Todos los campos deben de estar llenos.</string>
     <string name="toast_no_image">Por favor, introduzca una imagen para la nueva mascota registrada.</string>
     <string name="pet_data">Datos de la mascota</string>
-    <string name="complete">  COMPLETAR  </string>
+    <string name="complete">    COMPLETAR    </string>
     <string name="select_lost">Seleccione la mascota que se ha perdido</string>
     <string name="select_place">Toque el lugar donde desee crear el marcador</string>
     <string name="toast_pet_select">Seleccione una mascota</string>

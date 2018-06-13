@@ -21,25 +21,25 @@ public class StepperAdapterPaseo extends AbstractFragmentStepAdapter {
     public Step createStep(int position) {
         switch (position){
             case 0:
-                final SelecionarUbicacionMapaPaseoFragment step1 = new SelecionarUbicacionMapaPaseoFragment();
+                final PaseoUnoFragment step1 = new PaseoUnoFragment();
                 Bundle b1 = new Bundle();
                 b1.putInt(CURRENT_STEP_POSITION_KEY, position);
                 step1.setArguments(b1);
                 return step1;
-            /*
+
             case 1:
                 final SelecionarUbicacionMapaPaseoFragment step2 = new SelecionarUbicacionMapaPaseoFragment();
                 Bundle b2 = new Bundle();
                 b2.putInt(CURRENT_STEP_POSITION_KEY, position);
                 step2.setArguments(b2);
                 return step2;
-            */
+
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }

@@ -50,7 +50,7 @@
     <string name="toast_no_image">Please, upload an image of the new pet.</string>
     <string name="pet_data">Pet data</string>
     <string name="btn_delete">Delete this pet</string>
-    <string name="complete">  COMPLETE  </string>
+    <string name="complete">    COMPLETE    </string>
     <string name="select_lost">Select the lost pet</string>
     <string name="select_place">Touch the map to create a marker on the desired place</string>
     <string name="hint_phone">Enter a phone number</string>

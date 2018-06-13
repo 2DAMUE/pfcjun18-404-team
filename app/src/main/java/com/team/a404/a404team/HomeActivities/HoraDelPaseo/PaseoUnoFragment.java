@@ -22,7 +22,7 @@ import com.team.a404.a404team.R;
 
 import java.util.Date;
 
-public class SelecionMascotaTiempoFragment extends Fragment implements BlockingStep {
+public class PaseoUnoFragment extends Fragment implements BlockingStep {
 
     private View mView;
     public static String v_id_mascota;
@@ -31,7 +31,7 @@ public class SelecionMascotaTiempoFragment extends Fragment implements BlockingS
     private int hora_x,min_x;
     private String time_min = "";
 
-    public SelecionMascotaTiempoFragment() {
+    public PaseoUnoFragment() {
         // Required empty public constructor
     }
 
@@ -121,6 +121,7 @@ public class SelecionMascotaTiempoFragment extends Fragment implements BlockingS
     }
 
 
+
     /**
      * CONTROLADOR PARA PASAR LAS VENTANAS
      */
@@ -128,7 +129,7 @@ public class SelecionMascotaTiempoFragment extends Fragment implements BlockingS
 
     @Override
     public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
-
+        
         if ((v_id_mascota != null)) {
             new Handler().postDelayed(new Runnable() {
                 @Override

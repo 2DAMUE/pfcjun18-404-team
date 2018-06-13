@@ -36,8 +36,8 @@
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="backgroundColor" value="e5000a" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="D:\StudioProjects\pfcjun18-404-team\app\src\main\res\drawable\papelera_roja.png" />
-                                      <entry key="outputName" value="ic_papelera_roja" />
+                                      <entry key="imageAsset" value="D:\StudioProjects\pfcjun18-404-team\app\src\main\res\drawable\close.png" />
+                                      <entry key="outputName" value="ic_cerrar" />
                                     </map>
                                   </option>
                                 </PersistentState>

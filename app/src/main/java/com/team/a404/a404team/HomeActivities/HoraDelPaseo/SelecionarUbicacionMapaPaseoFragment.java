@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -34,7 +35,6 @@ import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 import com.team.a404.a404team.Datos.Marcadores_paseo;
-import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.R;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -62,7 +62,8 @@ public class SelecionarUbicacionMapaPaseoFragment extends Fragment implements On
         super.onViewCreated(view, savedInstanceStade);
 
         mMapView = (MapView) mView.findViewById(R.id.map);
-
+        TextView v_text_ayuda_titulo =(TextView) mView.findViewById(R.id.text_ayuda_titulo);
+        v_text_ayuda_titulo.setText("¿Por dónde vas a sacar tu mascota?");
         mMapView.setVisibility(View.INVISIBLE);
 
         contador = true;
@@ -192,7 +193,7 @@ public class SelecionarUbicacionMapaPaseoFragment extends Fragment implements On
 
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
-        Log.e("ID"," > "+ SelecionMascotaTiempoFragment.v_id_mascota);
+        Log.e("ID"," > "+ PaseoUnoFragment.v_id_mascota);
         Log.e("UBI"," > "+map_marcador.getPosition());
         EnviarDatos();
         Toast.makeText(getActivity(), "Tu marcador de a creado", Toast.LENGTH_SHORT).show();

@@ -7,12 +7,12 @@ import android.support.v4.app.FragmentManager;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter;
 
-public class StepperAdapter extends AbstractFragmentStepAdapter {
+public class StepperAdapterPerdida extends AbstractFragmentStepAdapter {
 
 
     private static final String CURRENT_STEP_POSITION_KEY = "messageResourceId";
 
-    public StepperAdapter(FragmentManager fm, Context context) {
+    public StepperAdapterPerdida(FragmentManager fm, Context context) {
         super(fm, context);
     }
 
@@ -42,4 +42,6 @@ public class StepperAdapter extends AbstractFragmentStepAdapter {
     public int getCount() {
         return 2;
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.team.a404.a404team.HomeActivities.MiMascotaPerdida;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -116,10 +118,17 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
         });
     }
 
+
+    public void closeSoftKeyBoard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mView.getWindowToken(), 0);
+    }
+    
     @Override
     public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
 
         if ((v_id_mascota != null)) {
+            closeSoftKeyBoard();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

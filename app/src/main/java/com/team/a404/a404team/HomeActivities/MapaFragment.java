@@ -7,19 +7,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -30,13 +24,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.github.andreilisun.swipedismissdialog.OnSwipeDismissListener;
 import com.github.andreilisun.swipedismissdialog.SwipeDismissDialog;
-import com.github.andreilisun.swipedismissdialog.SwipeDismissDirection;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -47,8 +38,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -56,11 +45,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
-import com.team.a404.a404team.Datos.DB_Datos_Mascotas;
 import com.team.a404.a404team.Datos.DB_Datos_Perfil;
 import com.team.a404.a404team.Datos.DatosMascota;
 import com.team.a404.a404team.Datos.Marcadores_paseo;
@@ -69,7 +55,6 @@ import com.team.a404.a404team.HomeActivities.HoraDelPaseo.CreateMarcadorPaseo;
 import com.team.a404.a404team.HomeActivities.MiMascotaPerdida.CreateMarcadorPerdida;
 import com.team.a404.a404team.HomeActivities.OtraMascotaPerdida.CreateMarcardorOtra;
 import com.team.a404.a404team.R;
-import com.team.a404.a404team.pruebas.pruebas_dialogo;
 
 import java.util.ArrayList;
 
@@ -94,7 +79,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<String> marcadores_azul_id = new ArrayList<String>();
     private FloatingActionButton v_fab_myloca, v_fab_EncontreMascota, v_fab_Paseo, v_fab_PerdiMiMascota;
     private FloatingActionsMenu v_fab_menu;
-    private String id, owner, id_marcador, markerid;
+    private String id, owner, id_marcador, markerid ,url_foto_mascota;
     private FrameLayout fl_interceptor;
     private Button v_btn_visto;
 
@@ -159,15 +144,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             v_fab_myloca.setVisibility(View.VISIBLE);
             MapsInitializer.initialize(getContext());
 
-
             UiSettings uiSettings = mGoogleMap.getUiSettings();
             mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
 
             MiUbucacion();
 
             /**  /INFO DE LOS MARCADORES **/
-
 
             mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
@@ -192,11 +174,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                         case 3:
                             break;
                     }
-
-
                     return false;
                 }
             });
+
             mGoogleMap.setMyLocationEnabled(true);
             mGoogleMap.getUiSettings().setCompassEnabled(false);
             mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -206,6 +187,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
 
     // ----------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * MENU DEL FAB
+     */
 
     private void PerdiMiMascota() {
         v_fab_PerdiMiMascota = (FloatingActionButton) mView.findViewById(R.id.fab_PerdiMiMascota);
@@ -242,6 +227,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
+    /**
+     *  INFORMACION DE LOS MARCADORES
+     */
+
     private void InfoDialogoPerdido() {
 
         final SwipeDismissDialog dialog_info_perdido = new SwipeDismissDialog.Builder(getContext())
@@ -265,17 +254,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         v_foto_mascota = (CircularImageView) dialog_info_perdido.findViewById(R.id.foto_mascota);
         v_telefono = (TextView) dialog_info_perdido.findViewById(R.id.usuario_telefono);
         v_btn_visto = (Button)dialog_info_perdido.findViewById(R.id.btn_accept);
-        v_btn_visto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseReference change_marker = FirebaseDatabase.getInstance().getReference("marcadores")
-                        .child("perdidas").child(markerid);
-                LatLng actual = new LatLng(mGoogleMap.getMyLocation().getLatitude(), mGoogleMap.getMyLocation().getLongitude());
-                change_marker.child("latitud").setValue(actual.latitude);
-                change_marker.child("longitud").setValue(actual.longitude);
-                dialog_info_perdido.dismiss();
-            }
-        });
+
 
 
         DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
@@ -287,8 +266,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 v_mascota_nombre.setText(d_mascota.getNombre());
                 v_mascota_raza.setText(d_mascota.getRaza());
                 markerid = d_mascota.getMarker_id();
-                DatabaseReference info_marker = FirebaseDatabase.getInstance().getReference("marcadores")
-                        .child("perdidas").child(markerid);
+                url_foto_mascota = d_mascota.getUrl_foto();
+                DatabaseReference info_marker = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(markerid);
                 info_marker.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -329,35 +308,72 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        /** FUNCIONES ON CLIK INFO PERDIDA */
+
         v_icon_borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 BorrarMarcador(id_marcador, dialog_info_perdido, 1);
             }
         });
         v_telefono.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                realizarLlamada(v_telefono.getText().toString());
+                RealizarLlamada(v_telefono.getText().toString());
             }
         });
 
-    }
-
-    public void realizarLlamada(String telf) {
-        final int request = 1;
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:"+telf));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            if (ActivityCompat.checkSelfPermission(getContext(),
-                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.CALL_PHONE}, request);
-            } else {
-                startActivity(callIntent);
+        v_btn_visto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setMessage("Va a mover el marcador a su posición actual"); // FALTA PARSEAR
+                builder.setPositiveButton(getString(R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseReference change_marker = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(markerid);
+                                LatLng actual = new LatLng(mGoogleMap.getMyLocation().getLatitude(), mGoogleMap.getMyLocation().getLongitude());
+                                change_marker.child("latitud").setValue(actual.latitude);
+                                change_marker.child("longitud").setValue(actual.longitude);
+                                dialog_info_perdido.dismiss();
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog dialog_confirmar = builder.create();
+                dialog_confirmar.show();
             }
-        }
+        });
+
+        v_foto_mascota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog_foto_mascota = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
+                dialog_foto_mascota.setContentView(R.layout.dialog_mapa_info_foto);
+                dialog_foto_mascota.setCanceledOnTouchOutside(true);
+                dialog_foto_mascota.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
+                dialog_foto_mascota.show();
+
+                ImageView v_foto = (ImageView) dialog_foto_mascota.findViewById(R.id.img_mascota);
+                ImageView v_cerrar = (ImageView) dialog_foto_mascota.findViewById(R.id.icon_cerrar);
+
+                Picasso.get().load(url_foto_mascota).into(v_foto);
+                v_cerrar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog_foto_mascota.hide();
+                    }
+                });
+            }
+        });
+
+
+
     }
 
     private void InfoDialogoPaseo() {
@@ -410,8 +426,28 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     }
 
     /**
+     *  LLAMAR POR TELEFONO
+     */
+
+    public void RealizarLlamada(String telf) {
+        final int request = 1;
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:"+telf));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (ActivityCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.CALL_PHONE}, request);
+            } else {
+                startActivity(callIntent);
+            }
+        }
+    }
+
+    /**
      * BORRAR MARCADOR
      */
+
     private void BorrarMarcador(final String id_marcador_total, final SwipeDismissDialog dialog_total, final int tipo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setCancelable(true);
