@@ -4,9 +4,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,9 +30,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.team.a404.a404team.HomeActivities.HomeActivity;
 import com.team.a404.a404team.R;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class lobby extends AppCompatActivity {
 
@@ -79,8 +76,8 @@ public class lobby extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
-            Intent intent1 = new Intent(lobby.this, HomeActivity.class);
-            startActivity(intent1);
+            startActivity(new Intent(this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
         }
         firebaseAuthState = new FirebaseAuth.AuthStateListener() {

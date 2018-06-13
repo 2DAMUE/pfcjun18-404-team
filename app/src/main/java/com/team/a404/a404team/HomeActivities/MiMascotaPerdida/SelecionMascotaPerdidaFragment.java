@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -82,7 +82,8 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
                 if (!TextUtils.isEmpty(telefono)) {
                     v_id_mascota = id_mascota_perfil.get(i);
                 } else {
-                    Toast.makeText(getActivity(), getString(R.string.toast_set_phone), Toast.LENGTH_SHORT).show();
+                    Snackbar.make(listaMascotas, getString(R.string.toast_set_phone), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    //Toast.makeText(getActivity(), getString(R.string.toast_set_phone), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -136,7 +137,8 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
                 }
             }, 0L);
         } else {
-            Toast.makeText(getActivity(), getString(R.string.toast_pet_select), Toast.LENGTH_SHORT).show();
+            Snackbar.make(listaMascotas, getString(R.string.toast_pet_select), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            //Toast.makeText(getActivity(), getString(R.string.toast_pet_select), Toast.LENGTH_SHORT).show();
         }
 
 

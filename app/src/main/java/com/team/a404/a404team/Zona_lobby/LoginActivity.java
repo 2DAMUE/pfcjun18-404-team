@@ -3,27 +3,25 @@ package com.team.a404.a404team.Zona_lobby;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.support.design.widget.Snackbar;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.team.a404.a404team.R;
 import com.team.a404.a404team.HomeActivities.HomeActivity;
-import com.team.a404.a404team.SplashScreen;
+import com.team.a404.a404team.R;
 import com.team.a404.a404team.VentanasEstado.ActivitySuccess;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
@@ -103,6 +101,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if (task.isSuccessful()) {
                     finish();
                     progressDialog.hide();
+                    closeSoftKeyBoard();
                     startActivity(new Intent(LoginActivity.this, ActivitySuccess.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 } else {

@@ -1,6 +1,7 @@
 package com.team.a404.a404team.Zona_lobby;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -57,6 +59,11 @@ public class RegistroActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.zoom_back_in,R.anim.right_out);
     }
 
+    public void closeSoftKeyBoard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v_mail.getWindowToken(), 0);
+    }
+
 
     private void registrar() {
         String email = v_mail.getText().toString().trim();
@@ -96,6 +103,7 @@ public class RegistroActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     // Perfil creado , agregamos en nombre y correo.
                     SalvarDatos();
+                    closeSoftKeyBoard();
                     progressDialog.hide();
                     startActivity(new Intent(RegistroActivity.this, ActivitySuccess.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

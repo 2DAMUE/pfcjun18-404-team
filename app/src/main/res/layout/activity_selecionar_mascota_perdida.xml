@@ -19,13 +19,15 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/select_lost"
+            android:gravity="center"
+            android:text="@string/lost_pet"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:typeface="normal" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -64,6 +66,15 @@
         android:background="@drawable/dialogo_blanco"
         android:elevation="3dp"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/select_lost"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="18sp"
+            android:typeface="normal" />
 
         <ListView
             android:id="@+id/listmascotas"
