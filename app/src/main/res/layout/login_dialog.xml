@@ -30,7 +30,8 @@ android:layout_height="match_parent">
         android:id="@+id/btn_iniciarPorGoogle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tooltipText="dddddd" />
+        android:tooltipText="dddddd"
+        android:visibility="invisible" />
 </LinearLayout>
 
 </FrameLayout>
