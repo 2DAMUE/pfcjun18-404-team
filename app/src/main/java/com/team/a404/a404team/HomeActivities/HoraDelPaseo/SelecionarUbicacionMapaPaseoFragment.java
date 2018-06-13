@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -193,8 +192,6 @@ public class SelecionarUbicacionMapaPaseoFragment extends Fragment implements On
 
     @Override
     public void onCompleteClicked(StepperLayout.OnCompleteClickedCallback callback) {
-        Log.e("ID"," > "+ PaseoUnoFragment.v_id_mascota);
-        Log.e("UBI"," > "+map_marcador.getPosition());
         EnviarDatos();
         Toast.makeText(getActivity(), "Tu marcador de a creado", Toast.LENGTH_SHORT).show();
         getActivity().finish();
@@ -212,7 +209,8 @@ public class SelecionarUbicacionMapaPaseoFragment extends Fragment implements On
 
 
     public void EnviarDatos(){
-        DatabaseReference db_marcador_perdida = FirebaseDatabase.getInstance().getReference("marcadores").child("paseo").push();
-        db_marcador_perdida.setValue(new Marcadores_paseo(map_marcador.getPosition().latitude, map_marcador.getPosition().longitude, firebaseAuth.getCurrentUser().getUid()));
+        PaseoUnoFragment puf = new PaseoUnoFragment();
+        DatabaseReference db_marcador_paseo= FirebaseDatabase.getInstance().getReference("marcadores").child("paseo").push();
+        db_marcador_paseo.setValue(new Marcadores_paseo(map_marcador.getPosition().latitude, map_marcador.getPosition().longitude, firebaseAuth.getCurrentUser().getUid(), puf.comentario));
     }
 }

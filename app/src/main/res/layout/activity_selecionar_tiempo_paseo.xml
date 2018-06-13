@@ -28,10 +28,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Selecione el tiempo que va ha estar"
+                android:text="Te gustaria agregar un comentario"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="18sp"
                 android:typeface="normal" />
+
         </LinearLayout>
 
 
@@ -47,77 +48,16 @@
             android:elevation="3dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/p_text_comentario"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/grupo_de"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="De"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                        android:textColor="@color/colorNegro"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/text_de"
-                        android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="▀▀▀▀▀▀▀"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:textColor="@color/colorGris"
-                    android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/grupo_hasta"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Hasta"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                        android:textColor="@color/colorNegro"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/text_hasta"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="▀▀▀▀▀▀▀"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                        android:textColor="@color/colorGris"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:autoLink="phone"
+                android:background="@color/colorBlanco"
+                android:ems="10"
+                android:hint="Ej. Me voy a quedar solo 5 minutos"
+                android:inputType="textMultiLine" />
 
         </LinearLayout>
 

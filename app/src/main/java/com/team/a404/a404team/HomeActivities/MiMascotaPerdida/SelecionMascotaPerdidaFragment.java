@@ -124,7 +124,11 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mView.getWindowToken(), 0);
     }
-    
+
+    /**
+     * CONTROLADOR PARA PASAR LAS VENTANAS
+     */
+
     @Override
     public void onNextClicked(final StepperLayout.OnNextClickedCallback callback) {
 

@@ -84,8 +84,10 @@
         <activity
             android:name=".HomeActivities.HoraDelPaseo.CreateMarcadorPaseo"
             android:parentActivityName=".HomeActivities.HomeActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:screenOrientation="portrait" />
-        <activity android:name=".HomeActivities.OtraMascotaPerdida.CreateMarcardorOtra"></activity>
+        <activity
+            android:name=".HomeActivities.OtraMascotaPerdida.CreateMarcardorOtra"/>
     </application>
 
 </manifest>

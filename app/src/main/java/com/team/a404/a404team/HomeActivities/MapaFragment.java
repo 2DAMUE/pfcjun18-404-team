@@ -500,9 +500,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         dialog_info_paseo.show();
         */
 
-        FrameLayout v_pantalla = (FrameLayout) dialog_info_paseo.findViewById(R.id.anuncio_pantalla);
-        LinearLayout v_contenido_ventana = (LinearLayout) dialog_info_paseo.findViewById(R.id.contenido_ventana);
         v_usuario_owner = (TextView) dialog_info_paseo.findViewById(R.id.usuario_owner);
+        final TextView v_text_comentario = (TextView) dialog_info_paseo.findViewById(R.id.text_comentario);
 
         v_icon_borrar = (ImageView) dialog_info_paseo.findViewById(R.id.icon_borrar);
 
@@ -511,6 +510,21 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         } else {
             v_icon_borrar.setVisibility(View.INVISIBLE);
         }
+
+        Log.e("ID","> "+id_marcador);
+        DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("marcadores").child("paseo").child(id_marcador);
+        info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Marcadores_paseo d_info_paseo = dataSnapshot.getValue(Marcadores_paseo.class);
+
+                v_text_comentario.setText(d_info_paseo.getComentario());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         DatabaseReference info_owner = FirebaseDatabase.getInstance().getReference("usuarios").child(owner);
         info_owner.addListenerForSingleValueEvent(new ValueEventListener() {
