@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             app:fab_icon="@mipmap/ic_huellaperro"
             app:fab_size="mini"
-            app:fab_title="Hora del paseo"/>
+            app:fab_title="@string/fab_walk_pet"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_EncontreMascota"
@@ -87,7 +87,7 @@
             app:fab_colorPressed="#992ecc71"
             app:fab_icon="@mipmap/ic_huellaperro"
             app:fab_size="mini"
-            app:fab_title="Encontre una mascota"/>
+            app:fab_title="@string/fab_other_pet"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_PerdiMiMascota"
@@ -97,7 +97,7 @@
             app:fab_colorPressed="#b70040"
             app:fab_icon="@mipmap/ic_huellaperro"
             app:fab_size="mini"
-            app:fab_title="Perdi mi mascota" />
+            app:fab_title="@string/fab_lost_pet" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

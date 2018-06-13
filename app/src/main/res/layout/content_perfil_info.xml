@@ -34,7 +34,7 @@
                 android:background="@drawable/button_background_negro"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="Editar Perfil" />
+                android:text="@string/btn_change_profile" />
 
         </LinearLayout>
 

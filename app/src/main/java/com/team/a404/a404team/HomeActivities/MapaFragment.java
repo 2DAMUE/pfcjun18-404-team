@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -95,6 +96,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private FloatingActionsMenu v_fab_menu;
     private String id, owner, id_marcador, markerid;
     private FrameLayout fl_interceptor;
+    private Button v_btn_visto;
 
     //SwipeDismissDialog
 
@@ -262,6 +264,18 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         v_usuario_owner = (TextView) dialog_info_perdido.findViewById(R.id.usuario_owner);
         v_foto_mascota = (CircularImageView) dialog_info_perdido.findViewById(R.id.foto_mascota);
         v_telefono = (TextView) dialog_info_perdido.findViewById(R.id.usuario_telefono);
+        v_btn_visto = (Button)dialog_info_perdido.findViewById(R.id.btn_accept);
+        v_btn_visto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference change_marker = FirebaseDatabase.getInstance().getReference("marcadores")
+                        .child("perdidas").child(markerid);
+                LatLng actual = new LatLng(mGoogleMap.getMyLocation().getLatitude(), mGoogleMap.getMyLocation().getLongitude());
+                change_marker.child("latitud").setValue(actual.latitude);
+                change_marker.child("longitud").setValue(actual.longitude);
+                dialog_info_perdido.dismiss();
+            }
+        });
 
 
         DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
@@ -401,9 +415,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private void BorrarMarcador(final String id_marcador_total, final SwipeDismissDialog dialog_total, final int tipo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setCancelable(true);
-        builder.setTitle("Borrar Marcador");
-        builder.setMessage("¿Esta seguro que quiere borrarlo este marcador?");
-        builder.setPositiveButton("SI",
+        builder.setTitle(getString(R.string.dialog_delete_marker_title));
+        builder.setMessage(getString(R.string.dialog_delete_marker_body));
+        builder.setPositiveButton(getString(R.string.yes),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

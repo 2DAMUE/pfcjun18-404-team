@@ -54,6 +54,14 @@
     <string name="toast_set_phone">El número de teléfono no es válido</string>
     <string name="toast_pet_deleted">Se ha borrado la mascota de la base de datos</string>
     <string name="toast_marker_created">¡El marcador se ha creado con éxito!</string>
+    <string name="save_data">Guardar</string>
+    <string name="dialog_delete_marker_title">Borrar Marcador</string>
+    <string name="dialog_delete_marker_body">¿Está seguro de querer borrar este marcador?</string>
+    <string name="yes">SI</string>
+    <string name="fab_lost_pet">He perdido mi mascota</string>
+    <string name="fab_other_pet">He encontrado una mascota perdida</string>
+    <string name="fab_walk_pet">¡Hora del paseo!</string>
+
 
     <!-- Strings related to Settings -->
 
@@ -140,7 +148,8 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
-    <string name="btn_seen">Visto</string>
+    <string name="btn_seen">He visto esta mascota</string>
     <string name="btn_delete">Borrar Mascota</string>
     <string name="hint_phone">Introduzca un teléfono de contacto</string>
+    <string name="btn_change_profile">Editar Perfil</string>
 </resources>

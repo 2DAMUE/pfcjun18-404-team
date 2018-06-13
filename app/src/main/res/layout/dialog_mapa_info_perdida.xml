@@ -236,7 +236,7 @@
             android:background="@drawable/button_background_lleno"
             android:backgroundTint="@color/colorPrimaryDark"
             android:elevation="3dp"
-            android:text="Visto"
+            android:text="@string/btn_seen"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

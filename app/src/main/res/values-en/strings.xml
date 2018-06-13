@@ -45,7 +45,7 @@
     <string name="new_pet">Pet Registry</string>
     <string name="btn_save">Save</string>
     <string name="my_pets">My Pets</string>
-    <string name="btn_seen">Visto</string>
+    <string name="btn_seen">I\'ve seen this pet</string>
     <string name="toast_no_pet_data">All fields must be filled.</string>
     <string name="toast_no_image">Please, upload an image of the new pet.</string>
     <string name="pet_data">Pet data</string>
@@ -58,4 +58,12 @@
     <string name="toast_set_phone">The phone number is not valid</string>
     <string name="toast_pet_deleted">The selected pet was deleted successfully</string>
     <string name="toast_marker_created">The marker was created successfully!</string>
+    <string name="save_data">Save data</string>
+    <string name="btn_change_profile">Edit user profile</string>
+    <string name="dialog_delete_marker_title">Delete Marker</string>
+    <string name="dialog_delete_marker_body">Are you sure you want to delete this marker?</string>
+    <string name="yes">YES</string>
+    <string name="fab_lost_pet">I\'ve lost my pet</string>
+    <string name="fab_other_pet">I\`ve found a lost pet</string>
+    <string name="fab_walk_pet">Walk time!</string>
 </resources>

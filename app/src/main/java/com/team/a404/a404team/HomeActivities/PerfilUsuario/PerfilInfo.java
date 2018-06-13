@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 import com.team.a404.a404team.Datos.UserInformation;
 import com.team.a404.a404team.R;
 
@@ -29,6 +31,7 @@ public class PerfilInfo extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference DataRef = FirebaseDatabase.getInstance().getReference().child("usuarios");
+    private String photo;
 
     private CircularImageView imagen;
     Uri imageUri;
@@ -55,6 +58,12 @@ public class PerfilInfo extends AppCompatActivity {
                 UserInformation user = dataSnapshot.getValue(UserInformation.class);
                 Log.v("MSG",""+user.getUsername());
                 textView2.setText(user.getUsername());
+                photo = user.getUrlphoto();
+                if(!TextUtils.isEmpty(photo)){
+                    Picasso.get().load(photo).into(imagen);
+                }else{
+                    Picasso.get().load(R.drawable.avatarpic).into(imagen);
+                }
             }
 
             @Override
@@ -64,19 +73,5 @@ public class PerfilInfo extends AppCompatActivity {
         });
 
     }
-    protected void onActivityResult(int requestcode, int resultcode, Intent data) {
-        super.onActivityResult(requestcode, resultcode, data);
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("images").child(firebaseAuth.getCurrentUser().getUid()).child("userphoto.jpg");
-        if (resultcode == RESULT_OK && requestcode == PICK_IMAGE_REQUEST) {
-            imageUri = data.getData();
-            imagen.setImageURI(imageUri);
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 }

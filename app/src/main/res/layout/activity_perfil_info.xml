@@ -30,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginLeft="15dp"
-                android:text="Nombre"
                 android:textSize="30sp" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -45,7 +44,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginRight="15dp"
-        android:src="@drawable/akuro"
         app:layout_anchor="@+id/app_bar"
         app:layout_anchorGravity="right|bottom" />
 

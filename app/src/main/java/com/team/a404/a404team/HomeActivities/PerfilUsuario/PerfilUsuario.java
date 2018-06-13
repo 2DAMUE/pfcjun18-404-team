@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 import com.team.a404.a404team.Datos.UserInformation;
 import com.team.a404.a404team.R;
 
@@ -43,6 +45,7 @@ public class PerfilUsuario extends AppCompatActivity {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference DataRef = FirebaseDatabase.getInstance().getReference().child("usuarios");
     private Button guarda;
+    private String photo;
     private EditText nomb, email;
     private ImageView imagenperfil;
     private CircularImageView imagen;
@@ -58,9 +61,9 @@ public class PerfilUsuario extends AppCompatActivity {
         nomb = findViewById(R.id.nombremodifica);
         email = findViewById(R.id.correoElectronicomodifica);
         guarda = findViewById(R.id.guarda);
-        imagenperfil = findViewById(R.id.imagenperfil);
-        imagen = findViewById(R.id.imagen);
-        imagenperfil.setOnClickListener(new View.OnClickListener() {
+        imagenperfil = (ImageView) findViewById(R.id.imagenperfil);
+        imagen = (CircularImageView)findViewById(R.id.imagen);
+        imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 OpenGallery();
@@ -83,30 +86,17 @@ public class PerfilUsuario extends AppCompatActivity {
                         Log.v("MSG",""+user.getUsername());
                         nomb.setText(user.getNombre());
                         email.setText(user.getEmail());
+                        photo = user.getUrlphoto();
+                        if(!TextUtils.isEmpty(photo)){
+                            Picasso.get().load(photo).into(imagen);
+                        }else{
+                            Picasso.get().load(R.drawable.avatarpic).into(imagen);
+                        }
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
-
-
-                StorageReference stor = FirebaseStorage.getInstance().getReference().child("images/" + usuario.getUid().toString() + "/userphoto.jpg");
-                final long ONE_MEGABYTE = 1024 * 1024;
-                stor.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        imagen.setImageBitmap(bmp);
-                        imagenperfil.setVisibility(View.VISIBLE);
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        imagen.setImageResource(R.drawable.logo_petaware);
-                        imagenperfil.setVisibility(View.VISIBLE);
                     }
                 });
             }
@@ -159,7 +149,7 @@ public class PerfilUsuario extends AppCompatActivity {
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     DataRef.child(usuario.getUid()).child("urlfoto").setValue(downloadUrl.toString());
                     Log.d("downloadUrl-->", "" + downloadUrl);
-                    Snackbar.make(guarda, "Guardar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    Snackbar.make(guarda, getString(R.string.save_data), Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 }
             });
         }
