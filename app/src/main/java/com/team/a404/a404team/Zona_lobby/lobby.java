@@ -92,6 +92,12 @@ public class lobby extends AppCompatActivity {
         v_btn_iniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(lobby.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                overridePendingTransition(R.anim.left_in, R.anim.zoom_back_out);
+                /*
                 final Dialog dialog;
                 // con este tema personalizado evitamos los bordes por defecto
                 dialog = new Dialog(lobby.this, R.style.Theme_Dialog_Translucent);
@@ -130,6 +136,7 @@ public class lobby extends AppCompatActivity {
                         signIn();
                     }
                 });
+                */
             }
         });
         v_btn_registro.setOnClickListener(new View.OnClickListener() {
@@ -167,13 +174,13 @@ public class lobby extends AppCompatActivity {
                     personEmail = acct.getEmail();
                     Uri personPhoto = acct.getPhotoUrl();
                 }
-
+                firebaseAuthWithGoogle(acct);
                 FirebaseAuth firebaseAuth2 = FirebaseAuth.getInstance();
                 FirebaseUser usuario = firebaseAuth2.getCurrentUser();
                 DataRef = FirebaseDatabase.getInstance().getReference().child("usuarios").child(personID);
                 DataRef.child("nombre").setValue(personName);
                 DataRef.child("email").setValue(personEmail);
-                firebaseAuthWithGoogle(acct);
+
 
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
