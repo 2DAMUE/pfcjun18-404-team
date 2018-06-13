@@ -154,4 +154,5 @@
     <string name="hint_phone">Introduzca un teléfono de contacto</string>
     <string name="btn_change_profile">Editar Perfil</string>
     <string name="select_photo" >Saque una foto de la mascota</string>
+    <string name="enter_characteristics">Introduzca los rasgos de la mascota</string>
 </resources>

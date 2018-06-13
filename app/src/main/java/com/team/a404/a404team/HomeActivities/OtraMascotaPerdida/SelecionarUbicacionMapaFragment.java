@@ -34,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.stepstone.stepper.BlockingStep;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
+import com.team.a404.a404team.Datos.Marcadores_otras;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.R;
 
@@ -123,9 +124,9 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
         map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                 .position(ubi)
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_rojo)));
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_verde)));
 
-
+        map_marcador.setTitle(SelecionMascotaPerdidaFragment.v_id_mascota);
     }
 
 
@@ -212,7 +213,7 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
 
     public void EnviarDatos() {
         DatabaseReference db_marcador_perdida = FirebaseDatabase.getInstance().getReference("marcadores").child("encontradas").push();
-        db_marcador_perdida.setValue(new Marcadores_perdidos(SelecionMascotaPerdidaFragment.v_id_mascota, map_marcador.getPosition().latitude, map_marcador.getPosition().longitude, firebaseAuth.getCurrentUser().getUid(), SelecionMascotaPerdidaFragment.telefono));
+        db_marcador_perdida.setValue(new Marcadores_otras(SelecionMascotaPerdidaFragment.rasgos,SelecionMascotaPerdidaFragment.url_foto,map_marcador.getPosition().latitude, map_marcador.getPosition().longitude,SelecionMascotaPerdidaFragment.v_id_mascota,SelecionMascotaPerdidaFragment.telefono));
         DatabaseReference db_mi_marcador_perdida = FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mis_marcadores").push();
         db_mi_marcador_perdida.setValue(db_marcador_perdida.getKey());
         markerkey = db_marcador_perdida.getKey();

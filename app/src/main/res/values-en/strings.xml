@@ -68,4 +68,5 @@
     <string name="fab_other_pet">I found a lost pet</string>
     <string name="fab_walk_pet">Walk time!</string>
     <string name="select_photo" >Take a photo of the lost pet</string>
+    <string name="enter_characteristics">Insert a description of the pet.</string>
 </resources>

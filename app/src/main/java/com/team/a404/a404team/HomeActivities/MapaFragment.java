@@ -49,6 +49,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.team.a404.a404team.Datos.DB_Datos_Perfil;
 import com.team.a404.a404team.Datos.DatosMascota;
+import com.team.a404.a404team.Datos.Marcadores_otras;
 import com.team.a404.a404team.Datos.Marcadores_paseo;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
 import com.team.a404.a404team.HomeActivities.HoraDelPaseo.CreateMarcadorPaseo;
@@ -75,8 +76,10 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private ArrayList<Marcadores_perdidos> marcadores_rojo = new ArrayList<Marcadores_perdidos>();
     private ArrayList<Marcadores_paseo> marcadores_azul = new ArrayList<Marcadores_paseo>();
+    private ArrayList<Marcadores_otras> marcadores_verdes = new ArrayList<Marcadores_otras>();
     private ArrayList<String> marcadores_rojo_id = new ArrayList<String>();
     private ArrayList<String> marcadores_azul_id = new ArrayList<String>();
+    private ArrayList<String> marcadores_verdes_id = new ArrayList<String>();
     private FloatingActionButton v_fab_myloca, v_fab_EncontreMascota, v_fab_Paseo, v_fab_PerdiMiMascota;
     private FloatingActionsMenu v_fab_menu;
     private String id, owner, id_marcador, markerid ,url_foto_mascota;
@@ -172,6 +175,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                             InfoDialogoPaseo();
                             break;
                         case 3:
+                            InfoDialogoOtra(marker);
                             break;
                     }
                     return false;
@@ -230,6 +234,112 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     /**
      *  INFORMACION DE LOS MARCADORES
      */
+
+    private void InfoDialogoOtra(final Marker marker) {
+
+        final SwipeDismissDialog dialog_info_perdido = new SwipeDismissDialog.Builder(getContext())
+                .setLayoutResId(R.layout.dialog_mascotas_otra)
+                .build()
+                .show();
+
+        v_icon_borrar = (ImageView) dialog_info_perdido.findViewById(R.id.icon_borrar);
+
+        if (owner.equals(firebaseAuth.getCurrentUser().getUid())) {
+            v_icon_borrar.setVisibility(View.VISIBLE);
+        } else {
+            v_icon_borrar.setVisibility(View.INVISIBLE);
+        }
+
+        v_mascota_rasgos = (TextView) dialog_info_perdido.findViewById(R.id.rasgos_otra);
+        v_foto_mascota = (CircularImageView) dialog_info_perdido.findViewById(R.id.foto_mascotaotra);
+        v_telefono = (TextView) dialog_info_perdido.findViewById(R.id.telf_otra);
+        v_btn_visto = (Button)dialog_info_perdido.findViewById(R.id.btn_vistro_otra);
+
+
+
+        DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("marcadores").child("encontradas").child(id_marcador);
+        info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               Marcadores_otras mark = dataSnapshot.getValue(Marcadores_otras.class);
+                v_mascota_rasgos.setText(mark.getRasgos());
+                v_telefono.setText(mark.getTelefono());
+                url_foto_mascota = mark.getUrl_foto();
+                Picasso.get().load(url_foto_mascota).into(v_foto_mascota);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        /** FUNCIONES ON CLIK INFO PERDIDA */
+
+        v_icon_borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BorrarMarcador(id_marcador, dialog_info_perdido, 1);
+            }
+        });
+        v_telefono.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RealizarLlamada(v_telefono.getText().toString());
+            }
+        });
+
+        v_btn_visto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setMessage("Va a mover el marcador a su posición actual"); // FALTA PARSEAR
+                builder.setPositiveButton(getString(R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DatabaseReference change_marker = FirebaseDatabase.getInstance().getReference("marcadores").child("encontradas").child(id_marcador);
+                                LatLng actual = new LatLng(mGoogleMap.getMyLocation().getLatitude(), mGoogleMap.getMyLocation().getLongitude());
+                                change_marker.child("latitud").setValue(actual.latitude);
+                                change_marker.child("longitud").setValue(actual.longitude);
+                                dialog_info_perdido.dismiss();
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                AlertDialog dialog_confirmar = builder.create();
+                dialog_confirmar.show();
+            }
+        });
+
+        v_foto_mascota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog_foto_mascota = new Dialog(getContext(), R.style.Theme_Dialog_Translucent);
+                dialog_foto_mascota.setContentView(R.layout.dialog_mapa_info_foto);
+                dialog_foto_mascota.setCanceledOnTouchOutside(true);
+                dialog_foto_mascota.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#25000000")));
+                dialog_foto_mascota.show();
+
+                ImageView v_foto = (ImageView) dialog_foto_mascota.findViewById(R.id.img_mascota);
+                ImageView v_cerrar = (ImageView) dialog_foto_mascota.findViewById(R.id.icon_cerrar);
+
+                Picasso.get().load(url_foto_mascota).into(v_foto);
+                v_cerrar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog_foto_mascota.hide();
+                    }
+                });
+            }
+        });
+
+
+
+    }
 
     private void InfoDialogoPerdido() {
 
@@ -465,6 +575,9 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                             case 2:
                                 borrar_marcador = FirebaseDatabase.getInstance().getReference("marcadores").child("paseo").child(id_marcador_total);
                                 break;
+                            case 3:
+                                borrar_marcador = FirebaseDatabase.getInstance().getReference("marcadores").child("encontradas").child(id_marcador_total);
+                                break;
                         }
                         borrar_marcador.removeValue();
                         CogerTodosMarcadores();
@@ -561,7 +674,43 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         });
 
     }
+    /**
+     * CREAR MARCADORES EN EL MAPA PASO VERDE
+     */
 
+    public void CogerMarcadoresOtra() {
+
+        all_marcadores = FirebaseDatabase.getInstance().getReference("marcadores").child("encontradas");
+        all_marcadores.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                marcadores_verdes = new ArrayList<>();
+                marcadores_rojo_id.clear();
+                for (DataSnapshot dato : dataSnapshot.getChildren()) {
+                    Marcadores_otras mpaseo = dato.getValue(Marcadores_otras.class);
+                    marcadores_verdes.add(mpaseo);
+                    marcadores_verdes_id.add(dato.getKey());
+                }
+                MeterMarcadoresVerde();
+            }
+
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
+    public void MeterMarcadoresVerde() {
+        for (int i = 0; i < marcadores_verdes.size(); i++) {
+            LatLng ubi = new LatLng(marcadores_verdes.get(i).getLatitud(), marcadores_verdes.get(i).getLongitud());
+
+            Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
+                    .position(ubi)
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_verde)));
+            Log.e("TTT", "> " + marcadores_verdes_id.get(i));
+            map_marcador.setTag("nada##" + marcadores_verdes.get(i).getMarker_id() + "##3##" + marcadores_verdes_id.get(i));
+        }
+
+    }
     public void MeterMarcadoresAzul() {
         for (int i = 0; i < marcadores_azul.size(); i++) {
             LatLng ubi = new LatLng(marcadores_azul.get(i).getLatitud(), marcadores_azul.get(i).getLongitud());
@@ -589,6 +738,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 mGoogleMap.clear();
                 CogerMarcadoresPerdidas();
                 CogerMarcadoresPaseo();
+                CogerMarcadoresOtra();
             }
 
             @Override
@@ -596,6 +746,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 mGoogleMap.clear();
                 CogerMarcadoresPerdidas();
                 CogerMarcadoresPaseo();
+                CogerMarcadoresOtra();
             }
 
             @Override
@@ -603,6 +754,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 mGoogleMap.clear();
                 CogerMarcadoresPerdidas();
                 CogerMarcadoresPaseo();
+                CogerMarcadoresOtra();
             }
 
             @Override

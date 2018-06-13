@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter;
-import com.team.a404.a404team.HomeActivities.MiMascotaPerdida.SelecionMascotaPerdidaFragment;
-import com.team.a404.a404team.HomeActivities.MiMascotaPerdida.SelecionarUbicacionMapaFragment;
+import com.team.a404.a404team.HomeActivities.OtraMascotaPerdida.SelecionMascotaPerdidaFragment;
+import com.team.a404.a404team.HomeActivities.OtraMascotaPerdida.SelecionarUbicacionMapaFragment;
 
 public class StepperAdapterOtra extends AbstractFragmentStepAdapter {
     private static final String CURRENT_STEP_POSITION_KEY = "messageResourceId";
