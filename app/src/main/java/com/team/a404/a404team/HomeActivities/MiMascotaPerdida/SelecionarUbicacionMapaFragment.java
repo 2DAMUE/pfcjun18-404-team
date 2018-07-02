@@ -218,8 +218,9 @@ public class SelecionarUbicacionMapaFragment extends Fragment implements OnMapRe
     public void EnviarDatos() {
         DatabaseReference db_marcador_perdida = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").push();
         db_marcador_perdida.setValue(new Marcadores_perdidos(SelecionMascotaPerdidaFragment.v_id_mascota, map_marcador.getPosition().latitude, map_marcador.getPosition().longitude, firebaseAuth.getCurrentUser().getUid(), SelecionMascotaPerdidaFragment.telefono));
-        DatabaseReference db_mi_marcador_perdida = FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mis_marcadores").push();
-        db_mi_marcador_perdida.setValue(db_marcador_perdida.getKey());
+
+
+        FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mascotas").child(SelecionMascotaPerdidaFragment.v_id_mascota).child("marker_id").setValue(db_marcador_perdida.getKey());
         markerkey = db_marcador_perdida.getKey();
     }
 }

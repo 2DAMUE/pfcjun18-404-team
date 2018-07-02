@@ -49,6 +49,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.team.a404.a404team.Datos.DB_Datos_Perfil;
 import com.team.a404.a404team.Datos.DatosMascota;
+import com.team.a404.a404team.Datos.Marcadores_info;
 import com.team.a404.a404team.Datos.Marcadores_otras;
 import com.team.a404.a404team.Datos.Marcadores_paseo;
 import com.team.a404.a404team.Datos.Marcadores_perdidos;
@@ -82,7 +83,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<String> marcadores_verdes_id = new ArrayList<String>();
     private FloatingActionButton v_fab_myloca, v_fab_EncontreMascota, v_fab_Paseo, v_fab_PerdiMiMascota;
     private FloatingActionsMenu v_fab_menu;
-    private String id, owner, id_marcador, markerid ,url_foto_mascota;
+    private String id_perfil_mascota, owner, id_marcador, markerid ,url_foto_mascota;
     private FrameLayout fl_interceptor;
     private Button v_btn_visto;
 
@@ -159,12 +160,14 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 public boolean onMarkerClick(Marker marker) {
                     LatLng posicionClick = marker.getPosition();
 
-                    String tagAll = (String) marker.getTag();
-                    String[] info = tagAll.split("##");
-                    id = info[0];
-                    owner = info[1];
-                    int tipo = Integer.parseInt(info[2]);
-                    id_marcador = info[3];
+                    //String infomarcador = (String) marker.getTag();
+
+                    Marcadores_info mi = (Marcadores_info) marker.getTag();
+                    //String[] info = tagAll.split("##");
+                    id_perfil_mascota = mi.getId_mascota();
+                    owner = mi.getOwner();
+                    int tipo = mi.getTipo();
+                    id_marcador = mi.getMarcador();
                     Log.e("LOGG", " > " + id_marcador);
 
                     switch (tipo) {
@@ -367,7 +370,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
 
 
-        DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id);
+        DatabaseReference info_mascota = FirebaseDatabase.getInstance().getReference("usuarios").child(owner).child("mascotas").child(id_perfil_mascota);
         info_mascota.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -584,6 +587,8 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                         DatabaseReference borrar_marcador = null;
                         switch (tipo) {
                             case 1:
+
+                                FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mascotas").child(id_perfil_mascota).child("marker_id").setValue("");
                                 borrar_marcador = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(id_marcador_total);
                                 break;
                             case 2:
@@ -650,17 +655,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    public void MeterMarcadoresRojo() {
-        for (int i = 0; i < marcadores_rojo.size(); i++) {
-            LatLng ubi = new LatLng(marcadores_rojo.get(i).getLatitud(), marcadores_rojo.get(i).getLongitud());
 
-            Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
-                    .position(ubi)
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_rojo)));
-            map_marcador.setTag(marcadores_rojo.get(i).getId_mascota() + "##" + marcadores_rojo.get(i).getOwner() + "##1##" + marcadores_rojo_id.get(i));
-        }
-
-    }
 
 
     /**
@@ -674,7 +669,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 marcadores_azul = new ArrayList<>();
-                marcadores_rojo_id.clear();
+                marcadores_azul_id.clear();
                 for (DataSnapshot dato : dataSnapshot.getChildren()) {
                     Marcadores_paseo mpaseo = dato.getValue(Marcadores_paseo.class);
                     marcadores_azul.add(mpaseo);
@@ -699,7 +694,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 marcadores_verdes = new ArrayList<>();
-                marcadores_rojo_id.clear();
+                marcadores_verdes_id.clear();
                 for (DataSnapshot dato : dataSnapshot.getChildren()) {
                     Marcadores_otras mpaseo = dato.getValue(Marcadores_otras.class);
                     marcadores_verdes.add(mpaseo);
@@ -713,18 +708,20 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
         });
 
     }
-    public void MeterMarcadoresVerde() {
-        for (int i = 0; i < marcadores_verdes.size(); i++) {
-            LatLng ubi = new LatLng(marcadores_verdes.get(i).getLatitud(), marcadores_verdes.get(i).getLongitud());
+
+    public void MeterMarcadoresRojo() {
+        for (int i = 0; i < marcadores_rojo.size(); i++) {
+            LatLng ubi = new LatLng(marcadores_rojo.get(i).getLatitud(), marcadores_rojo.get(i).getLongitud());
 
             Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                     .position(ubi)
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_verde)));
-            Log.e("TTT", "> " + marcadores_verdes_id.get(i));
-            map_marcador.setTag("nada##" + marcadores_verdes.get(i).getMarker_id() + "##3##" + marcadores_verdes_id.get(i));
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_rojo)));
+            //map_marcador.setTag(marcadores_rojo.get(i).getId_mascota() + "##" + marcadores_rojo.get(i).getOwner() + "##1##" + marcadores_rojo_id.get(i));
+            map_marcador.setTag(new Marcadores_info(marcadores_rojo.get(i).getId_mascota(),marcadores_rojo.get(i).getOwner(),1,marcadores_rojo_id.get(i)));
         }
 
     }
+
     public void MeterMarcadoresAzul() {
         for (int i = 0; i < marcadores_azul.size(); i++) {
             LatLng ubi = new LatLng(marcadores_azul.get(i).getLatitud(), marcadores_azul.get(i).getLongitud());
@@ -732,11 +729,26 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
             Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
                     .position(ubi)
                     .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_azul)));
-            Log.e("TTT", "> " + marcadores_azul_id.get(i));
-            map_marcador.setTag("nada##" + marcadores_azul.get(i).getOwner() + "##2##" + marcadores_azul_id.get(i));
+            //map_marcador.setTag("nada##" + marcadores_azul.get(i).getOwner() + "##2##" + marcadores_azul_id.get(i));
+            map_marcador.setTag(new Marcadores_info("nada",marcadores_azul.get(i).getOwner(),2,marcadores_azul_id.get(i)));
         }
 
     }
+
+    public void MeterMarcadoresVerde() {
+        for (int i = 0; i < marcadores_verdes.size(); i++) {
+            LatLng ubi = new LatLng(marcadores_verdes.get(i).getLatitud(), marcadores_verdes.get(i).getLongitud());
+
+            Marker map_marcador = mGoogleMap.addMarker(new MarkerOptions()
+                    .position(ubi)
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_marcador_verde)));
+            //Log.e("TTT", "> " + marcadores_verdes_id.get(i));
+            map_marcador.setTag("nada##" + marcadores_verdes.get(i).getMarker_id() + "##3##" + marcadores_verdes_id.get(i));
+            map_marcador.setTag(new Marcadores_info("nada",marcadores_verdes.get(i).getMarker_id(),3,marcadores_verdes_id.get(i)));
+        }
+
+    }
+
 
     /**
      * METODO PARA ACTUALIZAR Y CARGAR LOS MARCADORES EN EL MAPA
