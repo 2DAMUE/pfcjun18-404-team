@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,7 +34,7 @@ import com.team.a404.a404team.R;
 import java.util.ArrayList;
 
 public class MascotasFragment extends Fragment {
-    private FloatingActionButton nuevaMascota;
+    private ImageView nuevaMascota;
     private ListView listaMascotas;
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private DatabaseReference DataRef;
@@ -59,6 +61,9 @@ public class MascotasFragment extends Fragment {
         informacionMascotas.clear();
         nombreMascotas.clear();
         DataRef = FirebaseDatabase.getInstance().getReference("usuarios").child(firebaseAuth.getCurrentUser().getUid()).child("mascotas");
+
+        Log.i("INFO",""+DataRef);
+
         listaMascotas = (ListView) view.findViewById(R.id.listmascotas);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, nombreMascotas);
         listaMascotas.setAdapter(arrayAdapter);
@@ -141,7 +146,7 @@ public class MascotasFragment extends Fragment {
 
             }
         });
-        nuevaMascota = (FloatingActionButton) view.findViewById(R.id.nuevaMascota);
+        nuevaMascota = (ImageView) view.findViewById(R.id.nuevaMascota);
         nuevaMascota.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View view) {

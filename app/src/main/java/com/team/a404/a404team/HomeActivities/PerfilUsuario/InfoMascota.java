@@ -1,7 +1,12 @@
 package com.team.a404.a404team.HomeActivities.PerfilUsuario;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -9,11 +14,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,27 +46,66 @@ public class InfoMascota extends AppCompatActivity {
     private CircularImageView fotomascota;
     private TextView pnombre, praza, prasgos;
     private String nombre, raza, rasgos, url_foto,marker_id;
-    private Button btn_borrar;
     private DatabaseReference DataRef = FirebaseDatabase.getInstance().getReference("usuarios")
             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("mascotas");
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private static final int PICK_IMAGE_REQUEST = 100;
+    private FloatingActionButton v_fab_borrar, v_fab_editar;
+    private FloatingActionsMenu v_fab_menu;
+    private FrameLayout v_fondo;
+
+    private AlertDialog.Builder builder;
+    private AlertDialog dialog_confirmar;
     Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_mascota);
+        getSupportActionBar().hide();
+
+        v_fab_menu = (FloatingActionsMenu) findViewById(R.id.fab_menu);
+        v_fab_borrar = (FloatingActionButton) findViewById(R.id.fab_borrar);
+        v_fondo = (FrameLayout) findViewById(R.id.fondo);
+
+        v_fondo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (v_fab_menu.isExpanded()) {
+                    v_fab_menu.collapse();
+                }
+                return false;
+            }
+        });
+
+
         fotomascota = (CircularImageView) findViewById(R.id.imagen_mascota);
         getSupportActionBar().setTitle(R.string.pet_data);
         pnombre = (TextView) findViewById(R.id.pet_name);
         praza = (TextView) findViewById(R.id.pet_race);
         prasgos = (TextView) findViewById(R.id.pet_details);
-        btn_borrar = (Button) findViewById(R.id.btn_borrar);
-        btn_borrar.setOnClickListener(new View.OnClickListener() {
+        v_fab_borrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteMascota();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(InfoMascota.this);
+                builder.setCancelable(true);
+                builder.setTitle("Ventana de confirmación");
+                builder.setPositiveButton("Si",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteMascota();
+                            }
+                        });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
         fotomascota.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +167,7 @@ public class InfoMascota extends AppCompatActivity {
         finish();
     }
     public void deleteMarcador(){
+
         DatabaseReference deleteMarker = FirebaseDatabase.getInstance().getReference("marcadores")
                 .child("perdidas").child(marker_id);
         deleteMarker.child("id_mascota").removeValue();
@@ -129,8 +181,7 @@ public class InfoMascota extends AppCompatActivity {
     public void onActivityResult(int requestcode, int resultcode, Intent data) {
         super.onActivityResult(requestcode, resultcode, data);
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getInstance().getReference().child("images").child(firebaseAuth.getCurrentUser().getUid())
-                .child("mascotas").child(nombre).child(nombre);
+        StorageReference storageRef = storage.getInstance().getReference().child("images").child(firebaseAuth.getCurrentUser().getUid()).child("mascotas").child(nombre).child(nombre);
         if (resultcode == RESULT_OK && requestcode == PICK_IMAGE_REQUEST) {
             imageUri = data.getData();
             fotomascota.setImageURI(imageUri);

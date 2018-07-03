@@ -13,35 +13,45 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/dialogo_blanco"
-            android:elevation="3dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/nuevaMascota"
+                android:layout_width="24dp"
+                android:layout_height="23dp"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="15dp"
+                android:tint="@color/colorVerdeAzul"
+                app:srcCompat="@mipmap/ic_add" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="left|center"
+                android:layout_margin="15dp"
+                android:gravity="center"
                 android:text="@string/my_pets"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textSize="24sp"
-                android:typeface="normal" />
+                android:textStyle="bold"
+                android:typeface="normal"
+                app:fontFamily="@font/roboto_thin" />
+        </FrameLayout>
 
-        </LinearLayout>
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ededed" />
 
         <LinearLayout
+            android:id="@+id/caja_lista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="70dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
@@ -60,16 +70,5 @@
 
         </LinearLayout>
     </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/nuevaMascota"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:layout_marginEnd="10dp"
-        android:src="@mipmap/ic_add"
-        android:tint="@color/colorBlanco"
-        app:backgroundTint="@color/colorAccent" />
 
 </FrameLayout>

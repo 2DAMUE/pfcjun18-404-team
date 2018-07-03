@@ -1,78 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".HomeActivities.PerfilUsuario.InfoMascota">
 
-        <LinearLayout
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ms_selectedColor"
+        android:orientation="vertical">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/imagen_mascota"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="80dp"
+            android:layout_marginTop="15dp" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="180dp"
+        android:background="@color/colorBlanco"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/imagen_mascota"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/username"
-                android:textColor="@color/colorRojoRosaOscuro"
-                android:textSize="18sp" />
-
-            <TextView
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/pet_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"/>
+                android:hint="@string/username" />
+        </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pet_race"
-                android:textColor="@color/colorRojoRosaOscuro"
-                android:textSize="18sp" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
-            <TextView
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/pet_race"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"/>
+                android:hint="@string/pet_race" />
+        </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/details"
-                android:textColor="@color/colorRojoRosaOscuro"
-                android:textSize="18sp" />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
-            <TextView
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/pet_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="false"
-                android:textSize="18sp"/>
+                android:hint="@string/details" />
 
-            <Button
-                android:id="@+id/btn_borrar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@drawable/button_background_lleno"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:elevation="3dp"
-                android:text="@string/btn_delete"
-                android:textColor="@android:color/white" />
+        </android.support.design.widget.TextInputLayout>
 
 
-        </LinearLayout>
+    </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:elevation="3dp"
+        app:fab_addButtonColorNormal="@color/colorPrimary"
+        app:fab_addButtonColorPressed="#9901a5a6"
+        app:fab_labelStyle="@style/menu_labels_style"
+        app:fab_labelsPosition="left">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_Paseo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_icon="@mipmap/ic_edit"
+            app:fab_size="mini" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_borrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="#e3004f"
+            app:fab_colorPressed="#b70040"
+            app:fab_icon="@mipmap/ic_papelera_blanca"
+            app:fab_size="mini" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
-</RelativeLayout>
+</FrameLayout>

@@ -31,13 +31,28 @@
                             <entry key="launcherLegacy">
                               <value>
                                 <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="paddingPercent" value="10" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="backgroundColor" value="e5000a" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="D:\StudioProjects\pfcjun18-404-team\app\src\main\res\drawable\add.png" />
-                                      <entry key="outputName" value="ic_add" />
+                                      <entry key="imageAsset" value="C:\Users\usuario\StudioProjects\pfcjun18-404-team\app\src\main\res\drawable\delete.png" />
+                                      <entry key="outputName" value="ic_papelera_blanca" />
                                     </map>
                                   </option>
                                 </PersistentState>
