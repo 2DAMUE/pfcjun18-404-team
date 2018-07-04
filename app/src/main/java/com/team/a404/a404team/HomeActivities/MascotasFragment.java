@@ -28,7 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.team.a404.a404team.Datos.DatosMascota;
-import com.team.a404.a404team.HomeActivities.PerfilUsuario.InfoMascota;
+import com.team.a404.a404team.HomeActivities.PerfilMascota.InfoMascota;
 import com.team.a404.a404team.R;
 
 import java.util.ArrayList;

@@ -91,9 +91,17 @@ public class SelecionMascotaPerdidaFragment extends Fragment implements Blocking
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 DatosMascota pet = dataSnapshot.getValue(DatosMascota.class);
-                id_mascota_perfil.add(dataSnapshot.getKey());
-                nombreMascotas.add(pet.getNombre());
-                informacionMascotas.add(pet);
+                try {
+                    if (pet.getMarker_id().length() == 0){
+                        id_mascota_perfil.add(dataSnapshot.getKey());
+                        nombreMascotas.add(pet.getNombre());
+                        informacionMascotas.add(pet);
+                    }
+                }catch (Exception x){
+                    Log.e("TRY",""+x);
+                }
+
+
                 arrayAdapter.notifyDataSetChanged();
             }
 

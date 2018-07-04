@@ -57,7 +57,7 @@
     <string name="toast_marker_created">¡El marcador se ha creado con éxito!</string>
     <string name="save_data">Guardar</string>
     <string name="dialog_delete_marker_title">Borrar Marcador</string>
-    <string name="dialog_delete_marker_body">¿Está seguro de querer borrar este marcador?</string>
+    <string name="dialog_delete_marker_body">¿Está seguro de que quiere borrar este marcador?</string>
     <string name="yes">SI</string>
     <string name="fab_lost_pet">He perdido mi mascota</string>
     <string name="fab_other_pet">He encontrado una mascota perdida</string>
@@ -153,6 +153,6 @@
     <string name="btn_delete">Borrar Mascota</string>
     <string name="hint_phone">Introduzca un teléfono de contacto</string>
     <string name="btn_change_profile">Editar Perfil</string>
-    <string name="select_photo" >Saque una foto de la mascota</string>
+    <string name="select_photo">Saque una foto de la mascota</string>
     <string name="enter_characteristics">Introduzca los rasgos de la mascota</string>
 </resources>

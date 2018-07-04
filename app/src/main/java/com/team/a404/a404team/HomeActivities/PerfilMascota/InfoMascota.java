@@ -1,12 +1,9 @@
-package com.team.a404.a404team.HomeActivities.PerfilUsuario;
+package com.team.a404.a404team.HomeActivities.PerfilMascota;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -16,16 +13,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -156,11 +149,7 @@ public class InfoMascota extends AppCompatActivity {
         if(!TextUtils.isEmpty(marker_id)){
             deleteMarcador();
         }
-        deleteData.child("nombre").removeValue();
-        deleteData.child("raza").removeValue();
-        deleteData.child("rasgos").removeValue();
-        deleteData.child("url_foto").removeValue();
-        deleteData.child("marker_id").removeValue();
+        deleteData.removeValue();
         Toast.makeText(InfoMascota.this, getString(R.string.toast_pet_deleted), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(InfoMascota.this, HomeActivity.class);
         startActivity(intent);
@@ -168,13 +157,8 @@ public class InfoMascota extends AppCompatActivity {
     }
     public void deleteMarcador(){
 
-        DatabaseReference deleteMarker = FirebaseDatabase.getInstance().getReference("marcadores")
-                .child("perdidas").child(marker_id);
-        deleteMarker.child("id_mascota").removeValue();
-        deleteMarker.child("latitud").removeValue();
-        deleteMarker.child("longitud").removeValue();
-        deleteMarker.child("owner").removeValue();
-        deleteMarker.child("telefono").removeValue();
+        DatabaseReference deleteMarker = FirebaseDatabase.getInstance().getReference("marcadores").child("perdidas").child(marker_id);
+        deleteMarker.removeValue();
     }
 
     @Override

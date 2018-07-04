@@ -400,7 +400,12 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                     v_mascota_text_raza.setVisibility(View.INVISIBLE);
                     v_mascota_rasgos.setVisibility(View.INVISIBLE);
                 }
-                Picasso.get().load(d_mascota.getUrl_foto()).into(v_foto_mascota);
+                try {
+                    Picasso.get().load(d_mascota.getUrl_foto()).into(v_foto_mascota);
+                }catch (Exception x){
+                    Log.e("TRY",""+x);
+                }
+
             }
 
             @Override
