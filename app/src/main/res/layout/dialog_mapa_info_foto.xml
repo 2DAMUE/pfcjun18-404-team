@@ -5,15 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/contenido_ventana"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_margin="15dp"
         android:background="@drawable/dialogo_blanco"
         android:elevation="3dp"
         android:orientation="vertical">
@@ -23,6 +20,7 @@
             android:layout_width="27dp"
             android:layout_height="29dp"
             android:layout_gravity="right"
+            android:layout_margin="16dp"
             android:tint="@color/colorNegro"
             app:srcCompat="@mipmap/ic_cerrar" />
 
@@ -32,7 +30,7 @@
             android:layout_height="match_parent"
             android:paddingTop="15dp" />
 
-    </LinearLayout>
+    </FrameLayout>
 
 
 </FrameLayout>

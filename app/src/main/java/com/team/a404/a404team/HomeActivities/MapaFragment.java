@@ -331,6 +331,7 @@ public class MapaFragment extends Fragment implements OnMapReadyCallback {
                 ImageView v_cerrar = (ImageView) dialog_foto_mascota.findViewById(R.id.icon_cerrar);
 
                 Picasso.get().load(url_foto_mascota).into(v_foto);
+
                 v_cerrar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
